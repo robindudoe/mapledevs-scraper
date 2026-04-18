@@ -5,41 +5,64 @@ const path = require('path');
 const SITEMAP_PATH = path.join(__dirname, 'sitemap.xml');
 
 async function run() {
-    console.log('🔗 Starting Google Indexing (Sanitized Mode)...');
+    console.log('🔗 Starting Google Indexing (Bulletproof Mode)...');
     
-    let keyData;
     const rawKey = process.env.GOOGLE_INDEXING_KEY;
-    
-    if (rawKey) {
-        try {
-            // First, try to handle multiple layers of escaping from GitHub
+    if (!rawKey) {
+        console.error('❌ GOOGLE_INDEXING_KEY is missing from environment!');
+        return;
+    }
+
+    console.log(`📊 Secret Length: ${rawKey.length} characters.`);
+    console.log(`📊 Secret Start: ${rawKey.substring(0, 15)}...`);
+
+    let keyData;
+    try {
+        // Step 1: Handle Base64 if you pasted it that way
+        if (!rawKey.trim().startsWith('{')) {
+            console.log('📦 Attempting Base64 decode...');
+            const decoded = Buffer.from(rawKey.trim(), 'base64').toString('utf8');
+            keyData = JSON.parse(decoded);
+        } else {
+            // Step 2: Handle raw JSON with potential mangled newlines
+            console.log('📦 Parsing raw JSON...');
             let sanitized = rawKey.trim();
+            // Remove wrapping quotes if GitHub added them
             if (sanitized.startsWith('"') && sanitized.endsWith('"')) sanitized = sanitized.slice(1, -1);
-            keyData = JSON.parse(sanitized.replace(/\\n/g, '\n'));
-        } catch (e) {
-            console.error('⚠️ Key parsing failed, attempting repair...');
-            // Fallback for raw JSON mangling
-            const keyMatch = /"private_key":\s*"(.*?)"/.exec(rawKey);
-            if (keyMatch) {
-                keyData = { 
-                    private_key: keyMatch[1].replace(/\\n/g, '\n'),
-                    client_email: (/"client_email":\s*"(.*?)"/.exec(rawKey) || [])[1]
-                };
-            }
+            
+            // Fix double-escaped newlines
+            keyData = JSON.parse(sanitized.replace(/\\\\n/g, '\n').replace(/\\n/g, '\n'));
+        }
+    } catch (e) {
+        console.error('⚠️ Direct parse failed. Reconstructing from raw string patterns...');
+        const emailMatch = /"client_email":\s*"([^"]+)"/.exec(rawKey);
+        const keyMatch = /"private_key":\s*"([^"]+)"/.exec(rawKey);
+        
+        if (emailMatch && keyMatch) {
+            keyData = {
+                client_email: emailMatch[1],
+                private_key: keyMatch[1].replace(/\\\\n/g, '\n').replace(/\\n/g, '\n')
+            };
+            console.log('✅ Reconstructed key from raw patterns.');
         }
     }
 
     if (!keyData || !keyData.private_key) {
-        console.error('❌ Could not recover private key from environment.');
+        console.error('❌ FATAL: Could not extract private_key. Please re-check your GitHub Secret!');
         return;
     }
 
-    // SURGICAL PEM REPAIR
+    // Step 3: Ensure PEM headers are clean
     let pk = keyData.private_key.trim();
     if (!pk.includes('-----BEGIN')) {
-        // If it's just the raw base64, wrap it
         pk = `-----BEGIN PRIVATE KEY-----\n${pk}\n-----END PRIVATE KEY-----`;
     }
+    
+    // Ensure internal newlines are real newlines, not strings
+    pk = pk.split('\\n').join('\n');
+
+    console.log(`🔑 Key Format: ${pk.startsWith('-----BEGIN') ? 'PEM Valid' : 'Raw Content'}`);
+    console.log(`📧 Service Email: ${keyData.client_email}`);
 
     try {
         const auth = google.auth.fromJSON({
@@ -47,7 +70,6 @@ async function run() {
             private_key: pk
         });
         auth.scopes = ['https://www.googleapis.com/auth/indexing'];
-        
         const indexing = google.indexing({ version: 'v3', auth });
 
         if (!fs.existsSync(SITEMAP_PATH)) {
@@ -61,20 +83,19 @@ async function run() {
         let match;
         while ((match = urlRegex.exec(sitemap)) !== null) urls.push(match[1]);
 
-        console.log(`🔍 Found ${urls.length} URLs. Authenticating...`);
+        console.log(`🔍 Found ${urls.length} URLs. Pinging Google...`);
 
         for (const url of urls) {
             try {
-                await new Promise(r => setTimeout(r, 100));
                 await indexing.urlNotifications.publish({
                     requestBody: { url: url, type: 'URL_UPDATED' }
                 });
                 console.log(`✅ Indexed: ${url}`);
             } catch (err) {
-                console.log(`⚠️ Skip ${url}: ${err.message}`);
-                if (err.message.includes('403')) {
-                    console.error('🛑 Search Console ownership missing for the service account email!');
-                    break;
+                console.log(`❌ Fail ${url}: ${err.message}`);
+                if (err.message.includes('supported') || err.message.includes('decoder')) {
+                    console.error('🛑 CRITICAL: The private key format is still being rejected by OpenSSL.');
+                    process.exit(1); 
                 }
             }
         }
