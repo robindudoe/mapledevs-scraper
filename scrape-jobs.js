@@ -843,16 +843,13 @@ async function scrapeAll() {
 // Install with: npm install googleapis google-auth-library
 
 async function updateGoogleSheet(scrapedJobs) {
-  // Check if we have the required env vars
   const sheetId = process.env.GOOGLE_SHEET_ID;
+  // Use the same JSON credentials that work for Google Indexing
+  const rawCreds = process.env.GOOGLE_INDEXING_KEY || process.env.GOOGLE_PRIVATE_KEY;
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const privateKeyB64 = process.env.GOOGLE_PRIVATE_KEY;
 
-  if (!sheetId || !clientEmail || !privateKeyB64) {
-    console.log('\n⚠️  Google Sheets env vars not set. Outputting to console instead.\n');
-    console.log('To enable Google Sheets sync, set these environment variables:');
-    console.log('  GOOGLE_SHEET_ID, GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY\n');
-    console.log('Scraped jobs (CSV format):\n');
+  if (!sheetId) {
+    console.log('\n⚠️  GOOGLE_SHEET_ID not set. Outputting to console instead.\n');
     console.log('Title,Studio,Location,Type,Mode,Description,Apply URL,Posted,Featured,Student,Salary,Engine,Visa');
     scrapedJobs.forEach(j => {
       console.log(`"${j.title}","${j.studio}","${j.location}","${j.type}","${j.mode}","${j.description.replace(/"/g, '""')}","${j.applyUrl}","${j.posted}","${j.featured}","${j.student}","${j.salary}","${j.engine}","${j.visa}"`);
@@ -860,48 +857,40 @@ async function updateGoogleSheet(scrapedJobs) {
     return;
   }
 
+  if (!rawCreds) {
+    console.log('\n⚠️  No credentials found. Set GOOGLE_INDEXING_KEY to the full service account JSON.');
+    return;
+  }
+
   try {
     const { google } = require('googleapis');
-    
-    // Parse private key from whatever format was stored in the secret
-    function parsePrivateKey(raw) {
-      if (!raw) return null;
-      let str = raw.trim();
 
-      // Case 1: Full JSON (user pasted the whole service account file)
+    // Parse credentials from the secret (supports full JSON or base64-encoded JSON)
+    let credentials;
+    try {
+      credentials = JSON.parse(rawCreds.trim());
+    } catch (e) {
       try {
-        const obj = JSON.parse(str);
-        if (obj.private_key) return obj.private_key.replace(/\\n/g, '\n');
-      } catch (e) { /* not JSON */ }
-
-      // Case 2: Base64-encoded JSON
-      try {
-        const decoded = Buffer.from(str, 'base64').toString('utf-8');
-        const obj = JSON.parse(decoded);
-        if (obj.private_key) return obj.private_key.replace(/\\n/g, '\n');
-      } catch (e) { /* not base64 JSON */ }
-
-      // Case 3: Raw PEM string (possibly with escaped newlines)
-      let key = str.replace(/\\n/g, '\n');
-      if (!key.includes('-----BEGIN')) {
-        try {
-          const decoded = Buffer.from(key.replace(/\s+/g, ''), 'base64').toString('utf-8');
-          if (decoded.includes('-----BEGIN')) key = decoded;
-        } catch (e) { /* not base64 PEM */ }
+        credentials = JSON.parse(Buffer.from(rawCreds.trim(), 'base64').toString('utf-8'));
+      } catch (e2) {
+        throw new Error('GOOGLE_INDEXING_KEY must contain the full service account JSON file contents.');
       }
-
-      return key;
     }
 
-    const privateKey = parsePrivateKey(privateKeyB64);
-    if (!privateKey) throw new Error('Could not parse private key from GOOGLE_PRIVATE_KEY.');
+    if (!credentials.client_email || !credentials.private_key) {
+      throw new Error('JSON is missing client_email or private_key fields.');
+    }
 
-    const auth = new google.auth.JWT(clientEmail, null, privateKey, [
-      'https://www.googleapis.com/auth/spreadsheets',
-    ]);
+    console.log(`\n🔑 Using service account: ${credentials.client_email}`);
+
+    const auth = new google.auth.GoogleAuth({
+      credentials: credentials,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
 
     const sheets = google.sheets({ version: 'v4', auth });
-    const range = 'Sheet1!A:M'; // Expanded to A:M
+    const range = 'Sheet1!A:M';
+
 
     // Read existing data
     console.log('\n📖 Reading existing sheet data...');
