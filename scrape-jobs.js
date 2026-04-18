@@ -121,6 +121,34 @@ const STUDIOS = [
     city: "Montreal, Quebec",
     locationFilter: "Canada"
   },
+  {
+    name: "The Coalition",
+    platform: "greenhouse",
+    token: "thecoalition",
+    city: "Vancouver, BC",
+    locationFilter: "Canada"
+  },
+  {
+    name: "Next Level Games",
+    platform: "greenhouse",
+    token: "nextlevelgames",
+    city: "Vancouver, BC",
+    locationFilter: "Canada"
+  },
+  {
+    name: "Skybox Labs",
+    platform: "greenhouse",
+    token: "skyboxlabs",
+    city: "Burnaby, BC",
+    locationFilter: "Canada"
+  },
+  {
+    name: "Hothead Games",
+    platform: "greenhouse",
+    token: "hotheadgames",
+    city: "Vancouver, BC",
+    locationFilter: "Canada"
+  },
   // ─── EXAMPLE: How to add more Greenhouse studios ───
   // {
   //   name: "Studio Name",
@@ -160,6 +188,13 @@ const STUDIOS = [
     platform: "lever",
     token: "ludia",
     city: "Montreal, Quebec",
+    locationFilter: "Canada"
+  },
+  {
+    name: "Blackbird Interactive",
+    platform: "lever",
+    token: "blackbirdinteractive",
+    city: "Vancouver, BC",
     locationFilter: "Canada"
   },
   // ─── SmartRecruiters Studios ───
@@ -280,35 +315,54 @@ const CANADA_KEYWORDS = [
 function normalizeLocation(raw, studioCity = '', filter = null) {
   if (!raw || raw.toLowerCase().includes('blank')) return studioCity || 'Canada';
 
-  const sLowerRaw = raw.toLowerCase().replace(/[\W_]+/g, ' '); // Clean for matching
+  const sLowerRaw = raw.toLowerCase().replace(/[\W_]+/g, ' ').trim(); // Clean for matching
   
-  // Whitelist: Must have one of these or it's GONE.
-  const isCanadaRegex = /, ca\b|, on\b|, qc\b|, bc\b|, ab\b|, sk\b|, mb\b|, ns\b|, nb\b|, pe\b|, nl\b|ontario|quebec|british columbia|alberta|manitoba|saskatchewan|nova scotia|new brunswick|newfoundland/i;
-  const hasCanadaKeyword = CANADA_KEYWORDS.some(k => sLowerRaw.includes(k));
+  // 1. Whitelist: Must have one of these specifically or it's GONE.
+  // We use word boundaries \b to ensure "on" doesn't match "Lyon" or "Washington"
+  const CANADA_KW_REGEX = new RegExp(`\\b(${CANADA_KEYWORDS.join('|')})\\b`, 'i');
+  const PROV_CODE_REGEX = /\b(on|qc|bc|ab|sk|mb|ns|nb|pe|nl|yt|nt|nu)\b/i;
+  
+  const hasCanadaKeyword = CANADA_KW_REGEX.test(sLowerRaw);
+  const hasProvCode = PROV_CODE_REGEX.test(sLowerRaw);
 
-  // Global Noise: If it mentions these, it's an immediate fail (even if it says Remote)
-  const globalNoise = /france|paris|germany|berlin|india|bangalore|japan|tokyo|spain|madrid|barcelona|brazil|mexico|australia|uk\b|england|london\s+england/i;
-  if (globalNoise.test(sLowerRaw)) return null;
+  // 2. Global Noise: If it mentions these, it's an immediate fail (even if it says Remote)
+  const globalNoise = /\b(france|paris|germany|berlin|india|bangalore|japan|tokyo|spain|madrid|barcelona|brazil|mexico|australia|uk|england|usa|united states|america|washington|bellevue|redmond|austin|texas|california|san francisco|london england)\b/i;
+  if (globalNoise.test(sLowerRaw)) {
+    // Edge case: "London, Ontario" should NOT be blocked by "London England" or "London"
+    // But since "Ontario" is a Canada keyword, we can add a bypass if both are present
+    if (sLowerRaw.includes('london') && (sLowerRaw.includes('ontario') || sLowerRaw.includes(' on '))) {
+      // Keep going
+    } else {
+      return null;
+    }
+  }
 
-  // 1. Strict Requirement Check
-  const isStrictlyCanada = isCanadaRegex.test(sLowerRaw) || hasCanadaKeyword;
-  const isExplicitlyRemote = sLowerRaw.includes('remote') || sLowerRaw.includes('anywhere');
+  // 3. Strict Requirement Check
+  const isStrictlyCanada = hasCanadaKeyword || hasProvCode;
+  const isExplicitlyRemote = /\b(remote|anywhere|work from home|wfh)\b/i.test(sLowerRaw);
 
   if (filter && filter.toLowerCase().includes('canada')) {
     if (!isStrictlyCanada && !isExplicitlyRemote) return null; // Not Canada, not Remote? Reject.
-    if (isExplicitlyRemote && !isStrictlyCanada) return null;  // Remote but no Canada context? Reject.
+    
+    // If it's Remote, we only keep it if there is SOME Canadian context (either in the job loc or the studio's home city)
+    if (isExplicitlyRemote && !isStrictlyCanada) {
+      const studioIsCanada = CANADA_KW_REGEX.test(studioCity) || PROV_CODE_REGEX.test(studioCity) || studioCity.toLowerCase().includes('canada');
+      if (!studioIsCanada) return null; // Remote but US/International studio? Drop.
+    }
   }
 
-  // 2. Parse segments
+  // 4. Parse segments
   const segments = raw.split(/[;/]/).map(s => s.trim());
   let bestLoc = null;
 
   for (const seg of segments) {
-    const sLower = seg.toLowerCase();
-    if (globalNoise.test(sLower)) continue;
+    const sLower = seg.toLowerCase().replace(/[\W_]+/g, ' ');
+    if (globalNoise.test(sLower)) {
+       if (sLower.includes('london') && (sLower.includes('ontario') || sLower.includes(' on '))) { /* allow */ }
+       else continue;
+    }
     
-    if (isCanadaRegex.test(sLower)) { bestLoc = seg; break; }
-    if (CANADA_KEYWORDS.some(k => sLower.includes(k))) { bestLoc = seg; break; }
+    if (CANADA_KW_REGEX.test(sLower) || PROV_CODE_REGEX.test(sLower)) { bestLoc = seg; break; }
     if (sLower.includes('remote') || sLower.includes('anywhere')) { bestLoc = seg; }
   }
 

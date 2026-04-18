@@ -79,17 +79,40 @@ function safeReplaceMeta(html, propertyOrName, newValue, isProperty = true) {
     return html.replace(regex, `<meta ${attr}="${propertyOrName}" content="${newValue}">`);
 }
 
-function injectSEO(html, target) {
+function injectSEO(html, target, targetJobs = []) {
     let output = html;
+    
+    // 1. Clean up potential artifacts
     output = output.replace(/^[^{]*\{[^{}]*"@context":[^{}]*\}/s, '');
+    
+    // 2. Head Tags
     output = output.replace(/<title>.*?<\/title>/i, `<title>${target.title}</title>`);
     output = safeReplaceMeta(output, 'description', target.desc, false);
     output = safeReplaceMeta(output, 'og:title', target.title, true);
     output = safeReplaceMeta(output, 'og:description', target.desc, true);
     output = safeReplaceMeta(output, 'og:url', `https://mapledevs.ca/${target.folder}/`, true);
     output = output.replace(/<link rel="canonical" href="[^"]*"/i, `<link rel="canonical" href="https://mapledevs.ca/${target.folder}/"`);
+    
+    // 3. Redirect / Deep Link Hash (for SPA fallback)
     const redirectScript = `\n    <script>if(!window.location.hash) window.location.hash = '${target.hash}';</script>\n`;
     output = output.replace('<head>', '<head>' + redirectScript);
+    
+    // 4. STATIC INJECTION (The "Fortress" of SEO)
+    // We replace the skeleton list with actual HTML for search engines
+    if (targetJobs.length > 0) {
+        const jobsHtml = targetJobs.map(j => `
+            <div class="jc ${j.featured ? 'feat' : ''}" style="margin-bottom:1rem; border:1px solid #eee; padding:1rem; border-radius:8px;">
+                <div style="font-weight:700; font-size:1.1rem;">${j.title}</div>
+                <div style="color:#666; margin-bottom:0.5rem;">${j.studio}</div>
+                <div style="font-size:0.9rem;">${j.location}</div>
+                <div style="font-size:0.85rem; margin-top:0.5rem; color:#444;">${j.desc}</div>
+            </div>
+        `).join('');
+        
+        const jobListRegex = /<div id="job-list">[\s\S]*?<\/div>/;
+        output = output.replace(jobListRegex, `<div id="job-list">${jobsHtml}</div>`);
+    }
+
     return output;
 }
 
@@ -126,7 +149,27 @@ async function build() {
     for (const target of SEO_TARGETS) {
         const targetDir = path.join(ROOT_DIR, target.folder);
         if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir);
-        const html = injectSEO(baseHTML, target);
+
+        // Filter jobs for this hub
+        let targetJobs = [];
+        const h = target.hash.replace('#','');
+        const p = new URLSearchParams(h);
+        
+        if (p.has('city')) targetJobs = jobs.filter(j => j.location.toLowerCase().includes(p.get('city').toLowerCase()));
+        else if (p.has('role')) {
+            const ro = p.get('role');
+            const r = ro==="programming"?/program|engineer|develop|tech|backend|frontend/i:ro==="art"?/art|animat|vfx|3d|2d|model/i:ro==="design"?/design|level/i:ro==="qa"?/qa|test|quality/i:ro==="production"?/produc|manage/i:ro==="audio"?/audio|sound|music/i:/.*/;
+            targetJobs = jobs.filter(j => r.test(j.title));
+        }
+        else if (p.has('exp')) {
+            const ex = p.get('exp');
+            const e = ex==="junior"?/junior|jr|entry|associate|student|intern/i:ex==="mid"?/mid|intermediate|(?!senior)(?!lead)(?!junior)(?!entry)/i:ex==="senior"?/senior|sr|principal/i:ex==="lead"?/lead|director|head|vp/i:/.*/;
+            targetJobs = jobs.filter(j => e.test(j.title));
+        }
+        else if (p.has('mode')) targetJobs = jobs.filter(j => j.location.toLowerCase().includes('remote') || j.title.toLowerCase().includes('remote')); // simplified
+        else if (p.has('type')) targetJobs = jobs.filter(j => j.title.toLowerCase().includes(p.get('type').toLowerCase()));
+        
+        const html = injectSEO(baseHTML, target, targetJobs.slice(0, 10)); // Top 10 for SEO
         fs.writeFileSync(path.join(targetDir, 'index.html'), html);
         sitemapXML += `\n  <url><loc>https://mapledevs.ca/${target.folder}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`;
     }
@@ -144,7 +187,7 @@ async function build() {
             title: `${job.title} at ${job.studio} | Canadian Game Jobs - MapleDevs`,
             desc: `Apply for ${job.title} at ${job.studio} in ${job.location}. Verified Canadian game industry opportunity.`
         };
-        const html = injectSEO(baseHTML, target);
+        const html = injectSEO(baseHTML, target, [job]); // Inject the specific job
         fs.writeFileSync(path.join(jobPath, 'index.html'), html);
         sitemapXML += `\n  <url><loc>https://mapledevs.ca/jobs/${slug}/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>`;
     }

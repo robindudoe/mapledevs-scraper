@@ -122,8 +122,19 @@ async function run() {
     
     // 3. Find New Jobs
     const prevKeys = new Set(prevJobs.map(j => `${j.title}|${j.studio}`.toLowerCase()));
-    const newJobs = currentJobs.filter(j => !prevKeys.has(`${j.title}|${j.studio}`.toLowerCase()));
+    let newJobs = currentJobs.filter(j => !prevKeys.has(`${j.title}|${j.studio}`.toLowerCase()));
     
+    // Safety Fallback: If snapshot was missing (first run or lost), 
+    // only post jobs from the last 24h to avoid spamming the entire board.
+    if (prevJobs.length === 0 && newJobs.length > 0) {
+        console.log('⚠️ No previous snapshot found. Using 24h fallback logic.');
+        const oneDayAgo = Date.now() - (24 * 60 * 60 * 1000);
+        newJobs = newJobs.filter(j => {
+            const d = new Date(j.posted || Date.now());
+            return d.getTime() > oneDayAgo;
+        });
+    }
+
     if (newJobs.length === 0) {
         console.log('✨ No new jobs since last check. Skipping.');
         return;
