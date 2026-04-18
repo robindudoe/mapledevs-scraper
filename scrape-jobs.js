@@ -863,43 +863,38 @@ async function updateGoogleSheet(scrapedJobs) {
   try {
     const { google } = require('googleapis');
     
-    // Fortress Key Repair — Handles B64, JSON, and PEM mangling
-    function repairKey(raw) {
+    // Parse private key from whatever format was stored in the secret
+    function parsePrivateKey(raw) {
       if (!raw) return null;
-      let k = raw.trim();
-      // 1. Handle JSON wrapper or escaped JSON string
-      if (k.startsWith('{') || k.includes('"private_key"')) {
+      let str = raw.trim();
+
+      // Case 1: Full JSON (user pasted the whole service account file)
+      try {
+        const obj = JSON.parse(str);
+        if (obj.private_key) return obj.private_key.replace(/\\n/g, '\n');
+      } catch (e) { /* not JSON */ }
+
+      // Case 2: Base64-encoded JSON
+      try {
+        const decoded = Buffer.from(str, 'base64').toString('utf-8');
+        const obj = JSON.parse(decoded);
+        if (obj.private_key) return obj.private_key.replace(/\\n/g, '\n');
+      } catch (e) { /* not base64 JSON */ }
+
+      // Case 3: Raw PEM string (possibly with escaped newlines)
+      let key = str.replace(/\\n/g, '\n');
+      if (!key.includes('-----BEGIN')) {
         try {
-          let j;
-          try { j = JSON.parse(k); } 
-          catch(e) { j = JSON.parse(k.replace(/\\n/g, '\\\\n')); }
-          k = j.private_key || k;
-        } catch (e) {
-          const m = /"private_key":\s*"([^"]+)"/.exec(k);
-          if (m) k = m[1];
-        }
+          const decoded = Buffer.from(key.replace(/\s+/g, ''), 'base64').toString('utf-8');
+          if (decoded.includes('-----BEGIN')) key = decoded;
+        } catch (e) { /* not base64 PEM */ }
       }
-      // 2. Handle Base64
-      if (!k.includes('-----BEGIN')) {
-        try {
-          const b = Buffer.from(k.replace(/\s+/g, ''), 'base64').toString('utf-8');
-          if (b.includes('-----BEGIN')) k = b;
-        } catch (e) {}
-      }
-      // 3. Wash and Polish PEM
-      k = k.replace(/\\n/g, '\n').replace(/\\\\n/g, '\n');
-      k = k.replace(/-----BEGIN RSA PRIVATE KEY-----/g, '-----BEGIN PRIVATE KEY-----');
-      k = k.replace(/-----END RSA PRIVATE KEY-----/g, '-----END PRIVATE KEY-----');
-      if (!k.includes('-----BEGIN')) {
-        k = `-----BEGIN PRIVATE KEY-----\n${k.replace(/\s+/g, '')}\n-----END PRIVATE KEY-----`;
-      }
-      // Final check for survived escapes
-      k = k.split('\\n').join('\n');
-      return k;
+
+      return key;
     }
 
-    const privateKey = repairKey(privateKeyB64);
-    if (!privateKey) throw new Error('Private key missing after repair.');
+    const privateKey = parsePrivateKey(privateKeyB64);
+    if (!privateKey) throw new Error('Could not parse private key from GOOGLE_PRIVATE_KEY.');
 
     const auth = new google.auth.JWT(clientEmail, null, privateKey, [
       'https://www.googleapis.com/auth/spreadsheets',

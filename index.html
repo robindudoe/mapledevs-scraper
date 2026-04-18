@@ -1150,7 +1150,7 @@ function spotlightHTML(j, ri){
 
 function loadMore(){dispCount+=PER_PAGE;const jobs=filtered(),list=document.getElementById("job-list"),vis=jobs.slice(0,dispCount);list.className="job-list";list.innerHTML=vis.map((j,i)=>cardHTML(j,ALL.indexOf(j),i)).join("");if(jobs.length>dispCount)list.innerHTML+='<div class="load-wrap"><button class="load-btn" onclick="loadMore()">Show more ('+(jobs.length-dispCount)+' remaining)</button></div>';}
 
-function updPills(){const c=document.getElementById('f-pills'),q=document.getElementById('search').value,ci=document.getElementById('f-city').value,ty=document.getElementById('f-type').value,mo=document.getElementById('f-mode').value,ro=document.getElementById('f-role').value,ex=document.getElementById('f-exp').value,st=document.getElementById('f-student').checked;let pills=[];
+function updPills(){const c=document.getElementById('f-pills'),q=document.getElementById('search').value,ci=document.getElementById('f-city').value,ty=document.getElementById('f-type').value,mo=document.getElementById('f-mode').value,ro=document.getElementById('f-role').value,ex=document.getElementById('f-exp').value,en=document.getElementById('f-engine').value,vi=document.getElementById('f-visa').value,st=document.getElementById('f-student').checked;let pills=[];
 if(q)pills.push({l:'"'+q+'"',fn:()=>{document.getElementById('search').value='';render();}});
 if(ci)pills.push({l:ci,fn:()=>{document.getElementById('f-city').value='';render();}});
 if(ty)pills.push({l:ty,fn:()=>{document.getElementById('f-type').value='';render();}});
