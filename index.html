@@ -991,9 +991,10 @@ async function loadJobs(){
   try{const r=await fetch(url);if(!r.ok)throw 0;const csv=await r.text();ALL=parseCSV(csv);injectJobSchema(ALL);initFilters();updateStats();applyHash();render();buildTrusted();}
   catch(e){document.getElementById("job-list").innerHTML='<div class="state-msg"><span class="ic">⚠️</span>Couldn\'t load jobs.<span class="sub">Check the Google Sheet is published.</span></div>';}
 }
-function parseCSV(t){const ls=t.trim().split("\n"),jobs=[];for(let i=1;i<ls.length;i++){const c=csvLine(ls[i]);if(!c[COL.title]||!c[COL.studio])continue;jobs.push({title:cl(c[COL.title]),studio:cl(c[COL.studio]),location:cl(c[COL.location]||""),type:cl(c[COL.type]||""),mode:cl(c[COL.mode]||""),desc:cl(c[COL.desc]||""),apply:cl(c[COL.apply]||""),posted:cl(c[COL.posted]||""),featured:cl(c[COL.featured]||"").toLowerCase()==="yes",student:cl(c[COL.student]||"").toLowerCase()==="yes",salary:cl(c[COL.salary]||""),engine:cl(c[COL.engine]||""),visa:cl(c[COL.visa]||"")});}return jobs;}
+function parseCSV(t){const ls=t.trim().split("\n"),jobs=[];for(let i=1;i<ls.length;i++){const c=csvLine(ls[i]);if(!c[COL.title]||!c[COL.studio])continue;jobs.push({title:cl(c[COL.title]),studio:cl(c[COL.studio]),location:cl(c[COL.location]),type:cl(c[COL.type]),mode:cl(c[COL.mode]),desc:cl(c[COL.desc]),apply:cl(c[COL.apply]),posted:cl(c[COL.posted]),featured:cl(c[COL.featured]||"").toLowerCase()==="yes",student:cl(c[COL.student]||"").toLowerCase()==="yes",salary:cl(c[COL.salary]),engine:cl(c[COL.engine]),visa:cl(c[COL.visa])});}return jobs;}
 function csvLine(l){const r=[];let c="",q=false;for(let i=0;i<l.length;i++){const ch=l[i];if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c);c="";}else c+=ch;}r.push(c);return r;}
-function cl(s){return s.replace(/^"|"$/g,"").trim();}
+function cl(s){return (s||"").replace(/^"|"$/g,"").trim();}
+function toSlug(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');}
 function initFilters(){const cs=[...new Set(ALL.map(j=>j.location).filter(Boolean))].sort(),s=document.getElementById("f-city");s.innerHTML='<option value="">All cities</option>';cs.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;s.appendChild(o);});}
 function updateStats(){const jc=ALL.length,sc=new Set(ALL.map(j=>j.studio)).size,cc=new Set(ALL.map(j=>j.location).filter(Boolean)).size;if(!statsAni){statsAni=true;animC(document.getElementById('s-jobs'),jc);animC(document.getElementById('s-studios'),sc);animC(document.getElementById('s-cities'),cc);}}
 function injectJobSchema(jobs){const jld=jobs.map(j=>({"@context":"https://schema.org/","@type":"JobPosting","title":j.title,"description":j.desc||"Opportunity at "+j.studio,"datePosted":j.posted?new Date(j.posted).toISOString():new Date().toISOString(),"validThrough":new Date(Date.now()+30*24*60*60*1000).toISOString(),"employmentType":j.type?j.type.toUpperCase().replace("-","_"):"FULL_TIME","hiringOrganization":{"@type":"Organization","name":j.studio,"logo":"https://mapledevs.ca/og-image.png"},"jobLocation":{"@type":"Place","address":{"@type":"PostalAddress","addressLocality":j.location||"Canada","addressCountry":"CA"}},"jobLocationType":(j.mode||"").toLowerCase().includes("remote")?"TELECOMMUTE":undefined,"applicantLocationRequirements":(j.mode||"").toLowerCase().includes("remote")?{"@type":"Country","name":"Canada"}:undefined}));const el=document.getElementById("job-schema-dynamic");if(el)el.remove();const s=document.createElement("script");s.id="job-schema-dynamic";s.type="application/ld+json";s.text=JSON.stringify(jld);document.head.appendChild(s);}
@@ -1004,7 +1005,7 @@ function applyHash(){
   const h = location.hash.replace('#','');
   if(h.startsWith('id=')){
     const slug = h.replace('id=','');
-    const idx = ALL.findIndex(j => slugify(`${j.title}-${j.studio}-${j.location}`, {lower:true, strict:true}) === slug);
+    const idx = ALL.findIndex(j => toSlug(`${j.title}-${j.studio}-${j.location}`) === slug);
     if(idx > -1) openDet(idx);
     return;
   }
