@@ -3,54 +3,47 @@ const fs = require('fs');
 const path = require('path');
 
 const SITEMAP_PATH = path.join(__dirname, 'sitemap.xml');
+const TEMP_KEY_PATH = path.join(__dirname, 'google_key_tmp.json');
 
-let key;
 const rawKey = process.env.GOOGLE_INDEXING_KEY;
 
-if (rawKey) {
+if (!rawKey) {
+    console.log('⚠️ No GOOGLE_INDEXING_KEY found. Skipping indexing.');
+    process.exit(0);
+}
+
+// THE STABLE FILE STRATEGY
+// We write the key to a shielded file so the library can parse it natively
+try {
+    let keyObject;
     try {
-        key = JSON.parse(rawKey.trim());
-    } catch (e1) {
-        try {
-            const decoded = Buffer.from(rawKey.trim(), 'base64').toString('utf8');
-            key = JSON.parse(decoded);
-        } catch (e2) {
-            console.error('❌ Failed to parse GOOGLE_INDEXING_KEY.');
-            process.exit(1);
-        }
+        keyObject = JSON.parse(rawKey.trim());
+    } catch (e) {
+        const decoded = Buffer.from(rawKey.trim(), 'base64').toString('utf8');
+        keyObject = JSON.parse(decoded);
     }
+    
+    // Repair the private key newlines one last time inside the object
+    keyObject.private_key = keyObject.private_key.replace(/\\n/g, '\n');
+    
+    fs.writeFileSync(TEMP_KEY_PATH, JSON.stringify(keyObject));
+} catch (err) {
+    console.error('❌ Failed to prepare key file:', err.message);
+    process.exit(0); // Exit gracefully so the website still updates
 }
-
-if (!key || !key.private_key) {
-    console.error(`❌ No valid credentials found`);
-    process.exit(1);
-}
-
-// THE FINAL GOOGLE KEY REPAIR
-let privateKey = key.private_key.replace(/\\n/g, '\n').trim();
-
-// Ensure it has the correct PEM headers
-if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
-    privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----`;
-}
-
-const jwtClient = new google.auth.JWT(
-    key.client_email,
-    null,
-    privateKey,
-    ['https://www.googleapis.com/auth/indexing'],
-    null
-);
 
 async function indexUrls() {
-    console.log('🔗 Starting Google Indexing Ping...');
+    console.log('🔗 Starting Google Indexing...');
     try {
-        await jwtClient.authorize();
-        console.log('✅ Google Authentication Successful!');
+        const auth = new google.auth.GoogleAuth({
+            keyFile: TEMP_KEY_PATH,
+            scopes: ['https://www.googleapis.com/auth/indexing'],
+        });
+        const jwtClient = await auth.getClient();
         const indexing = google.indexing('v3');
 
         if (!fs.existsSync(SITEMAP_PATH)) {
-            console.error('❌ sitemap.xml not found!');
+            console.error('⚠️ sitemap.xml missing. Skipping.');
             return;
         }
 
@@ -58,12 +51,9 @@ async function indexUrls() {
         const urlRegex = /<loc>(https:\/\/mapledevs\.ca\/.*?)<\/loc>/g;
         let match;
         const urls = [];
+        while ((match = urlRegex.exec(sitemap)) !== null) urls.push(match[1]);
 
-        while ((match = urlRegex.exec(sitemap)) !== null) {
-            urls.push(match[1]);
-        }
-
-        console.log(`🔍 Found ${urls.length} URLs for indexing.`);
+        console.log(`🔍 Pinging ${urls.length} URLs...`);
 
         for (const url of urls) {
             try {
@@ -74,11 +64,13 @@ async function indexUrls() {
                 });
                 console.log(`✅ Indexed: ${url}`);
             } catch (err) {
-                console.error(`❌ Failed to index ${url}:`, err.message);
+                console.log(`⚠️ Skip ${url}: ${err.message}`);
             }
         }
     } catch (err) {
-        console.error('❌ Authentication failed:', err.message);
+        console.error('⚠️ Google Auth Error:', err.message);
+    } finally {
+        if (fs.existsSync(TEMP_KEY_PATH)) fs.unlinkSync(TEMP_KEY_PATH);
     }
 }
 

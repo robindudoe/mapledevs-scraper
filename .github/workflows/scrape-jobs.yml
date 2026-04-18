@@ -24,6 +24,7 @@ jobs:
         run: npm install
 
       - name: Run Automation
+        continue-on-error: true
         env:
           NODE_OPTIONS: --openssl-legacy-provider
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
