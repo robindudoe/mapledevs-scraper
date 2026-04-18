@@ -45,6 +45,7 @@ jobs:
           # 1. Copy core website files
           cp index.html dist/ || true
           cp sitemap.xml dist/ || true
+          cp CNAME dist/ || true
           cp -r css dist/ || true
           cp -r assets dist/ || true
           cp -r js dist/ || true
