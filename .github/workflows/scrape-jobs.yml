@@ -66,6 +66,8 @@ jobs:
           cp sitemap.xml dist/ || true
           cp robots.txt dist/ || true
           cp og-image.png dist/ || true
+          cp favicon.png dist/ || true
+          cp favicon.ico dist/ || true
           cp CNAME dist/ || true
           cp -r css dist/ || true
           cp -r assets dist/ || true
