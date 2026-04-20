@@ -278,14 +278,7 @@ const STUDIOS = [
     city: "Montreal, Quebec",
     locationFilter: "Canada"
   },
-  {
-    name: "Blackbird Interactive",
-    platform: "greenhouse",
-    token: "blackbirdinteractive",
-    city: "Vancouver, BC",
-    locationFilter: "Canada"
-  }
-];
+
 
 const PROVINCE_MAP = {
   'ontario': 'ON', 'quebec': 'QC', 'british columbia': 'BC', 'alberta': 'AB',
@@ -315,7 +308,10 @@ const CANADA_KEYWORDS = [
 function normalizeLocation(raw, studioCity = '', filter = null) {
   if (!raw || raw.toLowerCase().includes('blank')) return studioCity || 'Canada';
 
-  const sLowerRaw = raw.toLowerCase().replace(/[\W_]+/g, ' ').trim(); // Clean for matching
+  // Strip prefixes like "Location: " or "Team: " which some ATS include in field values
+  let cleanRaw = raw.replace(/^(Location|Team|Department|Category):\s*/i, '').trim();
+  
+  const sLowerRaw = cleanRaw.toLowerCase().replace(/[\W_]+/g, ' ').trim(); // Clean for matching
   
   // 1. Whitelist: Must have one of these specifically or it's GONE.
   // We use word boundaries \b to ensure "on" doesn't match "Lyon" or "Washington"
@@ -429,11 +425,14 @@ async function scrapeGreenhouse(studio) {
 
     return jobs
       .map(job => {
+        const cleanTitle = (job.title || '').trim();
+        if (cleanTitle.length < 3) return null;
+
         const cleanLoc = normalizeLocation(job.location?.name || '', studio.city, studio.locationFilter);
         if (!cleanLoc) return null;
 
         return {
-          title: job.title || '',
+          title: cleanTitle,
           studio: studio.name,
           location: cleanLoc,
           type: guessJobType(job.title, job.content || ''),
@@ -469,11 +468,14 @@ async function scrapeLever(studio) {
 
     return jobs
       .map(job => {
+        const cleanTitle = (job.text || '').trim();
+        if (cleanTitle.length < 3) return null;
+
         const cleanLoc = normalizeLocation(job.categories?.location || '', studio.city, studio.locationFilter);
         if (!cleanLoc) return null;
 
         return {
-          title: job.text || '',
+          title: cleanTitle,
           studio: studio.name,
           location: cleanLoc,
           type: job.categories?.commitment || guessJobType(job.text, job.descriptionPlain || ''),
@@ -914,16 +916,27 @@ async function updateGoogleSheet(scrapedJobs) {
       return !existingJobs.has(key);
     });
 
-    // Find jobs to remove (in sheet but not in scraped data)
+    // Find jobs to remove (in sheet but not in scraped data OR from unknown studios)
     const scrapedKeys = new Set(scrapedJobs.map(j => (j.title + '|' + j.studio).toLowerCase()));
     const studioNames = new Set(STUDIOS.map(s => s.name.toLowerCase()));
+    
+    // Whitelist check: we ONLY keep jobs from studios in our STUDIOS array.
+    // This purges "ghost" or corrupted rows with invalid studio names (like "BC").
     const rowsToRemove = [];
 
     for (let i = rows.length - 1; i >= 1; i--) {
-      const studio = (rows[i][1] || '').toLowerCase();
-      const key = (rows[i][0] + '|' + rows[i][1]).toLowerCase();
-      // Only remove jobs from studios we actively scrape
-      if (studioNames.has(studio) && !scrapedKeys.has(key)) {
+      const rowStudio = (rows[i][1] || '').trim();
+      const rowTitle = (rows[i][0] || '').trim();
+      const rowStudioLower = rowStudio.toLowerCase();
+      const key = (rowTitle + '|' + rowStudio).toLowerCase();
+
+      const isWhitelistedStudio = studioNames.has(rowStudioLower);
+      const isStillActive = scrapedKeys.has(key);
+
+      // Remove if:
+      // 1. It's not a studio we know about (Whitelisted Studio Check)
+      // 2. OR it's a known studio but the job is gone from their site
+      if (!isWhitelistedStudio || !isStillActive) {
         rowsToRemove.push(i + 1); // 1-indexed for Sheets API
       }
     }

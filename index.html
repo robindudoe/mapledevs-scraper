@@ -320,32 +320,181 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
 
 
 /* ═══════ SPOTLIGHT ═══════ */
-.spotlight-s { background: var(--bg-body); padding: 2rem 1.5rem 0.5rem; transition: background var(--dur); }
+.spotlight-s { background: var(--bg-body); padding: 2rem 1.5rem 0.5rem; transition: background var(--dur); position: relative; overflow: hidden; }
+.spotlight-s::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); animation: scanline 3s ease-in-out infinite; }
+@keyframes scanline { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 .spotlight-in { max-width: var(--max-w); margin: 0 auto; }
 .spotlight-hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
-.spotlight-hdr h2 { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 400; }
+.spotlight-hdr h2 { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+.spotlight-hdr h2::before { content: '⭐'; font-size: 14px; animation: starPulse 2s ease-in-out infinite; }
+@keyframes starPulse { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.2) rotate(15deg); } }
 .spotlight-hdr .line { flex: 1; height: 1px; background: var(--gold); opacity: 0.2; }
 .spotlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
 .sc { 
   background: var(--bg-card); border: 1px solid var(--gold); border-radius: var(--r); 
-  padding: 1.25rem; cursor: pointer; transition: all 0.2s; position: relative; 
+  padding: 1.25rem; cursor: pointer; transition: all 0.3s var(--ease); position: relative; 
   display: flex; flex-direction: column; justify-content: space-between; min-height: 140px;
   box-shadow: 0 4px 12px var(--gold-glow);
+  animation: featuredSlideIn 0.6s var(--ease-spring) both;
 }
-.sc:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--gold-glow); }
-.sc::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold) 0%, transparent 100%); opacity: 0.05; border-radius: var(--r); }
+.sc:nth-child(1) { animation-delay: 0.1s; }
+.sc:nth-child(2) { animation-delay: 0.25s; }
+.sc:nth-child(3) { animation-delay: 0.4s; }
+@keyframes featuredSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.sc:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 32px var(--gold-glow), 0 0 20px rgba(232,201,74,0.15); }
+.sc::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold) 0%, transparent 100%); opacity: 0.05; border-radius: var(--r); transition: opacity 0.3s; }
+.sc:hover::before { opacity: 0.12; }
+.sc::after { content: ''; position: absolute; inset: -2px; border-radius: calc(var(--r) + 2px); background: linear-gradient(135deg, var(--gold), transparent 60%); opacity: 0; z-index: -1; transition: opacity 0.3s; }
+.sc:hover::after { opacity: 0.3; }
 .sc-title { font-size: 14px; font-weight: 700; color: var(--text-1); line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sc-studio { font-size: 11px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .sc-tags { display: flex; gap: 4px; margin-top: auto; padding-top: 10px; }
 .sc-loc { font-size: 10px; color: var(--text-2); background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px; }
-.sc-badge { position: absolute; top: -8px; right: 12px; background: var(--gold); color: #000; font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+.sc-badge { position: absolute; top: -8px; right: 12px; background: var(--gold); color: #000; font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; animation: badgeShine 3s ease-in-out infinite; }
+@keyframes badgeShine { 0%, 100% { box-shadow: 0 0 4px rgba(232,201,74,0.3); } 50% { box-shadow: 0 0 12px rgba(232,201,74,0.6), 0 0 24px rgba(232,201,74,0.2); } }
 
 @media (max-width: 900px) {
   .spotlight-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); overflow-x: auto; display: flex; padding-bottom: 1rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
   .sc { min-width: 280px; scroll-snap-align: start; }
   .spotlight-grid::-webkit-scrollbar { height: 4px; }
   .spotlight-grid::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+}
+
+/* ═══════ MICRO-INTERACTIONS ═══════ */
+/* XP Popup — floats up from click */
+.xp-popup {
+  position: fixed; pointer-events: none; z-index: 9999;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800;
+  color: var(--gold); text-shadow: 0 0 6px rgba(232,201,74,0.4);
+  animation: xpFloat 1s ease-out forwards;
+  white-space: nowrap;
+}
+@keyframes xpFloat {
+  0% { opacity: 1; transform: translateY(0) scale(0.8); }
+  20% { transform: translateY(-12px) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0.7); }
+}
+
+/* Combo Counter — top right HUD */
+.combo-display {
+  position: fixed; top: 80px; right: 16px; z-index: 300;
+  background: linear-gradient(135deg, rgba(232,201,74,0.12), rgba(200,55,45,0.08));
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(232,201,74,0.2); border-radius: var(--r);
+  padding: 8px 14px; font-family: 'Inter', sans-serif;
+  opacity: 0; transform: scale(0.8) translateX(20px);
+  transition: all 0.25s var(--ease-spring);
+  pointer-events: none;
+}
+.combo-display.show { opacity: 1; transform: scale(1) translateX(0); }
+.combo-count { font-size: 22px; font-weight: 800; color: var(--gold); line-height: 1; }
+.combo-label { font-size: 9px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; }
+.combo-bar { width: 100%; height: 2px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+.combo-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--maple)); border-radius: 2px; transition: width 0.3s; }
+
+/* Achievement Toast — subtle bottom-right */
+.achievement-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  z-index: 10000; background: var(--bg-card); border: 1px solid var(--gold);
+  border-radius: var(--r); padding: 14px 24px; text-align: center;
+  box-shadow: 0 8px 32px rgba(232,201,74,0.2), var(--shadow-m);
+  animation: achSlideUp 3s var(--ease-spring) forwards;
+  pointer-events: none; display: flex; align-items: center; gap: 12px;
+}
+@keyframes achSlideUp {
+  0% { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  10% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  80% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  100% { transform: translateX(-50%) translateY(-10px); opacity: 0; }
+}
+.ach-icon { font-size: 28px; flex-shrink: 0; }
+.ach-title { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--gold); }
+.ach-desc { font-size: 11px; color: var(--text-3); }
+
+/* Particle Burst */
+.particle {
+  position: fixed; pointer-events: none; z-index: 9998;
+  width: 5px; height: 5px; border-radius: 50%;
+  animation: particleFly 0.7s ease-out forwards;
+}
+@keyframes particleFly {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--px), var(--py)) scale(0); }
+}
+
+/* Save coin fly */
+.coin-fly {
+  position: fixed; pointer-events: none; z-index: 9998; font-size: 18px;
+  animation: coinCollect 0.5s var(--ease-spring) forwards;
+}
+@keyframes coinCollect {
+  0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(180deg); }
+  100% { opacity: 0; transform: translate(var(--tx), calc(var(--ty) - 15px)) scale(0.4) rotate(360deg); }
+}
+
+/* Save button bounce */
+.sv-btn.just-saved { animation: saveBounce 0.4s var(--ease-spring); }
+@keyframes saveBounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.35); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* Apply button confetti pulse */
+.apply-btn.applied, .btn-p.applied { animation: applyGlow 0.6s ease-out; }
+@keyframes applyGlow {
+  0% { box-shadow: 0 0 0 0 rgba(200,55,45,0.4); }
+  50% { box-shadow: 0 0 20px 8px rgba(200,55,45,0.15); }
+  100% { box-shadow: 0 2px 8px rgba(200,55,45,0.25); }
+}
+
+/* Card hover expand — show more info */
+.jc { cursor: pointer; transition: all 0.15s var(--ease); }
+.jc:active { transform: scale(0.985) !important; transition: transform 0.08s !important; }
+.jc:hover .jc-desc { -webkit-line-clamp: 3; }
+
+/* Hot job glow — recent posts */
+.jc.hot { border-color: rgba(200,55,45,0.2); }
+.jc.hot::after { content: ''; position: absolute; inset: -1px; border-radius: calc(var(--r) + 1px); background: var(--maple-gradient); opacity: 0.04; z-index: -1; animation: hotPulse 3s ease-in-out infinite; }
+@keyframes hotPulse { 0%, 100% { opacity: 0.03; } 50% { opacity: 0.08; } }
+
+/* Social proof indicator */
+.jc-social { font-size: 10px; color: var(--text-3); display: flex; align-items: center; gap: 4px; }
+.jc-social .dot { width: 5px; height: 5px; background: #34A853; border-radius: 50%; animation: liveDot 2s ease-in-out infinite; }
+@keyframes liveDot { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* Salary blur reveal */
+.salary-blur { filter: blur(4px); cursor: pointer; transition: filter 0.3s; user-select: none; position: relative; }
+.salary-blur::after { content: 'Click to reveal'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--maple); opacity: 0; transition: opacity 0.2s; }
+.salary-blur:hover::after { opacity: 1; }
+.salary-blur:hover { filter: blur(2px); }
+.salary-blur.revealed { filter: none !important; cursor: default; }
+.salary-blur.revealed::after { display: none; }
+
+/* Scroll-in animation for cards */
+.jc.scroll-in { opacity: 0; transform: translateY(16px); }
+.jc.scroll-visible { opacity: 1; transform: translateY(0); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); }
+
+/* XP Progress bar in header */
+.xp-bar-wrap {
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; z-index: 1;
+  background: transparent; pointer-events: none;
+}
+.xp-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--gold), var(--maple-light));
+  border-radius: 0 2px 2px 0; transition: width 0.5s var(--ease);
+  box-shadow: 0 0 6px rgba(232,201,74,0.3);
+}
+
+/* Streak badge */
+.streak-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 700; color: var(--maple);
+  background: var(--maple-glow); padding: 2px 8px; border-radius: var(--r-pill);
+  border: 1px solid rgba(200,55,45,0.1);
 }
 
 mark.hl { background: rgba(200,55,45,0.1); color: inherit; padding: 1px 2px; border-radius: 3px; }
@@ -707,8 +856,11 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
 
 <!-- ═══════ BOARD VIEW ═══════ -->
 <div id="board-view">
-  <section class="hero" aria-labelledby="hero-heading">
-    <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+  <section class="hero" aria-labelledby="hero-heading" style="position:relative;overflow:hidden;">
+    <video autoplay loop muted playsinline class="hero-video" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: -2;">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-bg" id="hero-bg" aria-hidden="true" style="opacity: 0.8 !important; z-index: -1;"></div>
     <div class="hero-inner">
       <div class="hero-tag"><span class="pulse"></span> 100% Verified Canadian Studios Only</div>
       <h1 id="hero-heading">Find Verified Game Dev Jobs in Canada —<br><em>No US Listings.</em></h1>
@@ -723,6 +875,14 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
         <div><span class="stat-n" id="s-studios" data-t="0">—</span><div class="stat-l">Studios</div></div>
         <div><span class="stat-n" id="s-cities" data-t="0">—</span><div class="stat-l">Cities</div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FEATURED SPOTLIGHT (TOP) ═══════ -->
+  <section class="spotlight-s" id="spotlight-s" style="display:none">
+    <div class="spotlight-in">
+      <div class="spotlight-hdr"><h2>Featured Opportunities</h2><div class="line"></div></div>
+      <div class="spotlight-grid" id="spotlight-grid"></div>
     </div>
   </section>
 
@@ -832,13 +992,17 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
     </div>
   </div>
 
-  <!-- ═══════ FEATURED SPOTLIGHT ═══════ -->
-  <section class="spotlight-s" id="spotlight-s" style="display:none">
-    <div class="spotlight-in">
-      <div class="spotlight-hdr"><h2>Featured Opportunities</h2><div class="line"></div></div>
-      <div class="spotlight-grid" id="spotlight-grid"></div>
-    </div>
-  </section>
+  <!-- Game UI: Combo Display -->
+  <div class="combo-display" id="combo-display">
+    <div class="combo-count" id="combo-count">0x</div>
+    <div class="combo-label">Combo</div>
+    <div class="combo-bar"><div class="combo-fill" id="combo-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- XP Progress Bar -->
+  <div class="xp-bar-wrap" id="xp-bar-wrap" style="position:fixed;bottom:0;left:0;right:0;height:3px;z-index:999;">
+    <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
+  </div>
 
   <main id="main-content" role="main">
     <div id="hub-highlights" class="hub-highlights"></div>
@@ -988,10 +1152,217 @@ sObs.observe(document.querySelector('.hero-stats'));
 /* ═══════ TOAST ═══════ */
 function toast(msg,ic='✓'){const c=document.getElementById('toast-c'),t=document.createElement('div');t.className='toast';t.innerHTML='<span>'+ic+'</span> '+esc(msg);c.appendChild(t);setTimeout(()=>{t.classList.add('exit');setTimeout(()=>t.remove(),200);},2600);}
 
+/* ═══════ GAME INTERACTIONS SYSTEM ═══════ */
+const gameState = {
+  xp: parseInt(localStorage.getItem('md_xp') || '0'),
+  level: parseInt(localStorage.getItem('md_level') || '1'),
+  combo: 0,
+  comboTimer: null,
+  jobsViewed: parseInt(localStorage.getItem('md_views') || '0'),
+  achievements: JSON.parse(localStorage.getItem('md_ach') || '[]'),
+  lastClickTime: 0,
+  streak: parseInt(localStorage.getItem('md_streak') || '0'),
+  lastVisitDate: localStorage.getItem('md_lastvisit') || '',
+  appliesTracked: parseInt(localStorage.getItem('md_applies') || '0')
+};
+
+/* Streak tracking */
+(function initStreak() {
+  const today = new Date().toDateString();
+  const last = gameState.lastVisitDate;
+  if (last === today) return; /* Same day */
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (last === yesterday) {
+    gameState.streak++;
+    if (gameState.streak === 3) checkAchievement('streak3', '🔥', '3-Day Streak!', 'You visited 3 days in a row!');
+    if (gameState.streak === 7) checkAchievement('streak7', '⚡', 'Week Warrior!', '7-day streak! Dedicated searcher.');
+  } else if (last && last !== today) {
+    gameState.streak = 1;
+  } else {
+    gameState.streak = 1;
+  }
+  gameState.lastVisitDate = today;
+  localStorage.setItem('md_streak', gameState.streak);
+  localStorage.setItem('md_lastvisit', today);
+})();
+
+function updateXPBar() {
+  const xpForNext = gameState.level * 50;
+  const pct = Math.min((gameState.xp / xpForNext) * 100, 100);
+  const bar = document.getElementById('xp-bar-fill');
+  if (bar) bar.style.width = pct + '%';
+}
+setTimeout(updateXPBar, 500);
+
+function addXP(amount, x, y) {
+  gameState.xp += amount;
+  const xpForNext = gameState.level * 50;
+  if (gameState.xp >= xpForNext) {
+    gameState.xp -= xpForNext;
+    gameState.level++;
+    showAchievement('🎮', 'Level ' + gameState.level + '!', 'Keep exploring to level up again');
+  }
+  localStorage.setItem('md_xp', gameState.xp);
+  localStorage.setItem('md_level', gameState.level);
+  showXPPopup(amount, x, y);
+  updateXPBar();
+}
+
+function showXPPopup(amount, x, y) {
+  const el = document.createElement('div');
+  el.className = 'xp-popup';
+  el.textContent = '+' + amount + ' XP';
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1000);
+}
+
+function incrementCombo() {
+  gameState.combo++;
+  clearTimeout(gameState.comboTimer);
+  const cd = document.getElementById('combo-display');
+  const cc = document.getElementById('combo-count');
+  const cf = document.getElementById('combo-fill');
+  if (gameState.combo >= 2) {
+    cd.classList.add('show');
+    cc.textContent = gameState.combo + 'x';
+    cf.style.width = Math.min(gameState.combo * 15, 100) + '%';
+    if (gameState.combo === 5) checkAchievement('combo5', '🔥', '5x Combo!', 'Browse jobs quickly to build combos');
+    if (gameState.combo === 10) checkAchievement('combo10', '⚡', '10x COMBO!', 'Unstoppable job hunter!');
+  }
+  gameState.comboTimer = setTimeout(() => {
+    gameState.combo = 0;
+    cd.classList.remove('show');
+  }, 2500);
+}
+
+function spawnParticles(x, y, count, colors) {
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = x + 'px';
+    p.style.top = y + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5);
+    const dist = 25 + Math.random() * 40;
+    p.style.setProperty('--px', Math.cos(angle) * dist + 'px');
+    p.style.setProperty('--py', Math.sin(angle) * dist + 'px');
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 700);
+  }
+}
+
+function showAchievement(icon, title, desc) {
+  const el = document.createElement('div');
+  el.className = 'achievement-toast';
+  el.innerHTML = '<div class="ach-icon">' + icon + '</div><div><div class="ach-title">' + title + '</div><div class="ach-desc">' + desc + '</div></div>';
+  document.body.appendChild(el);
+  spawnParticles(window.innerWidth / 2, window.innerHeight - 60, 12, ['#E8C94A', '#C8372D', '#FFD700']);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function checkAchievement(id, icon, title, desc) {
+  if (gameState.achievements.includes(id)) return;
+  gameState.achievements.push(id);
+  localStorage.setItem('md_ach', JSON.stringify(gameState.achievements));
+  showAchievement(icon, title, desc);
+}
+
+function coinFlyAnimation(fromX, fromY) {
+  const badge = document.getElementById('sv-badge');
+  const rect = badge.getBoundingClientRect();
+  const coin = document.createElement('div');
+  coin.className = 'coin-fly';
+  coin.textContent = '🍁';
+  coin.style.left = fromX + 'px';
+  coin.style.top = fromY + 'px';
+  coin.style.setProperty('--tx', (rect.left - fromX) + 'px');
+  coin.style.setProperty('--ty', (rect.top - fromY) + 'px');
+  document.body.appendChild(coin);
+  setTimeout(() => coin.remove(), 500);
+}
+
+function gameClickFeedback(e) {
+  const now = Date.now();
+  if (now - gameState.lastClickTime < 2000) incrementCombo();
+  gameState.lastClickTime = now;
+  addXP(5 + gameState.combo * 2, e.clientX, e.clientY);
+}
+
+/* Apply button tracking */
+function trackApply(e) {
+  gameState.appliesTracked++;
+  localStorage.setItem('md_applies', gameState.appliesTracked);
+  /* Confetti burst on apply */
+  const btn = e.currentTarget || e.target;
+  btn.classList.add('applied');
+  spawnParticles(e.clientX, e.clientY, 10, ['#C8372D', '#E8564C', '#E8C94A', '#34A853']);
+  addXP(25, e.clientX, e.clientY - 20);
+  setTimeout(() => btn.classList.remove('applied'), 600);
+  if (gameState.appliesTracked === 1) checkAchievement('firstApply', '🚀', 'First Application!', 'You applied to your first job!');
+  if (gameState.appliesTracked === 5) checkAchievement('apply5', '🎯', 'Go-Getter', 'Applied to 5 jobs!');
+}
+
+/* Salary reveal */
+function revealSalary(el, e) {
+  if (e) e.stopPropagation();
+  el.classList.add('revealed');
+  spawnParticles(el.getBoundingClientRect().left + el.offsetWidth/2, el.getBoundingClientRect().top, 6, ['#E8C94A', '#C8372D']);
+  addXP(3, el.getBoundingClientRect().left + el.offsetWidth/2, el.getBoundingClientRect().top - 10);
+}
+
+/* Social proof removed per user request */
+
+/* Scroll-in observer for cards */
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) {
+      en.target.classList.add('scroll-visible');
+      scrollObserver.unobserve(en.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+function observeCards() {
+  document.querySelectorAll('.jc.scroll-in').forEach(el => scrollObserver.observe(el));
+}
+
+/* Hot job detection */
+function isHot(j) {
+  if (!j.posted) return false;
+  const dt = new Date(j.posted);
+  return !isNaN(dt) && (Date.now() - dt) / 864e5 <= 2;
+}
+
 /* ═══════ SAVED ═══════ */
 function jKey(j){return(j.title+'|'+j.studio).toLowerCase();}
 function isSaved(j){return saved.includes(jKey(j));}
-function toggleSave(e,idx){e.stopPropagation();const j=ALL[idx],k=jKey(j),i=saved.indexOf(k);if(i>-1){saved.splice(i,1);toast('Removed','🗑️');}else{saved.push(k);toast('Job saved!','🍁');}localStorage.setItem('md_saved',JSON.stringify(saved));updBadge();render();}
+function toggleSave(e,idx){
+  e.stopPropagation();
+  const j=ALL[idx],k=jKey(j),i=saved.indexOf(k);
+  const btn = e.currentTarget;
+  if(i>-1){
+    saved.splice(i,1);
+    toast('Removed','🗑️');
+  } else {
+    saved.push(k);
+    toast('Job saved!','🍁');
+    /* Bounce + coin fly + particles */
+    btn.classList.add('just-saved');
+    setTimeout(() => btn.classList.remove('just-saved'), 400);
+    coinFlyAnimation(e.clientX, e.clientY);
+    spawnParticles(e.clientX, e.clientY, 8, ['#C8372D', '#E8564C', '#E8C94A']);
+    addXP(15 + gameState.combo * 2, e.clientX, e.clientY - 30);
+    incrementCombo();
+    checkAchievement('firstSave', '🍁', 'First Save!', 'Save jobs you like by clicking the heart');
+    if(saved.length >= 5) checkAchievement('save5', '📚', 'Collector', 'You saved 5 jobs!');
+    if(saved.length >= 10) checkAchievement('save10', '🏆', 'Hoarder', 'Saved 10 jobs! Impressive!');
+  }
+  localStorage.setItem('md_saved',JSON.stringify(saved));
+  updBadge();
+  render();
+}
 function updBadge(){const b=document.getElementById('sv-badge');b.textContent=saved.length;b.classList.toggle('show',saved.length>0);}
 updBadge();
 
@@ -1116,23 +1487,26 @@ function render(){
   // Randomize Featured for fair priority
   shuffle(featured);
   
-  // Spotlight: Top 3 randomized featured
+  // Spotlight: All featured jobs
+  let spotJobs = [];
   if(featured.length > 0 && !document.getElementById('search').value && !document.getElementById('f-city').value){
     spotlightEl.style.display='block';
-    const spotJobs = featured.slice(0, 3);
+    spotJobs = featured;
     spotlightGrid.innerHTML = spotJobs.map(j => spotlightHTML(j, ALL.indexOf(j))).join('');
   } else {
     spotlightEl.style.display='none';
   }
 
-  // Primary list: Combine (with featured still at top of list but full set)
-  const combined = [...featured, ...standard];
+  // Primary list: Combine (exclude duplicates shown in spotlight)
+  const remainingFeatured = featured.filter(j => !spotJobs.includes(j));
+  const combined = [...remainingFeatured, ...standard];
   const vis = combined.slice(0, dispCount);
   
   list.className="job-list";
   list.innerHTML=vis.map((j,i)=>cardHTML(j,ALL.indexOf(j),i)).join("");
   
-  updateHubHighlights();
+  /* Observe cards for scroll-in animation */
+  requestAnimationFrame(observeCards);
   
   if(combined.length>dispCount) {
     list.innerHTML+='<div class="load-wrap"><button class="load-btn" onclick="loadMore()">Show more ('+(combined.length-dispCount)+' remaining)</button></div>';
@@ -1140,8 +1514,8 @@ function render(){
 }
 
 function spotlightHTML(j, ri){
-  return `<div class="sc" onclick="openDet(${ri})">
-    <span class="sc-badge">Featured</span>
+  return `<div class="sc" onclick="openDet(${ri},event)">
+    <span class="sc-badge">★ Featured</span>
     <div class="sc-title">${esc(j.title)}</div>
     <div class="sc-studio">${esc(j.studio)}</div>
     <div class="sc-tags">
@@ -1179,9 +1553,11 @@ function hl(text,q){if(!q)return esc(text);const e=esc(text),qe=esc(q);const rx=
 /* ═══════ CARD ═══════ */
 function cardHTML(j,ri,ai){
   const q=document.getElementById('search').value.toLowerCase(),sv=isSaved(j),dl=Math.min(ai*25,250);
-  const badges=(j.featured?'<span class="b-feat">★ Featured</span>':'')+(isNew(j.posted)?'<span class="b-new">New</span>':'');
+  const hot = isHot(j);
+  const xpLabel = '+5 XP';
+  const badges=(j.featured?'<span class="b-feat">★ Featured</span>':'')+(isNew(j.posted)?'<span class="b-new">New</span>':'')+(hot && !j.featured?'<span class="b-new" style="background:rgba(255,100,35,0.1);color:#FF6423;border-color:rgba(255,100,35,0.2)">🔥 Hot</span>':'');
   
-  return `<div class="jc${j.featured?' feat':''}" style="animation-delay:${dl}ms" onclick="openDet(${ri})" tabindex="0" role="article" onkeydown="if(event.key==='Enter')openDet(${ri})" aria-label="${esc(j.title)} at ${esc(j.studio)}">
+  return `<div class="jc${j.featured?' feat':''}${hot?' hot':''} scroll-in" style="animation-delay:${dl}ms" onclick="openDet(${ri},event)" tabindex="0" role="article" onkeydown="if(event.key==='Enter')openDet(${ri})" aria-label="${esc(j.title)} at ${esc(j.studio)}">
     <div class="jc-top">
       <div class="jc-title-grp">
         ${badges ? `<div class="jc-badges">${badges}</div>` : ''}
@@ -1209,10 +1585,12 @@ function cardHTML(j,ri,ai){
     ${j.desc ? `<div class="jc-desc">${hl(j.desc,q)}</div>` : ''}
     
     <div class="jc-foot">
-      <span class="jc-date">${j.posted ? 'Posted '+relDate(j.posted) : ''}</span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="jc-date">${j.posted ? 'Posted '+relDate(j.posted) : ''}</span>
+      </div>
       <div style="display:flex; align-items:center; gap:12px;">
-        <span class="jc-cta">Details</span>
-        ${j.apply ? `<a href="${esc(j.apply)}" target="_blank" rel="noopener" class="btn-p" style="padding:6px 16px; font-size:12px; border-radius:100px; box-shadow:none; text-decoration:none;" onclick="event.stopPropagation()">Apply ↗</a>` : ''}
+        <span class="jc-cta">${xpLabel}</span>
+        ${j.apply ? `<a href="${esc(j.apply)}" target="_blank" rel="noopener" class="btn-p" style="padding:6px 16px; font-size:12px; border-radius:100px; box-shadow:none; text-decoration:none;" onclick="trackApply(event);event.stopPropagation()">Apply ↗</a>` : ''}
       </div>
     </div>
   </div>`;
@@ -1231,12 +1609,19 @@ function shareJob(idx){const url=location.origin+location.pathname+'#job-'+idx;n
 function togSaveDet(e,idx){e.stopPropagation();const j=ALL[idx],k=jKey(j),i=saved.indexOf(k);if(i>-1){saved.splice(i,1);toast('Removed','🗑️');}else{saved.push(k);toast('Saved!','🍁');}localStorage.setItem('md_saved',JSON.stringify(saved));updBadge();const b=e.currentTarget,s=isSaved(j);b.classList.toggle('saved',s);b.innerHTML=s?'♥ Saved':'♡ Save';}
 
 function getSimilar(j,idx){return ALL.filter((o,i)=>i!==idx&&(o.studio===j.studio||o.location===j.location||o.type===j.type)).slice(0,3);}
-function openDet(idx){history.pushState({idx},"","#job-"+idx);const j=ALL[idx];hideAll();document.getElementById("detail-view").classList.add("on");
+function openDet(idx,e){history.pushState({idx},"","#job-"+idx);const j=ALL[idx];hideAll();document.getElementById("detail-view").classList.add("on");
 document.getElementById("d-crumbs").innerHTML='<button onclick="showBoard()">Jobs</button>'+(j.location?'<span class="sep">›</span><button onclick="filterCity(\''+esc(j.location)+'\')">'+esc(j.location)+'</button>':'')+'<span class="sep">›</span><span class="cur">'+esc(j.title)+'</span>';
 document.getElementById("d-content").innerHTML=detailHTML(j,idx);
 const sim=getSimilar(j,idx),ss=document.getElementById("sim-sec"),sl=document.getElementById("sim-jobs");
 if(sim.length){ss.style.display="block";sl.innerHTML=sim.map((s,i)=>cardHTML(s,ALL.indexOf(s),i)).join("");}else ss.style.display="none";
 window.scrollTo(0,0);
+/* Game: XP for viewing a job */
+gameState.jobsViewed++;
+localStorage.setItem('md_views', gameState.jobsViewed);
+if(e) gameClickFeedback(e);
+if(gameState.jobsViewed === 1) checkAchievement('firstView', '👀', 'First Look!', 'Click jobs to earn XP and level up');
+if(gameState.jobsViewed === 10) checkAchievement('view10', '🔍', 'Explorer', 'Viewed 10 jobs — keep going!');
+if(gameState.jobsViewed === 25) checkAchievement('view25', '🗺️', 'Adventurer', 'Viewed 25 jobs! Try browsing fast for combos');
 trackView(j.title + ' | MapleDevs');}
 
 function filterCity(c){showBoard();document.getElementById('f-city').value=c;render();setTimeout(()=>document.getElementById('main-content').scrollIntoView({behavior:'smooth'}),100);}
@@ -1266,6 +1651,7 @@ function openStudioProfile(n){
 function updateHubHighlights(){
   const ci = document.getElementById('f-city').value;
   const el = document.getElementById('hub-highlights');
+  if(!el) return;
   if(!ci) { el.style.display = 'none'; return; }
   
   const h = {
@@ -1296,7 +1682,6 @@ function updateHubHighlights(){
   }
 }
 
-
 /* ═══════ SAVED VIEW ═══════ */
 function showSaved(){history.pushState({v:'saved'},"","#saved");hideAll();document.getElementById("saved-view").classList.add("on");clearNav();document.getElementById("nav-saved").classList.add("active");renderSaved();window.scrollTo(0,0);trackView('Saved Jobs | MapleDevs');}
 
@@ -1309,7 +1694,6 @@ function closeAllViews(){showBoard();}
 function showBoard(){history.pushState(null,"",location.pathname);document.getElementById("board-view").classList.remove("off");document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));clearNav();window.scrollTo(0,0);trackView();}
 
 function showAbout(){history.pushState({v:'about'},"","#about");hideAll();document.getElementById("about-view").classList.add("on");clearNav();document.getElementById("nav-about").classList.add("active");window.scrollTo(0,0);trackView('About | MapleDevs');}
-
 
 function trackView(title) {
   if (typeof gtag === 'function') {
@@ -1330,7 +1714,6 @@ window.addEventListener("popstate",function(e){
   else showBoard();
   trackView();
 });
-
 
 /* ═══════ POST A JOB MODAL ═══════ */
 function openPostModal(){document.getElementById('post-modal').classList.add('on');document.body.style.overflow='hidden';}
@@ -1376,10 +1759,75 @@ document.addEventListener('keydown',function(e){if(e.key==='/'&&!e.ctrlKey&&!e.m
 /* ═══════ BROWSE BUTTON ═══════ */
 document.getElementById('browse-btn').addEventListener('click',function(e){e.preventDefault();document.getElementById('search').focus();document.getElementById('main-content').scrollIntoView({behavior:'smooth'});});
 
+/* ═══════ GAME VFX BACKGROUND ═══════ */
+(function(){
+  const canvas = document.createElement('canvas');
+  canvas.id = 'vfx-canvas';
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-100;opacity:0.3;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+  const particles = [];
+  const colors = ['#E8C94A', '#C8372D', '#34A853', '#4285F4'];
+  const shapes = ['circle', 'square', 'triangle', 'cross'];
+  
+  // Adaptive particle count for mobile smoothness
+  const numParticles = w < 768 ? 15 : 35;
+  
+  for(let i=0; i<numParticles; i++){
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      size: Math.random() * 4 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      shape: shapes[Math.floor(Math.random() * shapes.length)],
+      angle: Math.random() * Math.PI * 2,
+      vAngle: (Math.random() - 0.5) * 0.02
+    });
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for(let i=0; i<particles.length; i++) {
+      let p = particles[i];
+      p.x += p.vx; p.y += p.vy; p.angle += p.vAngle;
+      if(p.x < -10) p.x = w + 10; if(p.x > w + 10) p.x = -10;
+      if(p.y < -10) p.y = h + 10; if(p.y > h + 10) p.y = -10;
+      
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      if(p.shape === 'circle') {
+        ctx.arc(0, 0, p.size, 0, Math.PI*2);
+        ctx.fill();
+      } else if (p.shape === 'square') {
+        ctx.fillRect(-p.size, -p.size, p.size*2, p.size*2);
+      } else if (p.shape === 'triangle') {
+        ctx.moveTo(0, -p.size);
+        ctx.lineTo(p.size, p.size);
+        ctx.lineTo(-p.size, p.size);
+        ctx.fill();
+      } else if (p.shape === 'cross') {
+        ctx.fillRect(-p.size*1.5, -p.size/3, p.size*3, p.size/1.5);
+        ctx.fillRect(-p.size/3, -p.size*1.5, p.size/1.5, p.size*3);
+      }
+      ctx.restore();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  });
+})();
+
 /* ═══════ INIT ═══════ */
 function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}
 loadJobs().then(() => { handleHash(); trackView(); });
-
 </script>
 </body>
 </html>
