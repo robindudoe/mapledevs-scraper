@@ -7,12 +7,23 @@ require('dotenv').config();
 const STATE_PATH = path.join(__dirname, 'state.json');
 
 /**
- * Updates the global state file for the dashboard
+ * Update the global swarm state
  */
-async function updateState(updates) {
-    const state = await fs.readJson(STATE_PATH);
-    const newState = { ...state, ...updates };
-    await fs.writeJson(STATE_PATH, newState, { spaces: 2 });
+async function updateState(newState) {
+    const statePath = path.join(__dirname, 'state.json');
+    const stateJsPath = path.join(__dirname, 'state.js');
+    
+    let currentState = {};
+    if (await fs.pathExists(statePath)) {
+        currentState = await fs.readJson(statePath);
+    }
+    
+    const mergedState = { ...currentState, ...newState };
+    await fs.writeJson(statePath, mergedState, { spaces: 2 });
+    
+    // Also write as a JS file for local browser compatibility (bypasses CORS)
+    const jsContent = `window.SWARM_STATE = ${JSON.stringify(mergedState, null, 2)};`;
+    await fs.writeFile(stateJsPath, jsContent);
 }
 
 /**

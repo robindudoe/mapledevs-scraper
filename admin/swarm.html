@@ -246,7 +246,7 @@
             .stats-grid { grid-template-columns: 1fr; }
             .grid { grid-template-columns: 1fr; }
         }
-    </style>
+    <script src="../swarm/state.js"></script>
 </head>
 <body>
     <div class="container">
@@ -374,10 +374,20 @@
     <script>
         async function updateDashboard() {
             try {
-                const response = await fetch('../swarm/state.json?t=' + Date.now());
-                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-                
-                const state = await response.json();
+                let state;
+                try {
+                    const response = await fetch('../swarm/state.json?t=' + Date.now());
+                    if (response.ok) {
+                        state = await response.json();
+                    }
+                } catch (e) {
+                    console.warn('JSON fetch failed, falling back to JS state');
+                }
+
+                // Fallback to JS-loaded state if fetch failed
+                if (!state) state = window.SWARM_STATE;
+                if (!state) throw new Error("No state available");
+
                 document.getElementById('system-status-text').innerText = 'System Operational';
                 document.getElementById('system-status-dot').style.background = 'var(--success)';
                 
