@@ -1119,11 +1119,13 @@ async function updatePipelineSheets(sheets, sheetId, scrapedJobs) {
     if (normalizeKey(reviewEntry.object.status) !== 'approved') continue;
     const jobId = reviewEntry.object.job_id;
     const sourceRecord = records.find(r => r.job_id === jobId) || reviewEntry.object;
+    const existingLiveRecord = liveIndex.get(jobId)?.object;
+    const isFeatured = isYes(reviewEntry.object.featured) || isYes(existingLiveRecord?.featured);
     const liveRecord = {
-      ...mergeOwnerControlledFields(sourceRecord, liveIndex.get(jobId)?.object),
+      ...mergeOwnerControlledFields(sourceRecord, existingLiveRecord),
       ...reviewEntry.object,
       status: 'approved',
-      link_status: scrapedIds.has(jobId) ? 'active' : (reviewEntry.object.link_status || 'active'),
+      link_status: isFeatured || scrapedIds.has(jobId) ? 'active' : (reviewEntry.object.link_status || 'active'),
       last_seen_at: scrapedIds.has(jobId) ? now : (reviewEntry.object.last_seen_at || now),
       last_verified_at: now,
     };
