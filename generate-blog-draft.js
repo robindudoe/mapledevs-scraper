@@ -1,21 +1,18 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const https = require('https');
 require('dotenv').config();
 
 const DRAFTS_DIR = path.join(__dirname, 'blog-drafts');
 
 /**
- * AI Draft Generator
+ * AI Draft Generator (Direct API version)
  */
 async function generateDraft(topic) {
     console.log(`[AI Draft] Researching topic: ${topic}...`);
     
     const apiKey = process.env.GOOGLE_API_KEY;
     if (!apiKey) throw new Error('MISSING_API_KEY');
-    
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const prompt = `
         You are an expert SEO Content Engineer for MapleDevs, Canada's #1 game industry job board.
@@ -42,27 +39,53 @@ async function generateDraft(topic) {
         }
     `;
 
-    try {
-        const result = await model.generateContent(prompt);
-        const text = result.response.text();
-        
-        // Extract JSON if model wraps it in markdown
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('AI_FAILED_TO_GENERATE_JSON');
-        
-        const draft = JSON.parse(jsonMatch[0]);
-        draft.created_at = new Date().toISOString();
-        
-        const filename = `${draft.slug}.json`;
-        await fs.writeJson(path.join(DRAFTS_DIR, filename), draft, { spaces: 2 });
-        
-        console.log(`[AI Draft] SUCCESS: Draft saved to blog-drafts/${filename}`);
-        console.log(`[AI Draft] Status: DRAFT. Please review and change status to 'approved' before publishing.`);
-        
-    } catch (error) {
-        console.error('[AI Draft Error]', error.message);
+    const data = JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+    });
+
+    const options = {
+        hostname: 'generativelanguage.googleapis.com',
+        path: `/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length
+        }
+    };
+
+    const req = https.request(options, (res) => {
+        let body = '';
+        res.on('data', (d) => body += d);
+        res.on('end', async () => {
+            try {
+                const response = JSON.parse(body);
+                if (response.error) throw new Error(response.error.message);
+                
+                const text = response.candidates[0].content.parts[0].text;
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) throw new Error('AI_FAILED_TO_GENERATE_JSON');
+                
+                const draft = JSON.parse(jsonMatch[0]);
+                draft.created_at = new Date().toISOString();
+                
+                const filename = `${draft.slug}.json`;
+                await fs.writeJson(path.join(DRAFTS_DIR, filename), draft, { spaces: 2 });
+                
+                console.log(`[AI Draft] SUCCESS: Draft saved to blog-drafts/${filename}`);
+            } catch (err) {
+                console.error('[AI Draft Error]', err.message);
+                process.exit(1);
+            }
+        });
+    });
+
+    req.on('error', (error) => {
+        console.error('[Network Error]', error);
         process.exit(1);
-    }
+    });
+
+    req.write(data);
+    req.end();
 }
 
 const args = process.argv.slice(2);

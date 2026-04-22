@@ -57,9 +57,9 @@ async function publish(draftFilename) {
     // 2. Build Sources HTML
     let sourcesHtml = '';
     if (draft.sources && draft.sources.length > 0) {
-        sourcesHtml = `<section class="sources"><h3>Verified Sources</h3><ul>`;
+        sourcesHtml = `<section class="sources"><h3>Sources</h3><ul>`;
         for (const s of draft.sources) {
-            sourcesHtml += `<li><a href="${s.url}" target="_blank">${s.title}</a> — ${s.used_for}</li>`;
+            sourcesHtml += `<li><a href="${s.url}" target="_blank">${s.title}</a>: ${s.used_for}</li>`;
         }
         sourcesHtml += `</ul></section>`;
     }
