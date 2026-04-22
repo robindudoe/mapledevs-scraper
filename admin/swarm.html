@@ -374,7 +374,7 @@
     <script>
         async function updateDashboard() {
             try {
-                const response = await fetch('../swarm/state.json');
+                const response = await fetch('../swarm/state.json?t=' + Date.now());
                 const state = await response.json();
                 
                 // Update Stats
