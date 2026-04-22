@@ -82,32 +82,38 @@ async function askAI(agentName, prompt, model = 'gemini-2.5-flash') {
  */
 async function getSheets() {
     const { google } = require('googleapis');
-    const rawCreds = process.env.GOOGLE_INDEXING_KEY || process.env.GOOGLE_PRIVATE_KEY;
-    const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+    const credsPath = path.join(__dirname, '../credentials.json');
+    
+    let auth;
+    if (await fs.pathExists(credsPath)) {
+        auth = new google.auth.GoogleAuth({
+            keyFile: credsPath,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+    } else {
+        const rawCreds = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || process.env.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_INDEXING_KEY;
+        const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 
-    if (!rawCreds) throw new Error('MISSING_GOOGLE_CREDS: Please set GOOGLE_PRIVATE_KEY.');
+        if (!rawCreds) throw new Error('MISSING_GOOGLE_CREDS: Please set GOOGLE_SERVICE_ACCOUNT_JSON.');
 
-    let credentials;
-    try {
-        credentials = JSON.parse(rawCreds.trim());
-    } catch (e) {
+        let credentials;
         try {
-            credentials = JSON.parse(Buffer.from(rawCreds.trim(), 'base64').toString('utf-8'));
-        } catch (e2) {
+            credentials = JSON.parse(rawCreds.trim());
+        } catch (e) {
             const privateKey = rawCreds.includes('BEGIN PRIVATE KEY')
                 ? rawCreds.replace(/\\n/g, '\n')
-                : Buffer.from(rawCreds.trim(), 'base64').toString('utf-8');
+                : rawCreds;
             credentials = {
                 client_email: clientEmail,
                 private_key: privateKey,
             };
         }
-    }
 
-    const auth = new google.auth.GoogleAuth({
-        credentials,
-        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
+        auth = new google.auth.GoogleAuth({
+            credentials,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+    }
 
     return google.sheets({ version: 'v4', auth });
 }
