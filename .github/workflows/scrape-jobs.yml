@@ -79,7 +79,7 @@ jobs:
           
           # 2. Copy all SEO Hub folders (folders created by the build-seo script)
           # This looks for folders like /vancouver, /art, /programming and copies them
-          for dir in vancouver toronto montreal ottawa quebec-city edmonton calgary victoria london halifax kitchener burnaby programming art design producer qa audio ui-ux junior remote internship about studios saved; do
+          for dir in vancouver toronto montreal ottawa quebec-city edmonton calgary victoria london halifax kitchener burnaby programming art design producer qa audio ui-ux junior remote internship about studios saved blog admin; do
             if [ -d "$dir" ]; then
               cp -r "$dir" dist/
             fi
