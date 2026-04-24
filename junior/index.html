@@ -1434,7 +1434,7 @@ select {
 }
 .sv-btn { border-radius: var(--r-s); }
 
-.spotlight-s { display: none !important; }
+.spotlight-s { display: none; }
 .cta-section {
   background: #111820;
   color: #fff;
@@ -1698,10 +1698,26 @@ select {
   </section>
 
   <!-- ═══════ FEATURED SPOTLIGHT (TOP) ═══════ -->
-  <section class="spotlight-s" id="spotlight-s" style="display:none">
+  <section class="spotlight-s" id="spotlight-s" style="display:block">
     <div class="spotlight-in">
       <div class="spotlight-hdr"><h2>Featured Opportunities</h2><div class="line"></div></div>
-      <div class="spotlight-grid" id="spotlight-grid"></div>
+      <div class="spotlight-grid" id="spotlight-grid"><div class="sc" onclick="window.location.href='/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/'">
+        <span class="sc-badge">★ Featured</span>
+        <div class="sc-title">Game Writer (Intern)</div>
+        <div class="sc-studio">Red Diamond</div>
+        <div class="sc-tags">
+            <span class="sc-loc">Halifax, Nova Scotia</span>
+            <span class="sc-loc">On-site</span>
+        </div>
+    </div><div class="sc" onclick="window.location.href='/jobs/social-media-manager-red-diamond-halifax-nova-scotia/'">
+        <span class="sc-badge">★ Featured</span>
+        <div class="sc-title">Social Media Manager</div>
+        <div class="sc-studio">Red Diamond</div>
+        <div class="sc-tags">
+            <span class="sc-loc">Halifax, Nova Scotia</span>
+            <span class="sc-loc">On-site</span>
+        </div>
+    </div></div>
     </div>
   </section>
 
@@ -1854,35 +1870,7 @@ select {
 
   <main id="main-content" role="main">
     <div id="hub-highlights" class="hub-highlights"></div>
-    <div id="job-list" class="job-list"><article class="jc feat" style="margin-bottom:1rem;">
-        <div class="jc-main">
-            <div class="jc-top">
-                <div class="jc-title-grp"><div class="jc-badges"><span class="b-feat">Featured</span></div><h2 class="jc-title" style="margin:0;"><a href="/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Game Writer (Intern)</a></h2></div>
-            </div>
-            <div class="jc-studio">Red Diamond</div>
-            <div class="jc-meta"><div class="meta-item "><span class="meta-k">Location</span><span class="meta-v">Halifax, Nova Scotia</span></div><div class="meta-item "><span class="meta-k">Work mode</span><span class="meta-v">On-site</span></div><div class="meta-item salary"><span class="meta-k">Salary</span><span class="meta-v">Minimum Wage</span></div></div>
-            <div class="jc-pills"><span class="pill p-type">Contract</span><span class="pill p-stu">Student-friendly</span></div><p class="jc-desc">Red Diamond is seeking interns to work as writers on an upcoming dark fantasy mobile game and tabletop RPG. In this role, you will contribute to lore, world-building, creatures, characters, and other elements within an...</p>
-        </div>
-        <aside class="jc-side">
-            <div class="jc-side-top"><span class="jc-salary">Minimum Wage</span></div>
-            <div class="jc-foot-main"><span class="jc-verified">Verified listing</span><span class="jc-date">Posted 2026-04-14</span></div>
-            <div class="jc-cta-row"><a class="btn-s" href="/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/">Details</a></div>
-        </aside>
-    </article><article class="jc feat" style="margin-bottom:1rem;">
-        <div class="jc-main">
-            <div class="jc-top">
-                <div class="jc-title-grp"><div class="jc-badges"><span class="b-feat">Featured</span></div><h2 class="jc-title" style="margin:0;"><a href="/jobs/social-media-manager-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Social Media Manager</a></h2></div>
-            </div>
-            <div class="jc-studio">Red Diamond</div>
-            <div class="jc-meta"><div class="meta-item "><span class="meta-k">Location</span><span class="meta-v">Halifax, Nova Scotia</span></div><div class="meta-item "><span class="meta-k">Work mode</span><span class="meta-v">On-site</span></div><div class="meta-item salary"><span class="meta-k">Salary</span><span class="meta-v">$37,000 – $50,000</span></div></div>
-            <div class="jc-pills"><span class="pill p-type">Full-time</span><span class="pill p-stu">Student-friendly</span></div><p class="jc-desc">Red Diamond is seeking a Social Media Manager to execute a social media strategy for its upcoming dark fantasy mobile game. In this role, you will be responsible for creating and managing engaging social media content t...</p>
-        </div>
-        <aside class="jc-side">
-            <div class="jc-side-top"><span class="jc-salary">$37,000 – $50,000</span></div>
-            <div class="jc-foot-main"><span class="jc-verified">Verified listing</span><span class="jc-date">Posted 2026-04-14</span></div>
-            <div class="jc-cta-row"><a class="btn-s" href="/jobs/social-media-manager-red-diamond-halifax-nova-scotia/">Details</a></div>
-        </aside>
-    </article><article class="jc " style="margin-bottom:1rem;">
+    <div id="job-list" class="job-list"><article class="jc " style="margin-bottom:1rem;">
         <div class="jc-main">
             <div class="jc-top">
                 <div class="jc-title-grp"><h2 class="jc-title" style="margin:0;"><a href="/jobs/concept-outsource-lead-epic-games-montreal-qc/" style="color:inherit;text-decoration:none;">Concept Outsource Lead</a></h2></div>
@@ -2526,7 +2514,7 @@ function render(){
   
   // Spotlight: All featured jobs
   let spotJobs = [];
-  if(featured.length > 0 && !document.getElementById('search').value && !document.getElementById('f-city').value){
+  if(featured.length > 0){
     spotlightEl.style.display='block';
     spotJobs = featured;
     spotlightGrid.innerHTML = spotJobs.map(j => spotlightHTML(j, ALL.indexOf(j))).join('');

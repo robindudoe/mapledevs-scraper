@@ -1332,7 +1332,7 @@ select {
 }
 .sv-btn { border-radius: var(--r-s); }
 
-.spotlight-s { display: none !important; }
+.spotlight-s { display: none; }
 .cta-section {
   background: #111820;
   color: #fff;
@@ -2286,7 +2286,7 @@ function render(){
   
   // Spotlight: All featured jobs
   let spotJobs = [];
-  if(featured.length > 0 && !document.getElementById('search').value && !document.getElementById('f-city').value){
+  if(featured.length > 0){
     spotlightEl.style.display='block';
     spotJobs = featured;
     spotlightGrid.innerHTML = spotJobs.map(j => spotlightHTML(j, ALL.indexOf(j))).join('');

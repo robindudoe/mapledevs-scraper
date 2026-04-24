@@ -306,6 +306,19 @@ function buildStructuredData(target, targetJobs) {
     return `<!-- Structured Data -->\n<script type="application/ld+json">\n${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2).replace(/</g, '\\u003c')}\n</script>`;
 }
 
+function staticSpotlightHTML(job) {
+    const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
+    return `<div class="sc" onclick="window.location.href='/jobs/${slug}/'">
+        <span class="sc-badge">★ Featured</span>
+        <div class="sc-title">${escapeHTML(job.title)}</div>
+        <div class="sc-studio">${escapeHTML(job.studio)}</div>
+        <div class="sc-tags">
+            <span class="sc-loc">${escapeHTML(job.location)}</span>
+            ${job.mode ? `<span class="sc-loc">${escapeHTML(job.mode)}</span>` : ''}
+        </div>
+    </div>`;
+}
+
 function staticJobCardHTML(job) {
     const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
     const meta = (label, value, cls = '') => `<div class="meta-item ${cls}"><span class="meta-k">${escapeHTML(label)}</span><span class="meta-v">${escapeHTML(value || 'Not listed')}</span></div>`;
@@ -373,7 +386,16 @@ function injectSEO(html, target, targetJobs = []) {
     // 4. STATIC INJECTION (The "Fortress" of SEO)
     // We replace the skeleton list with actual HTML for search engines
     if (targetJobs.length > 0) {
-        const jobsHtml = targetJobs.map(staticJobCardHTML).join('');
+        const featured = targetJobs.filter(j => j.featured);
+        const standard = targetJobs.filter(j => !j.featured);
+
+        if (featured.length > 0) {
+            const featuredHtml = featured.map(staticSpotlightHTML).join('');
+            output = output.replace(/id="spotlight-s"\s+style="display:none"/i, 'id="spotlight-s" style="display:block"');
+            output = output.replace(/id="spotlight-grid">/i, `id="spotlight-grid">${featuredHtml}`);
+        }
+
+        const jobsHtml = standard.map(staticJobCardHTML).join('');
         const jobListRegex = /<div id="job-list">[\s\S]*?<\/div>\s*<\/main>/;
         output = output.replace(jobListRegex, `<div id="job-list" class="job-list">${jobsHtml}</div>\n  </main>`);
     }
