@@ -98,10 +98,10 @@ async function publish(draftFilename) {
     if (await fs.pathExists(indexPath)) {
         let indexContent = await fs.readFile(indexPath, 'utf-8');
         const tickerHtml = `<!-- SWARM_TICKER_START -->
-<div id="news-ticker" class="news-ticker" style="background:var(--maple-gradient); color:#fff; padding:6px 1rem; text-align:center; font-size:12px; font-weight:600; position:relative; z-index:300;">
-  <div class="nt-inner" style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:8px;">
-    <span style="background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:4px; font-size:10px; text-transform:uppercase;">Latest News</span>
-    <a href="/blog/${draft.slug}.html" style="color:#fff; text-decoration:none; display:flex; align-items:center; gap:4px;">
+<div id="news-ticker" class="news-ticker">
+  <div class="nt-inner">
+    <span class="nt-label">Latest News</span>
+    <a href="/blog/${draft.slug}.html" class="nt-link">
       <span>${draft.title}</span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
