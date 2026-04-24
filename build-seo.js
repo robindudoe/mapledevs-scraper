@@ -308,24 +308,29 @@ function buildStructuredData(target, targetJobs) {
 
 function staticJobCardHTML(job) {
     const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
-    const details = [
-        job.location,
-        job.mode,
-        job.salary,
-        job.engine,
-        job.student ? 'Student-friendly' : '',
-        hasVisa(job) ? 'Visa support' : ''
-    ].filter(Boolean);
+    const meta = (label, value, cls = '') => `<div class="meta-item ${cls}"><span class="meta-k">${escapeHTML(label)}</span><span class="meta-v">${escapeHTML(value || 'Not listed')}</span></div>`;
+    const pills = [
+        job.type ? `<span class="pill p-type">${escapeHTML(job.type)}</span>` : '',
+        job.engine ? `<span class="pill p-engine">${escapeHTML(job.engine)}</span>` : '',
+        hasVisa(job) ? '<span class="pill p-visa">Visa support</span>' : '',
+        job.student ? '<span class="pill p-stu">Student-friendly</span>' : ''
+    ].filter(Boolean).join('');
+    const featuredBadge = job.featured ? '<div class="jc-badges"><span class="b-feat">Featured</span></div>' : '';
+    const descHtml = job.desc ? `<p class="jc-desc">${escapeHTML(truncate(job.desc, 220))}</p>` : '';
     return `<article class="jc ${job.featured ? 'feat' : ''}" style="margin-bottom:1rem;">
-        <div class="jc-top">
-            <div class="jc-title-grp">
-                ${job.featured ? '<div class="jc-badges"><span class="b-feat">Featured</span></div>' : ''}
-                <h2 class="jc-title" style="margin:0;"><a href="/jobs/${slug}/" style="color:inherit;text-decoration:none;">${escapeHTML(job.title)}</a></h2>
+        <div class="jc-main">
+            <div class="jc-top">
+                <div class="jc-title-grp">${featuredBadge}<h2 class="jc-title" style="margin:0;"><a href="/jobs/${slug}/" style="color:inherit;text-decoration:none;">${escapeHTML(job.title)}</a></h2></div>
             </div>
+            <div class="jc-studio">${escapeHTML(job.studio)}</div>
+            <div class="jc-meta">${meta('Location', job.location || 'Canada')}${meta('Work mode', job.mode || 'Not listed')}${meta('Salary', job.salary || 'Not listed', 'salary')}</div>
+            <div class="jc-pills">${pills}</div>${descHtml}
         </div>
-        <div class="jc-studio">${escapeHTML(job.studio)}</div>
-        <div class="jc-pills">${details.map(detail => `<span class="pill">${escapeHTML(detail)}</span>`).join('')}</div>
-        ${job.desc ? `<p class="jc-desc">${escapeHTML(truncate(job.desc, 220))}</p>` : ''}
+        <aside class="jc-side">
+            <div class="jc-side-top"><span class="jc-salary">${escapeHTML(job.salary || 'Salary not listed')}</span></div>
+            <div class="jc-foot-main"><span class="jc-verified">Verified listing</span>${job.posted ? `<span class="jc-date">Posted ${escapeHTML(job.posted)}</span>` : ''}</div>
+            <div class="jc-cta-row"><a class="btn-s" href="/jobs/${slug}/">Details</a></div>
+        </aside>
     </article>`;
 }
 

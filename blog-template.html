@@ -171,6 +171,107 @@
             .article-content { font-size: 16px; }
             .sources { padding: 24px; }
         }
+
+        /* Professional Maple Feed article refresh */
+        :root {
+            --maple: #d83b2e;
+            --maple-dark: #b92f25;
+            --maple-gradient: linear-gradient(135deg, #d83b2e 0%, #f05a47 100%);
+            --bg: #f4f6f9;
+            --card-bg: #ffffff;
+            --text: #12151b;
+            --text-dim: #647080;
+            --border: rgba(18, 21, 27, 0.12);
+        }
+
+        [data-theme="dark"] {
+            --bg: #101318;
+            --card-bg: #171b22;
+            --text: #f5f7fb;
+            --text-dim: #9ca7b7;
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        body {
+            background:
+                linear-gradient(135deg, rgba(216, 59, 46, 0.08), transparent 34%),
+                var(--bg);
+            letter-spacing: 0;
+        }
+
+        .container {
+            max-width: 980px;
+            padding: 40px 24px 72px;
+        }
+
+        .nav-header {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            margin-bottom: 44px;
+            padding: 12px 0;
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(16px);
+        }
+
+        .back-link {
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+        }
+
+        .back-link:hover {
+            color: var(--maple);
+            text-decoration: none;
+            border-color: rgba(216, 59, 46, 0.32);
+        }
+
+        header {
+            max-width: 860px;
+            margin-bottom: 36px;
+            padding-bottom: 24px;
+        }
+
+        h1,
+        .article-content h2 {
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0;
+        }
+
+        h1 {
+            font-size: clamp(2.25rem, 5vw, 4.7rem);
+            line-height: 1;
+            font-weight: 850;
+        }
+
+        .article-content {
+            max-width: 800px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: clamp(24px, 4vw, 48px);
+            box-shadow: 0 14px 38px rgba(18, 21, 27, 0.08);
+        }
+
+        .article-content h2 {
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .article-content p,
+        .article-content li {
+            color: color-mix(in srgb, var(--text) 84%, var(--text-dim));
+        }
+
+        .theme-toggle {
+            border-radius: 6px;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 28px 16px 56px; }
+            .article-content { padding: 22px; }
+        }
     </style>
 </head>
 <body>

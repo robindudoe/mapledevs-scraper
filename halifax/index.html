@@ -812,6 +812,640 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
   .hub-highlights p { font-size:0.9rem; color:var(--text-2); margin-bottom:0; line-height:1.5; }
   .hub-highlights .credit-link { color:var(--maple); text-decoration:none; font-weight:600; border-bottom:1px solid transparent; }
   .hub-highlights .credit-link:hover { border-bottom-color:var(--maple); }
+
+/* Professional MapleDevs revamp */
+:root {
+  --maple: #d83b2e;
+  --maple-dark: #b92f25;
+  --maple-light: #f05a47;
+  --maple-glow: rgba(216, 59, 46, 0.10);
+  --maple-gradient: linear-gradient(135deg, #d83b2e 0%, #f05a47 100%);
+  --gold: #c79231;
+  --forest: #246b58;
+  --forest-light: #e9f4f0;
+  --forest-mid: #2d8b70;
+  --bg-body: #f4f6f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-subtle: #f0f3f7;
+  --bg-input: #ffffff;
+  --text-1: #12151b;
+  --text-2: #3f4652;
+  --text-3: #6f7987;
+  --border: rgba(18, 21, 27, 0.10);
+  --border-s: rgba(18, 21, 27, 0.16);
+  --glass: rgba(255, 255, 255, 0.92);
+  --shadow-xs: 0 1px 2px rgba(18, 21, 27, 0.04);
+  --shadow-s: 0 3px 10px rgba(18, 21, 27, 0.06);
+  --shadow-m: 0 12px 28px rgba(18, 21, 27, 0.09);
+  --shadow-l: 0 22px 60px rgba(18, 21, 27, 0.12);
+  --r-xs: 4px;
+  --r-s: 6px;
+  --r: 8px;
+  --r-l: 10px;
+  --r-xl: 12px;
+  --max-w: 1240px;
+}
+
+[data-theme="dark"] {
+  --bg-body: #101318;
+  --bg-card: #171b22;
+  --bg-elevated: #1d222b;
+  --bg-subtle: #222833;
+  --bg-input: #11151c;
+  --text-1: #f5f7fb;
+  --text-2: #c2cad6;
+  --text-3: #8e98a7;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-s: rgba(255, 255, 255, 0.18);
+  --glass: rgba(18, 22, 30, 0.92);
+  --forest-light: rgba(45, 139, 112, 0.16);
+}
+
+body {
+  background:
+    linear-gradient(180deg, #f8fafc 0, var(--bg-body) 340px),
+    var(--bg-body);
+  color: var(--text-1);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] body {
+  background:
+    linear-gradient(180deg, #0f141b 0, var(--bg-body) 340px),
+    var(--bg-body);
+}
+
+header {
+  background: var(--glass);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(18, 21, 27, 0.04);
+}
+
+header::after { display: none; }
+
+.logo:hover { transform: none; }
+.logo-i { width: 32px; height: 32px; border-radius: var(--r-s) !important; }
+.logo-w,
+.hero h1,
+.signup-t h2,
+.cta-inner h2,
+.about-c h1,
+.about-c h2,
+.studios-c h1,
+.saved-c h1,
+.d-title,
+.sim-sec h3,
+.ft-brand {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+.logo-w {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.n-link,
+.post-job-nav,
+.theme-btn,
+.btn-p,
+.btn-s,
+.alert-btn,
+.signup-btn,
+.load-btn {
+  border-radius: var(--r-s);
+}
+
+.n-link { color: var(--text-2); font-weight: 650; }
+.post-job-nav { background: var(--maple); box-shadow: none; }
+.post-job-nav:hover { background: var(--maple-dark); transform: translateY(-1px); }
+
+.news-ticker {
+  background: #111820;
+  color: #f7fafc;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 7px 1rem;
+}
+
+.nt-inner { justify-content: flex-start; }
+.nt-label {
+  color: #9fe0d1;
+  background: rgba(45, 139, 112, 0.18);
+  border-color: rgba(159, 224, 209, 0.22);
+}
+.nt-link { color: #f7fafc; font-weight: 650; }
+.nt-link:hover { color: #9fe0d1; }
+
+.hero {
+  padding: 3rem 1.5rem 2.4rem;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(216, 59, 46, 0.20), transparent 28%),
+    radial-gradient(circle at 86% 12%, rgba(45, 139, 112, 0.18), transparent 30%),
+    linear-gradient(135deg, #111820 0%, #17202b 55%, #1c242d 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.hero-video,
+.hero-bg .leaf { display: none !important; }
+
+.hero-bg {
+  display: block;
+  opacity: 0.32 !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.68fr);
+  gap: 2rem;
+  align-items: end;
+}
+
+.hero-copy { min-width: 0; }
+
+.hero-tag {
+  color: #9fe0d1;
+  background: rgba(45, 139, 112, 0.18);
+  border-color: rgba(159, 224, 209, 0.22);
+  border-radius: var(--r-s);
+}
+
+.hero-tag .pulse { background: #9fe0d1; animation: none; }
+
+.hero h1 {
+  max-width: 860px;
+  color: #fff;
+  font-size: clamp(2.15rem, 4.8vw, 4.55rem);
+  line-height: 0.98;
+  font-weight: 850;
+  margin-bottom: 1rem;
+}
+
+.hero h1 em {
+  color: #ff7a65;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  font-style: normal;
+}
+
+.hero p {
+  max-width: 680px;
+  color: rgba(255,255,255,0.78);
+  font-size: 17px;
+  line-height: 1.68;
+  margin-bottom: 1.35rem;
+}
+
+.hero-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  max-width: 760px;
+  padding: 8px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--r-l);
+  backdrop-filter: blur(12px);
+  margin: 1.35rem 0 1.1rem;
+}
+
+.hero-search input {
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--r-s);
+  background: #fff;
+  color: #111820;
+  font-size: 15px;
+  padding: 0 14px;
+}
+
+.hero-search button {
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--r-s);
+  background: var(--maple);
+  color: #fff;
+  font-weight: 800;
+  padding: 0 18px;
+  cursor: pointer;
+}
+
+.hero-search button:hover { background: var(--maple-dark); }
+
+.hero-cta { margin-bottom: 1.6rem; }
+.btn-p { background: var(--maple); box-shadow: none; }
+.btn-p:hover { background: var(--maple-dark); box-shadow: none; }
+.hero .btn-s {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.18);
+}
+.hero .btn-s:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border-color: rgba(255,255,255,0.30);
+}
+
+.hero-stats {
+  gap: 1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.hero-stats > div {
+  min-width: 126px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--r);
+  background: rgba(255,255,255,0.06);
+}
+.stat-n { color: #fff; font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 850; }
+.stat-l { color: rgba(255,255,255,0.62); letter-spacing: 0; text-transform: none; font-size: 12px; }
+
+.hero-panel {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--r-l);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 26px 70px rgba(0,0,0,0.22);
+  backdrop-filter: blur(16px);
+  padding: 18px;
+}
+
+.hero-panel h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.hero-panel p {
+  color: rgba(255,255,255,0.70);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.market-list { display: grid; gap: 8px; }
+.market-list a,
+.market-list span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 40px;
+  color: rgba(255,255,255,0.88);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--r-s);
+  background: rgba(255,255,255,0.06);
+  padding: 9px 10px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.market-list b { color: #9fe0d1; font-size: 12px; white-space: nowrap; }
+
+.trusted {
+  background: var(--bg-body);
+  padding: 1rem 1.5rem;
+}
+.trusted-inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-l);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-s);
+}
+.trusted-label { color: var(--text-2); letter-spacing: 0; }
+
+.feed-ticker { display: none; }
+.feed-s {
+  background: var(--bg-body);
+  border-bottom: 1px solid var(--border);
+  padding: 2.4rem 1.5rem;
+}
+.feed-shell {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.feed-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.feed-head h2 {
+  color: var(--text-1);
+  font-size: clamp(1.55rem, 2.4vw, 2.25rem);
+  line-height: 1.08;
+  margin: 0;
+}
+.feed-head p {
+  max-width: 560px;
+  color: var(--text-3);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+.feed-grid {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.feed-card {
+  display: grid;
+  align-content: space-between;
+  min-height: 172px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg-card);
+  color: var(--text-1);
+  text-decoration: none;
+  padding: 16px;
+  box-shadow: var(--shadow-s);
+  transition: transform var(--dur), border-color var(--dur), box-shadow var(--dur);
+}
+.feed-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(216, 59, 46, 0.28);
+  box-shadow: var(--shadow-m);
+}
+.feed-card.featured-feed {
+  background:
+    linear-gradient(135deg, rgba(216,59,46,0.10), transparent 42%),
+    var(--bg-card);
+}
+.feed-k {
+  color: var(--maple);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.feed-card h3 {
+  color: var(--text-1);
+  font-size: 18px;
+  line-height: 1.18;
+  margin: 9px 0 8px;
+}
+.feed-card p {
+  color: var(--text-3);
+  font-size: 13px;
+  line-height: 1.58;
+  margin: 0;
+}
+.feed-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 650;
+  margin-top: 18px;
+}
+
+.hubs-s,
+.proof-s,
+.signup-s {
+  background: var(--bg-body);
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+}
+.hubs-grid { gap: 1.2rem; }
+.hub-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-l);
+  padding: 18px;
+  box-shadow: var(--shadow-s);
+}
+.hub-group h3 {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: none;
+  margin-bottom: 1rem;
+}
+.hub-card {
+  border-radius: var(--r-s);
+  background: var(--bg-subtle);
+}
+.hub-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(216, 59, 46, 0.30);
+  box-shadow: none;
+}
+.proof-grid { gap: 10px; }
+.proof-item {
+  background: var(--bg-card);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-s);
+}
+
+.controls {
+  top: var(--header-h);
+  background: var(--glass);
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(18,21,27,0.07);
+}
+.ctrl-inner {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.65fr) repeat(4, minmax(130px, 1fr)) auto auto;
+  gap: 8px;
+}
+.s-wrap input,
+select {
+  min-height: 42px;
+  border-radius: var(--r-s);
+  background: var(--bg-card);
+  font-size: 13px;
+}
+.stu-label {
+  border: 1px solid var(--border-s);
+  background: var(--bg-card);
+  padding: 0 10px;
+}
+.alert-btn {
+  min-height: 42px;
+  background: #111820;
+  color: #fff;
+  border-color: #111820;
+}
+.alert-btn:hover { background: var(--maple); border-color: var(--maple); }
+.f-pills { max-width: var(--max-w); padding-left: 0; padding-right: 0; }
+
+#main-content {
+  max-width: var(--max-w);
+  padding-top: 1.2rem;
+}
+.job-list { gap: 10px; }
+
+.jc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
+  gap: 18px;
+  align-items: stretch;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-s);
+  padding: 18px;
+}
+.jc::before,
+.jc::after { display: none; }
+.jc:hover {
+  transform: translateY(-1px);
+  border-color: rgba(216, 59, 46, 0.28);
+  box-shadow: var(--shadow-m);
+}
+.jc.feat {
+  border-color: rgba(199, 146, 49, 0.42);
+  box-shadow: inset 3px 0 0 var(--gold), var(--shadow-s);
+}
+.jc-main { min-width: 0; }
+.jc-side {
+  border-left: 1px solid var(--border);
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.jc-top { margin-bottom: 8px; }
+.jc-title { font-size: 1.08rem; font-weight: 850; line-height: 1.25; }
+.jc-studio { color: var(--text-2); margin-bottom: 10px; }
+.jc-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 10px 0;
+}
+.meta-item {
+  background: var(--bg-body);
+  border-radius: var(--r-s);
+}
+.meta-k { letter-spacing: 0.04em; }
+.meta-v { font-size: 12.5px; }
+.jc-pills { margin-bottom: 10px; }
+.pill {
+  border-radius: var(--r-s);
+  font-size: 11.5px;
+  min-height: 25px;
+}
+.jc-desc {
+  color: var(--text-2);
+  margin-bottom: 0;
+}
+.jc-side-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.jc-salary {
+  display: block;
+  color: var(--text-1);
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.25;
+}
+.jc-side .jc-date,
+.jc-side .jc-verified {
+  display: block;
+}
+.jc-side .btn-p,
+.jc-side .btn-s {
+  width: 100%;
+  justify-content: center;
+  color: #fff;
+  background: var(--maple);
+  border-color: var(--maple);
+  padding: 9px 12px;
+  box-shadow: none;
+}
+.jc-side .btn-s {
+  color: var(--text-1);
+  background: var(--bg-subtle);
+  border-color: var(--border);
+}
+.jc-cta-row {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+}
+.jc-foot { border-top: 0; padding-top: 0; }
+.jc-foot-main { gap: 4px; }
+.b-feat,
+.b-new {
+  border-radius: var(--r-s);
+  letter-spacing: 0.04em;
+}
+.sv-btn { border-radius: var(--r-s); }
+
+.spotlight-s { display: none !important; }
+.cta-section {
+  background: #111820;
+  color: #fff;
+  border: 0;
+}
+.cta-inner h2 { color: #fff; }
+.cta-inner p { color: rgba(255,255,255,0.72); }
+
+.modal {
+  border-radius: var(--r-l);
+  box-shadow: var(--shadow-l);
+}
+.modal-hdr h2 { font-family: 'Inter', sans-serif; font-weight: 850; }
+.post-summary div { background: var(--bg-body); border-radius: var(--r-s); }
+.state-msg .ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-s);
+  background: var(--bg-card);
+  color: var(--text-3);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 8px;
+}
+
+@media (max-width: 1050px) {
+  .hero-inner,
+  .feed-grid { grid-template-columns: 1fr; }
+  .hero-panel { max-width: 760px; }
+  .ctrl-inner { grid-template-columns: minmax(220px, 1fr) repeat(3, minmax(120px, 1fr)); }
+}
+
+@media (max-width: 820px) {
+  .hero { padding: 2.4rem 1rem 2rem; }
+  .hero h1 { font-size: 2.1rem; line-height: 1.04; }
+  .hero-search { grid-template-columns: 1fr; }
+  .hero-search button { width: 100%; }
+  .hero-stats > div { min-width: 0; flex: 1; }
+  .feed-s { padding: 2rem 1rem; }
+  .feed-head { align-items: flex-start; flex-direction: column; }
+  .controls { position: relative; top: 0; padding: 1rem; }
+  .ctrl-inner { display: flex; flex-direction: column; }
+  .jc { grid-template-columns: 1fr; }
+  .jc-side { border-left: 0; border-top: 1px solid var(--border); padding-left: 0; padding-top: 12px; }
+  .jc-meta { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .hero-panel { padding: 14px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .stat-n { font-size: 20px; }
+  .stat-l { font-size: 10px; }
+  .feed-grid { gap: 8px; }
+  .feed-card { min-height: auto; }
+}
 </style>
 
 <!-- Google Analytics -->
@@ -826,9 +1460,9 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
 <!-- SWARM_TICKER_START -->
 <div id="news-ticker" class="news-ticker">
   <div class="nt-inner">
-    <span class="nt-label">Latest News</span>
+    <span class="nt-label">Maple Feed</span>
     <a href="/blog/montreal-silicon-valley-north-game-dev-2026.html" class="nt-link">
-      <span>Why Montreal Is Still a Global Game Development Hub in 2026 (And What It Means for Your Career)</span>
+      <span>Hiring intelligence: Montreal remains one of Canada's strongest game development hubs in 2026</span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </a>
   </div>
@@ -843,11 +1477,11 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
       <span class="logo-w">Maple<span>Devs</span></span>
     </a>
     <nav class="h-nav" role="navigation" aria-label="Main">
-      <a href="/blog/index.html" class="n-link">Blog</a>
+      <a href="/blog/index.html" class="n-link">Maple Feed</a>
       <button class="n-link" id="nav-studios" onclick="showStudios()">Studios</button>
       <button class="n-link" id="nav-about" onclick="showAbout()">About</button>
       <button class="n-link" id="nav-saved" onclick="showSaved()">Saved<span class="n-badge" id="sv-badge">0</span></button>
-      <a href="https://discord.gg/h9Uxpn5e" target="_blank" class="n-link" style="color:#5865F2; display:flex; align-items:center; gap:5px" aria-label="Join our Discord">
+      <a href="https://discord.gg/h9Uxpn5e" target="_blank" class="n-link" style="display:flex; align-items:center; gap:5px" aria-label="Join our Discord">
         <svg width="14" height="14" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a67.59,67.59,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.2,46,96.09,53,91.08,65.69,84.69,65.69Z"/></svg>
         Discord
       </a>
@@ -981,24 +1615,37 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
 <!-- ═══════ BOARD VIEW ═══════ -->
 <div id="board-view">
   <section class="hero" aria-labelledby="hero-heading" style="position:relative;overflow:hidden;">
-    <video autoplay loop muted playsinline class="hero-video" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: -2;">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4" type="video/mp4">
-    </video>
     <div class="hero-bg" id="hero-bg" aria-hidden="true" style="opacity: 0.8 !important; z-index: -1;"></div>
     <div class="hero-inner">
-      <div class="hero-tag"><span class="pulse"></span> 100% Verified Canadian Studios Only</div>
-      <h1 id="hero-heading">Find Verified Game Dev Jobs in Canada —<br><em>No US Listings.</em></h1>
-      <p>Student-friendly roles, salaries included, curated from real studios.</p>
-      <div class="hero-cta">
-        <a href="#main-content" class="btn-p" id="browse-btn">Browse open roles →</a>
-        <a href="https://discord.gg/h9Uxpn5e" target="_blank" rel="noopener" class="btn-s" style="color:#5865F2; border-color:rgba(88,101,242,0.5);">Join the Discord</a>
-        <button class="btn-s" onclick="openPostModal()">Post a job</button>
+      <div class="hero-copy">
+        <div class="hero-tag"><span class="pulse"></span> Verified Canadian game studio jobs</div>
+        <h1 id="hero-heading">A serious job board for Canada's game industry.</h1>
+        <p>Search verified studio roles by engine, salary, work mode, visa support, student-friendly paths, and Canadian region. Built for candidates who want signal, not noise.</p>
+        <form class="hero-search" onsubmit="return heroSearch(event)" role="search" aria-label="Search MapleDevs jobs">
+          <input id="hero-search" type="search" placeholder="Search role, studio, engine, city, salary..." autocomplete="off">
+          <button type="submit">Search jobs</button>
+        </form>
+        <div class="hero-cta">
+          <a href="#main-content" class="btn-p" id="browse-btn">Browse open roles</a>
+          <a href="https://discord.gg/h9Uxpn5e" target="_blank" rel="noopener" class="btn-s">Join the Discord</a>
+          <button class="btn-s" onclick="openPostModal()">Post a job</button>
+        </div>
+        <div class="hero-stats" role="region" aria-label="MapleDevs statistics">
+          <div><span class="stat-n" id="s-jobs" data-t="0">0</span><div class="stat-l">Open roles</div></div>
+          <div><span class="stat-n" id="s-studios" data-t="0">0</span><div class="stat-l">Hiring studios</div></div>
+          <div><span class="stat-n" id="s-cities" data-t="0">0</span><div class="stat-l">Canadian hubs</div></div>
+        </div>
       </div>
-      <div class="hero-stats" role="region" aria-label="Statistics">
-        <div><span class="stat-n" id="s-jobs" data-t="0">—</span><div class="stat-l">Open roles</div></div>
-        <div><span class="stat-n" id="s-studios" data-t="0">—</span><div class="stat-l">Studios</div></div>
-        <div><span class="stat-n" id="s-cities" data-t="0">—</span><div class="stat-l">Cities</div></div>
-      </div>
+      <aside class="hero-panel" aria-label="Hiring market snapshot">
+        <h2>Hiring market snapshot</h2>
+        <p>MapleDevs prioritizes practical job-search signals for game developers: compensation, engine stack, location model, verified Canadian studios, and application quality.</p>
+        <div class="market-list">
+          <a href="/remote/"><span>Remote and hybrid roles</span><b>Browse</b></a>
+          <a href="/junior/"><span>Junior and student pathways</span><b>Find</b></a>
+          <a href="/programming/"><span>Programming and engine roles</span><b>Explore</b></a>
+          <span><span>Featured listing price</span><b>$29 CAD</b></span>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -1018,13 +1665,41 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
   </div>
 
   <!-- ═══════ DISCOVERY HUBS ═══════ -->
-  <section class="feed-ticker" aria-label="The Maple Feed">
-    <div class="feed-inner">
-      <span class="feed-label">The Maple Feed</span>
-      <div class="feed-links">
-<!-- SWARM_TICKER_START -->
-        <a class="feed-item" href="/blog/mapledevs-editorial-launch.html">Introducing The Maple Feed</a>
-<!-- SWARM_TICKER_END -->
+  <section class="feed-s" aria-label="The Maple Feed">
+    <div class="feed-shell">
+      <div class="feed-head">
+        <div>
+          <span class="feed-k">The Maple Feed</span>
+          <h2>Hiring intelligence for Canadian game developers.</h2>
+          <p>Editorial that makes the job board feel alive: studio signals, regional hiring trends, salary context, engine demand, and practical career moves.</p>
+        </div>
+        <a class="btn-s" href="/blog/index.html">View all posts</a>
+      </div>
+      <div class="feed-grid">
+        <a class="feed-card featured-feed" href="/blog/montreal-silicon-valley-north-game-dev-2026.html">
+          <div>
+            <span class="feed-k">Regional intelligence</span>
+            <h3>Why Montreal remains a global game development hub in 2026</h3>
+            <p>What Montreal's studio density, tax credits, and bilingual market mean for candidates planning their next move.</p>
+          </div>
+          <div class="feed-meta"><span>Montreal</span><span>Career strategy</span></div>
+        </a>
+        <a class="feed-card" href="/blog/index.html">
+          <div>
+            <span class="feed-k">Studio signals</span>
+            <h3>How to read hiring pages before you apply</h3>
+            <p>Use engine stack, role mix, and work-mode language to understand what a studio is really hiring for.</p>
+          </div>
+          <div class="feed-meta"><span>Research</span><span>Applications</span></div>
+        </a>
+        <a class="feed-card" href="/blog/index.html">
+          <div>
+            <span class="feed-k">Market watch</span>
+            <h3>What salary, visa, and student-friendly tags reveal</h3>
+            <p>MapleDevs surfaces the details that help candidates decide faster and helps studios get better-fit applicants.</p>
+          </div>
+          <div class="feed-meta"><span>Salary</span><span>Visa</span><span>Students</span></div>
+        </a>
       </div>
     </div>
   </section>
@@ -1103,7 +1778,7 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
       <select id="f-engine" onchange="render()" aria-label="Engine"><option value="">All Engines</option><option>Unreal</option><option>Unity</option><option>Godot</option><option>C++ / Proprietary</option></select>
       <select id="f-visa" onchange="render()" aria-label="Visa"><option value="">Visa Support?</option><option value="yes">Yes</option><option value="no">No / Not Listed</option></select>
       <label class="stu-label" title="No experience required / accepts students"><input type="checkbox" id="f-student" onchange="render()"> Student-friendly</label>
-      <button class="alert-btn" onclick="openAlertModal()" title="Get email alerts for this search">🔔 Alert me</button>
+      <button class="alert-btn" onclick="openAlertModal()" title="Get email alerts for this search">Job alerts</button>
       <span class="r-count" id="r-count" aria-live="polite"></span>
     </div>
     <div class="f-pills" id="f-pills"></div>
@@ -1129,40 +1804,36 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 1.5rem; backgroun
     </div>
   </div>
 
-  <!-- Game UI: Combo Display -->
-  <div class="combo-display" id="combo-display">
-    <div class="combo-count" id="combo-count">0x</div>
-    <div class="combo-label">Combo</div>
-    <div class="combo-bar"><div class="combo-fill" id="combo-fill" style="width:0%"></div></div>
-  </div>
-
-  <!-- XP Progress Bar -->
-  <div class="xp-bar-wrap" id="xp-bar-wrap" style="position:fixed;bottom:0;left:0;right:0;height:3px;z-index:999;">
-    <div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div>
-  </div>
-
   <main id="main-content" role="main">
     <div id="hub-highlights" class="hub-highlights"></div>
     <div id="job-list" class="job-list"><article class="jc feat" style="margin-bottom:1rem;">
-        <div class="jc-top">
-            <div class="jc-title-grp">
-                <div class="jc-badges"><span class="b-feat">Featured</span></div>
-                <h2 class="jc-title" style="margin:0;"><a href="/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Game Writer (Intern)</a></h2>
+        <div class="jc-main">
+            <div class="jc-top">
+                <div class="jc-title-grp"><div class="jc-badges"><span class="b-feat">Featured</span></div><h2 class="jc-title" style="margin:0;"><a href="/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Game Writer (Intern)</a></h2></div>
             </div>
+            <div class="jc-studio">Red Diamond</div>
+            <div class="jc-meta"><div class="meta-item "><span class="meta-k">Location</span><span class="meta-v">Halifax, Nova Scotia</span></div><div class="meta-item "><span class="meta-k">Work mode</span><span class="meta-v">On-site</span></div><div class="meta-item salary"><span class="meta-k">Salary</span><span class="meta-v">Minimum Wage</span></div></div>
+            <div class="jc-pills"><span class="pill p-type">Contract</span><span class="pill p-stu">Student-friendly</span></div><p class="jc-desc">Red Diamond is seeking interns to work as writers on an upcoming dark fantasy mobile game and tabletop RPG. In this role, you will contribute to lore, world-building, creatures, characters, and other elements within an...</p>
         </div>
-        <div class="jc-studio">Red Diamond</div>
-        <div class="jc-pills"><span class="pill">Halifax, Nova Scotia</span><span class="pill">On-site</span><span class="pill">Minimum Wage</span><span class="pill">Student-friendly</span></div>
-        <p class="jc-desc">Red Diamond is seeking interns to work as writers on an upcoming dark fantasy mobile game and tabletop RPG. In this role, you will contribute to lore, world-building, creatures, characters, and other elements within an...</p>
+        <aside class="jc-side">
+            <div class="jc-side-top"><span class="jc-salary">Minimum Wage</span></div>
+            <div class="jc-foot-main"><span class="jc-verified">Verified listing</span><span class="jc-date">Posted 2026-04-14</span></div>
+            <div class="jc-cta-row"><a class="btn-s" href="/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/">Details</a></div>
+        </aside>
     </article><article class="jc feat" style="margin-bottom:1rem;">
-        <div class="jc-top">
-            <div class="jc-title-grp">
-                <div class="jc-badges"><span class="b-feat">Featured</span></div>
-                <h2 class="jc-title" style="margin:0;"><a href="/jobs/social-media-manager-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Social Media Manager</a></h2>
+        <div class="jc-main">
+            <div class="jc-top">
+                <div class="jc-title-grp"><div class="jc-badges"><span class="b-feat">Featured</span></div><h2 class="jc-title" style="margin:0;"><a href="/jobs/social-media-manager-red-diamond-halifax-nova-scotia/" style="color:inherit;text-decoration:none;">Social Media Manager</a></h2></div>
             </div>
+            <div class="jc-studio">Red Diamond</div>
+            <div class="jc-meta"><div class="meta-item "><span class="meta-k">Location</span><span class="meta-v">Halifax, Nova Scotia</span></div><div class="meta-item "><span class="meta-k">Work mode</span><span class="meta-v">On-site</span></div><div class="meta-item salary"><span class="meta-k">Salary</span><span class="meta-v">$37,000 – $50,000</span></div></div>
+            <div class="jc-pills"><span class="pill p-type">Full-time</span><span class="pill p-stu">Student-friendly</span></div><p class="jc-desc">Red Diamond is seeking a Social Media Manager to execute a social media strategy for its upcoming dark fantasy mobile game. In this role, you will be responsible for creating and managing engaging social media content t...</p>
         </div>
-        <div class="jc-studio">Red Diamond</div>
-        <div class="jc-pills"><span class="pill">Halifax, Nova Scotia</span><span class="pill">On-site</span><span class="pill">$37,000 – $50,000</span><span class="pill">Student-friendly</span></div>
-        <p class="jc-desc">Red Diamond is seeking a Social Media Manager to execute a social media strategy for its upcoming dark fantasy mobile game. In this role, you will be responsible for creating and managing engaging social media content t...</p>
+        <aside class="jc-side">
+            <div class="jc-side-top"><span class="jc-salary">$37,000 – $50,000</span></div>
+            <div class="jc-foot-main"><span class="jc-verified">Verified listing</span><span class="jc-date">Posted 2026-04-14</span></div>
+            <div class="jc-cta-row"><a class="btn-s" href="/jobs/social-media-manager-red-diamond-halifax-nova-scotia/">Details</a></div>
+        </aside>
     </article></div>
   </main>
 
@@ -1350,8 +2021,8 @@ function togTheme(){const c=document.documentElement.getAttribute('data-theme'),
 function updIcon(t){const i=document.getElementById('theme-ic');i.innerHTML=t==='dark'?'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>':'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';}
 document.getElementById('theme-btn').onclick=togTheme;
 
-/* ═══════ FLOATING LEAVES ═══════ */
-(function(){const bg=document.getElementById('hero-bg'),lp='M20 3l-1.5 6.5-2 1-1-2.5-3 3 1 2-3.5.5 1.5 4-3 1 5 5-1 3h4l-.5 4h5l-.5-4h4l-1-3 5-5-3-1 1.5-4-3.5-.5 1-2-3-3-1 2.5-2-1z';for(let i=0;i<10;i++){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 40 40');s.classList.add('leaf');const sz=18+Math.random()*30;s.style.width=sz+'px';s.style.height=sz+'px';s.style.left=Math.random()*100+'%';s.style.animationDuration=(14+Math.random()*18)+'s';s.style.animationDelay=(-Math.random()*20)+'s';const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',lp);p.setAttribute('fill','currentColor');s.appendChild(p);bg.appendChild(s);}})();
+/* Decorative hero effects removed for a more professional hiring product. */
+(function(){const bg=document.getElementById('hero-bg'); if(bg) bg.setAttribute('aria-hidden','true');})();
 
 /* ═══════ COUNTER ═══════ */
 function animC(el,target){if(!target){el.textContent='0';return;}const dur=1000,st=performance.now();(function t(now){const p=Math.min((now-st)/dur,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(t);})(performance.now());}
@@ -1360,7 +2031,7 @@ const sObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting&&!st
 sObs.observe(document.querySelector('.hero-stats'));
 
 /* ═══════ TOAST ═══════ */
-function toast(msg,ic='✓'){const c=document.getElementById('toast-c'),t=document.createElement('div');t.className='toast';t.innerHTML='<span>'+ic+'</span> '+esc(msg);c.appendChild(t);setTimeout(()=>{t.classList.add('exit');setTimeout(()=>t.remove(),200);},2600);}
+function toast(msg,ic='✓'){const c=document.getElementById('toast-c'),t=document.createElement('div');t.className='toast';t.innerHTML=(ic?'<span>'+ic+'</span> ':'')+esc(msg);c.appendChild(t);setTimeout(()=>{t.classList.add('exit');setTimeout(()=>t.remove(),200);},2600);}
 
 /* ═══════ GAME INTERACTIONS SYSTEM ═══════ */
 const gameState = {
@@ -1405,6 +2076,7 @@ function updateXPBar() {
 setTimeout(updateXPBar, 500);
 
 function addXP(amount, x, y) {
+  return;
   gameState.xp += amount;
   const xpForNext = gameState.level * 50;
   if (gameState.xp >= xpForNext) {
@@ -1448,6 +2120,7 @@ function incrementCombo() {
 }
 
 function spawnParticles(x, y, count, colors) {
+  return;
   for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
@@ -1464,6 +2137,7 @@ function spawnParticles(x, y, count, colors) {
 }
 
 function showAchievement(icon, title, desc) {
+  return;
   const el = document.createElement('div');
   el.className = 'achievement-toast';
   el.innerHTML = '<div class="ach-icon">' + icon + '</div><div><div class="ach-title">' + title + '</div><div class="ach-desc">' + desc + '</div></div>';
@@ -1473,6 +2147,7 @@ function showAchievement(icon, title, desc) {
 }
 
 function checkAchievement(id, icon, title, desc) {
+  return;
   if (gameState.achievements.includes(id)) return;
   gameState.achievements.push(id);
   localStorage.setItem('md_ach', JSON.stringify(gameState.achievements));
@@ -1480,6 +2155,7 @@ function checkAchievement(id, icon, title, desc) {
 }
 
 function coinFlyAnimation(fromX, fromY) {
+  return;
   const badge = document.getElementById('sv-badge');
   const rect = badge.getBoundingClientRect();
   const coin = document.createElement('div');
@@ -1494,6 +2170,7 @@ function coinFlyAnimation(fromX, fromY) {
 }
 
 function gameClickFeedback(e) {
+  return;
   const now = Date.now();
   if (now - gameState.lastClickTime < 2000) incrementCombo();
   gameState.lastClickTime = now;
@@ -1504,22 +2181,15 @@ function gameClickFeedback(e) {
 function trackApply(e) {
   gameState.appliesTracked++;
   localStorage.setItem('md_applies', gameState.appliesTracked);
-  /* Confetti burst on apply */
   const btn = e.currentTarget || e.target;
   btn.classList.add('applied');
-  spawnParticles(e.clientX, e.clientY, 10, ['#C8372D', '#E8564C', '#E8C94A', '#34A853']);
-  addXP(25, e.clientX, e.clientY - 20);
   setTimeout(() => btn.classList.remove('applied'), 600);
-  if (gameState.appliesTracked === 1) checkAchievement('firstApply', '🚀', 'First Application!', 'You applied to your first job!');
-  if (gameState.appliesTracked === 5) checkAchievement('apply5', '🎯', 'Go-Getter', 'Applied to 5 jobs!');
 }
 
 /* Salary reveal */
 function revealSalary(el, e) {
   if (e) e.stopPropagation();
   el.classList.add('revealed');
-  spawnParticles(el.getBoundingClientRect().left + el.offsetWidth/2, el.getBoundingClientRect().top, 6, ['#E8C94A', '#C8372D']);
-  addXP(3, el.getBoundingClientRect().left + el.offsetWidth/2, el.getBoundingClientRect().top - 10);
 }
 
 /* Social proof removed per user request */
@@ -1554,20 +2224,12 @@ function toggleSave(e,idx){
   const btn = e.currentTarget;
   if(i>-1){
     saved.splice(i,1);
-    toast('Removed','🗑️');
+    toast('Removed','');
   } else {
     saved.push(k);
-    toast('Job saved!','🍁');
-    /* Bounce + coin fly + particles */
+    toast('Job saved','');
     btn.classList.add('just-saved');
-    setTimeout(() => btn.classList.remove('just-saved'), 400);
-    coinFlyAnimation(e.clientX, e.clientY);
-    spawnParticles(e.clientX, e.clientY, 8, ['#C8372D', '#E8564C', '#E8C94A']);
-    addXP(15 + gameState.combo * 2, e.clientX, e.clientY - 30);
-    incrementCombo();
-    checkAchievement('firstSave', '🍁', 'First Save!', 'Save jobs you like by clicking the heart');
-    if(saved.length >= 5) checkAchievement('save5', '📚', 'Collector', 'You saved 5 jobs!');
-    if(saved.length >= 10) checkAchievement('save10', '🏆', 'Hoarder', 'Saved 10 jobs! Impressive!');
+    setTimeout(() => btn.classList.remove('just-saved'), 250);
   }
   localStorage.setItem('md_saved',JSON.stringify(saved));
   updBadge();
@@ -1691,7 +2353,7 @@ function render(){
   
   if(!allFiltered.length){
     spotlightEl.style.display='none';
-    list.innerHTML='<div class="state-msg"><span class="ic">🍁</span>No roles match your filters.<span class="sub">Try adjusting your search.</span></div>';
+    list.innerHTML='<div class="state-msg"><span class="ic">No results</span>No roles match your filters.<span class="sub">Try adjusting your search.</span></div>';
     return;
   }
 
@@ -1758,6 +2420,17 @@ pills.forEach((p,i)=>c.querySelector('[data-i="'+i+'"]').onclick=p.fn);
 document.getElementById('f-clr').onclick=clearAll;}
 function clearAll(){document.getElementById('search').value='';document.getElementById('f-city').value='';document.getElementById('f-type').value='';document.getElementById('f-mode').value='';document.getElementById('f-role').value='';document.getElementById('f-exp').value='';document.getElementById('f-engine').value='';document.getElementById('f-visa').value='';document.getElementById('f-student').checked=false;render();}
 
+function heroSearch(e){
+  if(e) e.preventDefault();
+  const heroInput=document.getElementById('hero-search');
+  const boardInput=document.getElementById('search');
+  if(boardInput && heroInput) boardInput.value=heroInput.value.trim();
+  render();
+  const target=document.getElementById('main-content');
+  if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  return false;
+}
+
 /* ═══════ HELPERS ═══════ */
 function isNew(d){if(!d)return false;const dt=new Date(d);return!isNaN(dt)&&(Date.now()-dt)/864e5<=4;}
 function relDate(d){if(!d)return"";const dt=new Date(d);if(isNaN(dt))return d;const days=Math.floor((Date.now()-dt)/864e5);if(days===0)return"Today";if(days===1)return"1d ago";if(days<30)return days+"d ago";return dt.toLocaleDateString("en-CA",{month:"short",day:"numeric"});}
@@ -1779,42 +2452,43 @@ function cardHTML(j,ri,ai){
     metaItem('Work mode',j.mode||'Not listed'),
     metaItem('Salary',j.salary||'Not listed','salary')
   ].join('');
+  const salary = j.salary || 'Salary not listed';
+  const applyAction = j.apply ? `<a href="${esc(j.apply)}" target="_blank" rel="noopener" class="btn-p" onclick="trackApply(event);event.stopPropagation()">Apply</a>` : '';
   
   return `<div class="jc${j.featured?' feat':''}${hot?' hot':''} scroll-in" style="animation-delay:${dl}ms" onclick="openDet(${ri},event)" tabindex="0" role="article" onkeydown="if(event.key==='Enter')openDet(${ri})" aria-label="${esc(j.title)} at ${esc(j.studio)}">
-    <div class="jc-top">
-      <div class="jc-title-grp">
-        ${badges ? `<div class="jc-badges">${badges}</div>` : ''}
-        <div class="jc-title">${hl(j.title,q)}</div>
+    <div class="jc-main">
+      <div class="jc-top">
+        <div class="jc-title-grp">
+          ${badges ? `<div class="jc-badges">${badges}</div>` : ''}
+          <div class="jc-title">${hl(j.title,q)}</div>
+        </div>
       </div>
-      <div class="jc-acts">
+      <div class="jc-studio">${hl(j.studio,q)}</div>
+      <div class="jc-meta">${facts}</div>
+      <div class="jc-pills">
+        ${j.type ? `<span class="pill p-type">${esc(j.type)}</span>` : ''}
+        ${j.engine ? `<span class="pill p-engine">${esc(j.engine)}</span>` : ''}
+        ${hasVisa(j) ? `<span class="pill p-visa">${visaText(j)}</span>` : ''}
+        ${j.student ? `<span class="pill p-stu">Student-friendly</span>` : ''}
+      </div>
+      ${j.desc ? `<div class="jc-desc">${hl(j.desc,q)}</div>` : ''}
+    </div>
+    <aside class="jc-side">
+      <div class="jc-side-top">
+        <span class="jc-salary">${esc(salary)}</span>
         <button class="sv-btn${sv?' saved':''}" onclick="toggleSave(event,${ri})" aria-label="${sv?'Unsave':'Save'}" title="${sv?'Saved':'Save'}">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="${sv?'currentColor':'none'}" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
       </div>
-    </div>
-    
-    <div class="jc-studio">${hl(j.studio,q)}</div>
-    <div class="jc-meta">${facts}</div>
-    
-    <div class="jc-pills">
-      ${j.type ? `<span class="pill p-type">${esc(j.type)}</span>` : ''}
-      ${j.engine ? `<span class="pill p-engine">${esc(j.engine)}</span>` : ''}
-      ${hasVisa(j) ? `<span class="pill p-visa">${visaText(j)}</span>` : ''}
-      ${j.student ? `<span class="pill p-stu">Student-friendly</span>` : ''}
-    </div>
-    
-    ${j.desc ? `<div class="jc-desc">${hl(j.desc,q)}</div>` : ''}
-    
-    <div class="jc-foot">
       <div class="jc-foot-main">
         <span class="jc-verified">Verified listing</span>
         <span class="jc-date">${j.posted ? 'Posted '+relDate(j.posted) : ''}</span>
       </div>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <span class="jc-cta">Details</span>
-        ${j.apply ? `<a href="${esc(j.apply)}" target="_blank" rel="noopener" class="btn-p" style="padding:6px 16px; font-size:12px; border-radius:100px; box-shadow:none; text-decoration:none;" onclick="trackApply(event);event.stopPropagation()">Apply</a>` : ''}
+      <div class="jc-cta-row">
+        ${applyAction}
+        <button type="button" class="btn-s" onclick="openDet(${ri},event);event.stopPropagation()">Details</button>
       </div>
-    </div>
+    </aside>
   </div>`;
 }
 
@@ -1829,8 +2503,8 @@ return '<div class="d-hdr"><div class="d-title">'+esc(j.title)+'</div><div class
 +'<button class="d-act-btn'+(sv?' saved':'')+'" onclick="togSaveDet(event,'+idx+')">'+(sv?'Saved':'Save')+'</button></div></div>'
 +(j.desc?'<div class="d-sec"><div class="d-label">About the role</div><div class="d-text">'+esc(j.desc)+'</div></div>':'')+apSec;}
 
-function shareJob(idx){const url=location.origin+location.pathname+'#job-'+idx;navigator.clipboard.writeText(url).then(()=>toast('Link copied!','🔗')).catch(()=>toast('Couldn\'t copy','⚠️'));}
-function togSaveDet(e,idx){e.stopPropagation();const j=ALL[idx],k=jKey(j),i=saved.indexOf(k);if(i>-1){saved.splice(i,1);toast('Removed','🗑️');}else{saved.push(k);toast('Saved!','🍁');}localStorage.setItem('md_saved',JSON.stringify(saved));updBadge();const b=e.currentTarget,s=isSaved(j);b.classList.toggle('saved',s);b.innerHTML=s?'♥ Saved':'♡ Save';}
+function shareJob(idx){const url=location.origin+location.pathname+'#job-'+idx;navigator.clipboard.writeText(url).then(()=>toast('Link copied','')).catch(()=>toast('Couldn\'t copy',''));}
+function togSaveDet(e,idx){e.stopPropagation();const j=ALL[idx],k=jKey(j),i=saved.indexOf(k);if(i>-1){saved.splice(i,1);toast('Removed','');}else{saved.push(k);toast('Saved','');}localStorage.setItem('md_saved',JSON.stringify(saved));updBadge();const b=e.currentTarget,s=isSaved(j);b.classList.toggle('saved',s);b.innerHTML=s?'Saved':'Save';}
 
 function getSimilar(j,idx){return ALL.filter((o,i)=>i!==idx&&(o.studio===j.studio||o.location===j.location||o.type===j.type)).slice(0,3);}
 function openDet(idx,e){history.pushState({idx},"","#job-"+idx);const j=ALL[idx];hideAll();document.getElementById("detail-view").classList.add("on");
@@ -1839,13 +2513,6 @@ document.getElementById("d-content").innerHTML=detailHTML(j,idx);
 const sim=getSimilar(j,idx),ss=document.getElementById("sim-sec"),sl=document.getElementById("sim-jobs");
 if(sim.length){ss.style.display="block";sl.innerHTML=sim.map((s,i)=>cardHTML(s,ALL.indexOf(s),i)).join("");}else ss.style.display="none";
 window.scrollTo(0,0);
-/* Game: XP for viewing a job */
-gameState.jobsViewed++;
-localStorage.setItem('md_views', gameState.jobsViewed);
-if(e) gameClickFeedback(e);
-if(gameState.jobsViewed === 1) checkAchievement('firstView', '👀', 'First Look!', 'Click jobs to earn XP and level up');
-if(gameState.jobsViewed === 10) checkAchievement('view10', '🔍', 'Explorer', 'Viewed 10 jobs — keep going!');
-if(gameState.jobsViewed === 25) checkAchievement('view25', '🗺️', 'Adventurer', 'Viewed 25 jobs! Try browsing fast for combos');
 trackView(j.title + ' | MapleDevs');}
 
 function filterCity(c){showBoard();document.getElementById('f-city').value=c;render();setTimeout(()=>document.getElementById('main-content').scrollIntoView({behavior:'smooth'}),100);}
@@ -1899,7 +2566,7 @@ function updateHubHighlights(){
   
   const match = Object.keys(h).find(k => ci.includes(k));
   if(match) {
-    el.innerHTML = `<h3><span class="ic">🍁</span> ${h[match].t}</h3><p>${h[match].p}</p>`;
+  el.innerHTML = `<h3><span class="ic">Market</span> ${h[match].t}</h3><p>${h[match].p}</p>`;
     el.style.display = 'block';
   } else {
     el.style.display = 'none';
@@ -1978,10 +2645,10 @@ function submitPostForm(e){
 }
 
 /* ═══════ SIGNUP & ALERTS ═══════ */
-function handleSignup(){const e=document.getElementById('signup-email').value;if(!e||!e.includes('@')){document.getElementById('signup-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');document.getElementById('signup-form').style.display='none';document.getElementById('signup-ok').classList.add('show');toast('Welcome! 🍁','📧');}
+function handleSignup(){const e=document.getElementById('signup-email').value;if(!e||!e.includes('@')){document.getElementById('signup-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');document.getElementById('signup-form').style.display='none';document.getElementById('signup-ok').classList.add('show');toast('You are on the list','');}
 function openAlertModal(){document.getElementById('alert-modal').classList.add('on');document.body.style.overflow='hidden';}
 function closeAlertModal(){document.getElementById('alert-modal').classList.remove('on');document.body.style.overflow='';}
-function handleAlertSignup(){const e=document.getElementById('alert-email').value;if(!e||!e.includes('@')){document.getElementById('alert-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');closeAlertModal();toast('Alerts enabled! 🍁','🔔');}
+function handleAlertSignup(){const e=document.getElementById('alert-email').value;if(!e||!e.includes('@')){document.getElementById('alert-email').focus();return;}window.open('http://eepurl.com/jDQFL2','_blank');closeAlertModal();toast('Alerts enabled','');}
 
 /* ═══════ KEYBOARD SHORTCUTS ═══════ */
 document.addEventListener('keydown',function(e){if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){const a=document.activeElement;if(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT')return;e.preventDefault();document.getElementById('search').focus();}if(e.key==='Escape'){const s=document.getElementById('search');if(document.activeElement===s&&s.value){s.value='';s.blur();render();}if(document.getElementById('post-modal').classList.contains('on'))closePostModal();if(document.getElementById('alert-modal').classList.contains('on'))closeAlertModal();}});
@@ -1989,71 +2656,7 @@ document.addEventListener('keydown',function(e){if(e.key==='/'&&!e.ctrlKey&&!e.m
 /* ═══════ BROWSE BUTTON ═══════ */
 document.getElementById('browse-btn').addEventListener('click',function(e){e.preventDefault();document.getElementById('search').focus();document.getElementById('main-content').scrollIntoView({behavior:'smooth'});});
 
-/* ═══════ GAME VFX BACKGROUND ═══════ */
-(function(){
-  const canvas = document.createElement('canvas');
-  canvas.id = 'vfx-canvas';
-  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-100;opacity:0.3;';
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  let w = canvas.width = window.innerWidth;
-  let h = canvas.height = window.innerHeight;
-  const particles = [];
-  const colors = ['#E8C94A', '#C8372D', '#34A853', '#4285F4'];
-  const shapes = ['circle', 'square', 'triangle', 'cross'];
-  
-  // Adaptive particle count for mobile smoothness
-  const numParticles = w < 768 ? 15 : 35;
-  
-  for(let i=0; i<numParticles; i++){
-    particles.push({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
-      size: Math.random() * 4 + 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      shape: shapes[Math.floor(Math.random() * shapes.length)],
-      angle: Math.random() * Math.PI * 2,
-      vAngle: (Math.random() - 0.5) * 0.02
-    });
-  }
-  
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    for(let i=0; i<particles.length; i++) {
-      let p = particles[i];
-      p.x += p.vx; p.y += p.vy; p.angle += p.vAngle;
-      if(p.x < -10) p.x = w + 10; if(p.x > w + 10) p.x = -10;
-      if(p.y < -10) p.y = h + 10; if(p.y > h + 10) p.y = -10;
-      
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.angle);
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      if(p.shape === 'circle') {
-        ctx.arc(0, 0, p.size, 0, Math.PI*2);
-        ctx.fill();
-      } else if (p.shape === 'square') {
-        ctx.fillRect(-p.size, -p.size, p.size*2, p.size*2);
-      } else if (p.shape === 'triangle') {
-        ctx.moveTo(0, -p.size);
-        ctx.lineTo(p.size, p.size);
-        ctx.lineTo(-p.size, p.size);
-        ctx.fill();
-      } else if (p.shape === 'cross') {
-        ctx.fillRect(-p.size*1.5, -p.size/3, p.size*3, p.size/1.5);
-        ctx.fillRect(-p.size/3, -p.size*1.5, p.size/1.5, p.size*3);
-      }
-      ctx.restore();
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-  window.addEventListener('resize', () => {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  });
-})();
+/* Background particle canvas removed for a cleaner hiring-platform feel. */
 
 /* ═══════ INIT ═══════ */
 function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#privacy')showPrivacy();else if(h==='#terms')showTerms();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}

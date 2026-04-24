@@ -100,7 +100,7 @@ async function publish(draftFilename) {
         const tickerHtml = `<!-- SWARM_TICKER_START -->
 <div id="news-ticker" class="news-ticker">
   <div class="nt-inner">
-    <span class="nt-label">Latest News</span>
+    <span class="nt-label">Maple Feed</span>
     <a href="/blog/${draft.slug}.html" class="nt-link">
       <span>${draft.title}</span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
