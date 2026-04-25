@@ -37,6 +37,14 @@ const SEO_TARGETS = [
     { folder: 'saved', hash: '#saved', title: 'Your Saved Jobs | MapleDevs', desc: 'Manage your bookmarked game industry opportunities in Canada.' }
 ];
 
+const NOINDEX_FOLDERS = new Set(['saved']);
+const PUBLIC_STATIC_PAGES = [
+    { path: 'talent/', changefreq: 'weekly', priority: '0.7' },
+    { path: 'blog/', changefreq: 'weekly', priority: '0.7' },
+    { path: 'blog/mapledevs-editorial-launch.html', changefreq: 'monthly', priority: '0.6' },
+    { path: 'blog/montreal-silicon-valley-north-game-dev-2026.html', changefreq: 'monthly', priority: '0.6' }
+];
+
 async function fetchURL(url) {
     return new Promise((resolve, reject) => {
         https.get(url, (res) => {
@@ -391,6 +399,7 @@ function injectSEO(html, target, targetJobs = []) {
     output = safeReplaceMeta(output, 'og:url', canonicalUrl, true);
     output = safeReplaceMeta(output, 'twitter:title', target.title, false);
     output = safeReplaceMeta(output, 'twitter:description', target.desc, false);
+    output = safeReplaceMeta(output, 'robots', NOINDEX_FOLDERS.has(target.folder) ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', false);
     output = output.replace(/<link rel="canonical" href="[^"]*"/i, `<link rel="canonical" href="${canonicalUrl}"`);
     output = output.replace(/<link rel="alternate" hreflang="en-CA" href="[^"]*"/i, `<link rel="alternate" hreflang="en-CA" href="${canonicalUrl}"`);
     output = output.replace(/<link rel="alternate" hreflang="x-default" href="[^"]*"/i, `<link rel="alternate" hreflang="x-default" href="${canonicalUrl}"`);
@@ -481,7 +490,10 @@ async function build() {
     }
     const jobs = parseCSV(csvData);
 
-    let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://mapledevs.ca/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n  <url><loc>https://mapledevs.ca/talent/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`;
+    let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://mapledevs.ca/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`;
+    for (const page of PUBLIC_STATIC_PAGES) {
+        sitemapXML += `\n  <url><loc>https://mapledevs.ca/${page.path}</loc><changefreq>${page.changefreq}</changefreq><priority>${page.priority}</priority></url>`;
+    }
 
     for (const target of SEO_TARGETS) {
         const targetDir = path.join(ROOT_DIR, target.folder);
@@ -512,7 +524,9 @@ async function build() {
         }
         const html = injectSEO(baseHTML, pageTarget, targetJobs.slice(0, 10)); // Top 10 for SEO
         fs.writeFileSync(path.join(targetDir, 'index.html'), html);
-        sitemapXML += `\n  <url><loc>https://mapledevs.ca/${target.folder}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`;
+        if (!NOINDEX_FOLDERS.has(target.folder)) {
+            sitemapXML += `\n  <url><loc>https://mapledevs.ca/${target.folder}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`;
+        }
     }
 
     const jobsDir = path.join(ROOT_DIR, 'jobs');

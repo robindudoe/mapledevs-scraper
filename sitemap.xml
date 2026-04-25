@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mapledevs.ca/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://mapledevs.ca/talent/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mapledevs.ca/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://mapledevs.ca/blog/mapledevs-editorial-launch.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mapledevs.ca/blog/montreal-silicon-valley-north-game-dev-2026.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/vancouver/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mapledevs.ca/toronto/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mapledevs.ca/montreal/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -26,7 +29,6 @@
   <url><loc>https://mapledevs.ca/internship/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mapledevs.ca/about/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mapledevs.ca/studios/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mapledevs.ca/saved/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://mapledevs.ca/jobs/game-writer-intern-red-diamond-halifax-nova-scotia/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/social-media-manager-red-diamond-halifax-nova-scotia/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://mapledevs.ca/jobs/disney-dreamlight-valley-producteurtrice-producer-gameloft-montreal-qc/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
