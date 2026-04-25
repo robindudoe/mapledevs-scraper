@@ -1,0 +1,1630 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account Dashboard | MapleDevs</title>
+  <meta name="description" content="Manage your MapleDevs candidate profile, resume sections, studio page, job requests, and saved jobs.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/favicon.png">
+  <style>
+    :root {
+      --maple: #c7352d;
+      --maple-dark: #9f2822;
+      --ink: #151515;
+      --ink-soft: #414141;
+      --muted: #6d6d6d;
+      --line: #dedbd5;
+      --line-strong: #cfc9c0;
+      --paper: #f7f5f0;
+      --panel: #fffefa;
+      --panel-alt: #fbfaf6;
+      --success: #257348;
+      --warning: #a15c08;
+      --danger: #b42318;
+      --focus: rgba(199, 53, 45, 0.18);
+      --shadow: 0 18px 50px rgba(30, 24, 20, 0.08);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(199, 53, 45, 0.06), rgba(199, 53, 45, 0) 260px),
+        var(--paper);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    img { max-width: 100%; }
+
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: -48px;
+      z-index: 10;
+      padding: 9px 12px;
+      border-radius: var(--radius);
+      color: #fff;
+      background: var(--ink);
+      text-decoration: none;
+      transition: top 0.2s ease;
+    }
+    .skip:focus { top: 12px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid rgba(222, 219, 213, 0.82);
+      background: rgba(255, 254, 250, 0.94);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      box-shadow: 0 1px 8px rgba(199, 53, 45, 0.18);
+    }
+    .brand span span { color: var(--maple); }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-link, .btn {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      padding: 8px 13px;
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 13px;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .nav-link {
+      color: var(--ink-soft);
+      border-color: var(--line);
+      background: var(--panel);
+    }
+    .nav-link:hover, .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      color: #fff;
+      background: var(--maple);
+      border-color: var(--maple);
+    }
+    .btn-primary:hover { background: var(--maple-dark); border-color: var(--maple-dark); }
+    .btn-secondary {
+      color: var(--ink);
+      background: var(--panel);
+      border-color: var(--line);
+    }
+    .btn-secondary:hover { border-color: var(--line-strong); background: #fff; }
+    .btn-danger {
+      color: var(--danger);
+      background: #fff;
+      border-color: rgba(180, 35, 24, 0.28);
+    }
+    .btn-danger:hover { border-color: rgba(180, 35, 24, 0.5); background: #fff7f5; }
+
+    .shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 34px 22px 56px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.55fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--maple);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.6vw, 4.25rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+      max-width: 780px;
+    }
+    .hero p:last-child {
+      margin: 12px 0 0;
+      color: var(--ink-soft);
+      max-width: 720px;
+      font-size: 16px;
+    }
+    .hero-metric {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .hero-metric strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .hero-metric span { color: var(--muted); font-size: 13px; }
+
+    .status {
+      display: none;
+      margin: 0 0 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 11px 13px;
+      background: var(--panel);
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+    .status.on { display: block; }
+    .status.ok { border-color: rgba(37, 115, 72, 0.25); background: #f3fbf6; color: var(--success); }
+    .status.warn { border-color: rgba(161, 92, 8, 0.28); background: #fff9ed; color: var(--warning); }
+    .status.err { border-color: rgba(180, 35, 24, 0.25); background: #fff5f3; color: var(--danger); }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.7fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .panel-head {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .panel-head h2, .panel h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .panel-head p, .panel-copy {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .panel-body { padding: 20px; }
+    .compact-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .compact-list li {
+      padding-left: 18px;
+      position: relative;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+    .compact-list li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      border-radius: 99px;
+      background: var(--maple);
+    }
+
+    form { display: grid; gap: 14px; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    textarea { min-height: 108px; resize: vertical; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--maple);
+      box-shadow: 0 0 0 4px var(--focus);
+    }
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+    .check-row input {
+      width: 17px;
+      min-height: 17px;
+      height: 17px;
+      accent-color: var(--maple);
+    }
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      padding: 14px;
+    }
+    .identity {
+      border-bottom: 1px solid var(--line);
+      padding: 4px 4px 14px;
+      margin-bottom: 12px;
+    }
+    .identity .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .identity strong {
+      display: block;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+    .identity span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+      margin-top: 2px;
+    }
+    .tab-list {
+      display: grid;
+      gap: 4px;
+    }
+    .tab-btn {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--ink-soft);
+      padding: 9px 10px;
+      text-align: left;
+      font-weight: 800;
+    }
+    .tab-btn:hover { background: var(--panel-alt); color: var(--ink); }
+    .tab-btn[aria-selected="true"] {
+      background: #fff4f2;
+      color: var(--maple);
+      border-color: rgba(199, 53, 45, 0.18);
+    }
+    .workspace { display: grid; gap: 18px; }
+    .view-panel { display: none; }
+    .view-panel.on { display: block; }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-alt);
+      padding: 13px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1.1;
+    }
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 25px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink-soft);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .item-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .list-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .list-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .list-item h4 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+    .list-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .empty {
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--panel-alt);
+      color: var(--muted);
+      padding: 16px;
+      font-size: 14px;
+    }
+    .mail-card {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid rgba(37, 115, 72, 0.25);
+      border-radius: var(--radius);
+      background: #f3fbf6;
+      color: var(--success);
+      padding: 14px;
+    }
+    .mail-card.on { display: block; }
+    .mail-card p { margin: 0 0 10px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 900px) {
+      .hero, .auth-grid, .dashboard, .split { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner, .shell { padding-left: 14px; padding-right: 14px; }
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .nav-actions { width: 100%; justify-content: flex-start; }
+      .nav-link, .btn { width: 100%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .panel-head { flex-direction: column; }
+      h1 { font-size: 2.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to dashboard</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">
+        <img src="/favicon.png" alt="">
+        <span>Maple<span>Devs</span></span>
+      </a>
+      <nav class="nav-actions" aria-label="Account navigation">
+        <a class="nav-link" href="/">Jobs</a>
+        <a class="nav-link" href="/studios/">Studios</a>
+        <a class="nav-link" href="mailto:mapledevsbusiness@gmail.com">Business</a>
+        <button class="btn btn-secondary hidden" id="sign-out-btn" type="button">Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Private account preview</p>
+        <h1 id="page-title">One profile for your Canadian games career.</h1>
+        <p>Save opportunities, build a candidate profile, maintain a studio page, and send job requests to MapleDevs from one controlled dashboard.</p>
+      </div>
+      <div class="hero-metric" aria-label="Featured listing price">
+        <strong>$29 CAD</strong>
+        <span>Optional featured listing price remains unchanged.</span>
+      </div>
+    </section>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <section class="auth-grid" id="auth-panel" aria-label="Sign in">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Sign in to MapleDevs</h2>
+            <p>Use email and password, or request a magic link if your Supabase auth settings allow it.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="sign-in-form">
+            <div class="field">
+              <label for="signin-email">Email</label>
+              <input id="signin-email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="signin-password">Password</label>
+              <input id="signin-password" type="password" autocomplete="current-password" minlength="6">
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Sign in</button>
+              <button class="btn btn-secondary" id="magic-link-btn" type="button">Send magic link</button>
+            </div>
+          </form>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Create an account</h2>
+            <p>Candidate and studio tools are tied to the same account.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="sign-up-form">
+            <div class="field">
+              <label for="signup-email">Email</label>
+              <input id="signup-email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" type="password" autocomplete="new-password" minlength="6" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Create account</button>
+          </form>
+          <ul class="compact-list" style="margin-top:18px">
+            <li>Candidate profiles stay private unless you change visibility.</li>
+            <li>Studio pages require MapleDevs review before public publishing.</li>
+            <li>Job requests are stored and still route through MapleDevs business email.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard" aria-label="Account dashboard">
+      <aside class="panel sidebar" aria-label="Dashboard sections">
+        <div class="identity">
+          <div class="avatar" id="avatar-initial">M</div>
+          <strong id="identity-name">MapleDevs account</strong>
+          <span id="identity-email"></span>
+        </div>
+        <div class="tab-list" role="tablist" aria-label="Account sections">
+          <button class="tab-btn" type="button" data-tab="overview" aria-selected="true">Overview</button>
+          <button class="tab-btn" type="button" data-tab="candidate" aria-selected="false">Candidate profile</button>
+          <button class="tab-btn" type="button" data-tab="resume" aria-selected="false">Resume builder</button>
+          <button class="tab-btn" type="button" data-tab="studio" aria-selected="false">Studio page</button>
+          <button class="tab-btn" type="button" data-tab="jobs" aria-selected="false">Job requests</button>
+          <button class="tab-btn" type="button" data-tab="saved" aria-selected="false">Saved jobs</button>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <section class="view-panel on" data-panel="overview" aria-labelledby="overview-title">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 id="overview-title">Account overview</h2>
+                <p>Your base identity for MapleDevs candidate and studio tools.</p>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="stats" aria-label="Profile stats">
+                <div class="stat"><strong id="stat-resume">0</strong><span>Resume sections</span></div>
+                <div class="stat"><strong id="stat-saved">0</strong><span>Cloud saved jobs</span></div>
+                <div class="stat"><strong id="stat-studio">Draft</strong><span>Studio page status</span></div>
+              </div>
+              <form id="profile-form">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="profile-display-name">Display name</label>
+                    <input id="profile-display-name" type="text" autocomplete="name">
+                  </div>
+                  <div class="field">
+                    <label for="profile-username">Username</label>
+                    <input id="profile-username" type="text" autocomplete="username" placeholder="firstname-lastname">
+                  </div>
+                  <div class="field">
+                    <label for="profile-account-type">Account type</label>
+                    <select id="profile-account-type">
+                      <option value="candidate">Candidate</option>
+                      <option value="studio">Studio</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="profile-visibility">Profile visibility</label>
+                    <select id="profile-visibility">
+                      <option value="private">Private</option>
+                      <option value="public">Public</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="profile-location">Location</label>
+                    <input id="profile-location" type="text" placeholder="Toronto, ON">
+                  </div>
+                  <div class="field">
+                    <label for="profile-website">Website</label>
+                    <input id="profile-website" type="url" placeholder="https://">
+                  </div>
+                  <div class="field full">
+                    <label for="profile-headline">Headline</label>
+                    <input id="profile-headline" type="text" placeholder="Gameplay programmer focused on Unreal and multiplayer systems">
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Save account</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="candidate" aria-labelledby="candidate-title">
+          <div class="split">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2 id="candidate-title">Candidate profile</h2>
+                  <p>Structured data for future resume pages, recruiter review, and better job matching.</p>
+                </div>
+              </div>
+              <div class="panel-body">
+                <form id="candidate-form">
+                  <div class="form-grid">
+                    <div class="field">
+                      <label for="candidate-title-input">Resume title</label>
+                      <input id="candidate-title-input" type="text" placeholder="Gameplay Programmer">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-years">Years of experience</label>
+                      <input id="candidate-years" type="number" min="0" max="60" step="1">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-portfolio">Portfolio URL</label>
+                      <input id="candidate-portfolio" type="url" placeholder="https://">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-linkedin">LinkedIn URL</label>
+                      <input id="candidate-linkedin" type="url" placeholder="https://">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-github">GitHub URL</label>
+                      <input id="candidate-github" type="url" placeholder="https://">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-visa">Work authorization</label>
+                      <input id="candidate-visa" type="text" placeholder="Canadian citizen, PR, work permit">
+                    </div>
+                    <div class="field full">
+                      <label for="candidate-summary">Professional summary</label>
+                      <textarea id="candidate-summary" placeholder="A short, recruiter-friendly overview of your strongest game development experience."></textarea>
+                    </div>
+                    <div class="field full">
+                      <label for="candidate-skills">Skills</label>
+                      <input id="candidate-skills" type="text" placeholder="C++, gameplay systems, networking, tools">
+                      <p class="hint">Separate values with commas.</p>
+                    </div>
+                    <div class="field">
+                      <label for="candidate-engines">Engines</label>
+                      <input id="candidate-engines" type="text" placeholder="Unreal, Unity, Godot">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-locations">Preferred locations</label>
+                      <input id="candidate-locations" type="text" placeholder="Remote, Vancouver, Toronto">
+                    </div>
+                    <div class="field">
+                      <label for="candidate-work-modes">Preferred work modes</label>
+                      <input id="candidate-work-modes" type="text" placeholder="Remote, Hybrid, On-site">
+                    </div>
+                    <div class="field">
+                      <label class="check-row" for="candidate-open">
+                        <input id="candidate-open" type="checkbox">
+                        Open to work
+                      </label>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Save candidate profile</button>
+                </form>
+              </div>
+            </article>
+            <aside class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Profile signal</h3>
+                  <p>Visible only to you for now.</p>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="tag-row" id="candidate-tags"></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="resume" aria-labelledby="resume-title">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 id="resume-title">Resume builder</h2>
+                <p>Add experience, education, projects, awards, and links as structured sections.</p>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form id="resume-form">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="resume-type">Section type</label>
+                    <select id="resume-type">
+                      <option value="experience">Experience</option>
+                      <option value="project">Project</option>
+                      <option value="education">Education</option>
+                      <option value="award">Award</option>
+                      <option value="link">Link</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="resume-section-title">Title</label>
+                    <input id="resume-section-title" type="text" required>
+                  </div>
+                  <div class="field">
+                    <label for="resume-organization">Studio, school, or team</label>
+                    <input id="resume-organization" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="resume-location">Location</label>
+                    <input id="resume-location" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="resume-start">Start date</label>
+                    <input id="resume-start" type="date">
+                  </div>
+                  <div class="field">
+                    <label for="resume-end">End date</label>
+                    <input id="resume-end" type="date">
+                  </div>
+                  <div class="field full">
+                    <label class="check-row" for="resume-current">
+                      <input id="resume-current" type="checkbox">
+                      Current role or project
+                    </label>
+                  </div>
+                  <div class="field full">
+                    <label for="resume-description">Description</label>
+                    <textarea id="resume-description" placeholder="Impact, tools, shipped work, team size, responsibilities."></textarea>
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Add section</button>
+              </form>
+              <div class="item-list" id="resume-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="studio" aria-labelledby="studio-title">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 id="studio-title">Studio page</h2>
+                <p>Create a studio draft that MapleDevs can review before publishing.</p>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form id="studio-form">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="studio-name">Studio name</label>
+                    <input id="studio-name" type="text" required>
+                  </div>
+                  <div class="field">
+                    <label for="studio-contact">Business email</label>
+                    <input id="studio-contact" type="email">
+                  </div>
+                  <div class="field">
+                    <label for="studio-website">Website</label>
+                    <input id="studio-website" type="url" placeholder="https://">
+                  </div>
+                  <div class="field">
+                    <label for="studio-careers">Careers page</label>
+                    <input id="studio-careers" type="url" placeholder="https://">
+                  </div>
+                  <div class="field">
+                    <label for="studio-team-size">Team size</label>
+                    <input id="studio-team-size" type="text" placeholder="11-50">
+                  </div>
+                  <div class="field">
+                    <label for="studio-remote-policy">Remote policy</label>
+                    <input id="studio-remote-policy" type="text" placeholder="Hybrid in Vancouver, remote in Canada">
+                  </div>
+                  <div class="field full">
+                    <label for="studio-description">Studio overview</label>
+                    <textarea id="studio-description" placeholder="What your studio builds, where the team works, and why developers join."></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="studio-locations">Locations</label>
+                    <input id="studio-locations" type="text" placeholder="Montreal, Quebec City, Remote Canada">
+                  </div>
+                  <div class="field">
+                    <label for="studio-engines">Engines</label>
+                    <input id="studio-engines" type="text" placeholder="Unreal, Unity, proprietary">
+                  </div>
+                  <div class="field full">
+                    <label for="studio-specialties">Specialties</label>
+                    <input id="studio-specialties" type="text" placeholder="AAA co-dev, indie games, mobile, VR, live ops">
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Save studio draft</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="jobs" aria-labelledby="job-request-title">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 id="job-request-title">Job request</h2>
+                <p>Submit a role for MapleDevs review. Standard listings are free; featured placement remains $29 CAD.</p>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form id="job-request-form">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="job-title">Job title</label>
+                    <input id="job-title" type="text" required>
+                  </div>
+                  <div class="field">
+                    <label for="job-studio">Studio name</label>
+                    <input id="job-studio" type="text" required>
+                  </div>
+                  <div class="field">
+                    <label for="job-contact-name">Contact name</label>
+                    <input id="job-contact-name" type="text">
+                  </div>
+                  <div class="field">
+                    <label for="job-contact-email">Contact email</label>
+                    <input id="job-contact-email" type="email" required>
+                  </div>
+                  <div class="field">
+                    <label for="job-location">Location</label>
+                    <input id="job-location" type="text" placeholder="Toronto, ON or Remote Canada">
+                  </div>
+                  <div class="field">
+                    <label for="job-type">Job type</label>
+                    <select id="job-type">
+                      <option value="Full-time">Full-time</option>
+                      <option value="Contract">Contract</option>
+                      <option value="Part-time">Part-time</option>
+                      <option value="Internship">Internship</option>
+                      <option value="Co-op">Co-op</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="job-work-mode">Work mode</label>
+                    <select id="job-work-mode">
+                      <option value="Remote">Remote</option>
+                      <option value="Hybrid">Hybrid</option>
+                      <option value="On-site">On-site</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="job-salary">Salary range</label>
+                    <input id="job-salary" type="text" placeholder="$80k-$110k CAD">
+                  </div>
+                  <div class="field">
+                    <label for="job-engine">Engine</label>
+                    <input id="job-engine" type="text" placeholder="Unreal">
+                  </div>
+                  <div class="field">
+                    <label for="job-apply">Apply link</label>
+                    <input id="job-apply" type="url" placeholder="https://">
+                  </div>
+                  <div class="field full">
+                    <label for="job-description">Description</label>
+                    <textarea id="job-description" required></textarea>
+                  </div>
+                  <div class="field">
+                    <label class="check-row" for="job-visa">
+                      <input id="job-visa" type="checkbox">
+                      Visa sponsorship available
+                    </label>
+                  </div>
+                  <div class="field">
+                    <label class="check-row" for="job-student">
+                      <input id="job-student" type="checkbox">
+                      Student friendly
+                    </label>
+                  </div>
+                  <div class="field full">
+                    <label class="check-row" for="job-featured">
+                      <input id="job-featured" type="checkbox">
+                      Request featured placement for $29 CAD
+                    </label>
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Send job request</button>
+              </form>
+              <div class="mail-card" id="job-mail-card">
+                <p><strong>Request saved.</strong> Send the business email too so MapleDevs can review it quickly.</p>
+                <a class="btn btn-secondary" id="job-mail-link" href="mailto:mapledevsbusiness@gmail.com">Email MapleDevs</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" data-panel="saved" aria-labelledby="saved-title">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 id="saved-title">Cloud saved jobs</h2>
+                <p>Store important roles inside your account while the public board keeps local quick-save support.</p>
+              </div>
+            </div>
+            <div class="panel-body">
+              <form id="saved-form">
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="saved-job-title">Job title</label>
+                    <input id="saved-job-title" type="text" required>
+                  </div>
+                  <div class="field">
+                    <label for="saved-studio">Studio</label>
+                    <input id="saved-studio" type="text">
+                  </div>
+                  <div class="field full">
+                    <label for="saved-url">Job URL</label>
+                    <input id="saved-url" type="url" placeholder="https://">
+                  </div>
+                  <div class="field full">
+                    <label for="saved-notes">Notes</label>
+                    <textarea id="saved-notes" placeholder="Application status, recruiter contact, deadline."></textarea>
+                  </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Save job</button>
+              </form>
+              <div class="item-list" id="saved-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://wihermvoldapicvtksds.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpaGVybXZvbGRhcGljdnRrc2RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwOTQzNTYsImV4cCI6MjA5MjY3MDM1Nn0.zqDWwusOf0qwrzGG7c-sQmCGts3WrNChwqMfKVlkvSg';
+    const BUSINESS_EMAIL = 'mapledevsbusiness@gmail.com';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    const state = {
+      user: null,
+      profile: null,
+      candidate: null,
+      studio: null,
+      resumeSections: [],
+      savedJobs: []
+    };
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    function text(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value == null ? '' : String(value);
+    }
+
+    function value(id, nextValue) {
+      const el = document.getElementById(id);
+      if (!el) return '';
+      if (nextValue !== undefined) {
+        if (el.type === 'checkbox') el.checked = Boolean(nextValue);
+        else el.value = nextValue == null ? '' : nextValue;
+      }
+      return el.type === 'checkbox' ? el.checked : el.value.trim();
+    }
+
+    function setStatus(message, kind = 'ok') {
+      const el = $('#status');
+      if (!message) {
+        el.className = 'status';
+        el.textContent = '';
+        return;
+      }
+      el.className = `status on ${kind}`;
+      el.textContent = message;
+    }
+
+    function cleanUrl(url) {
+      const trimmed = String(url || '').trim();
+      if (!trimmed) return null;
+      return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+    }
+
+    function cleanText(input) {
+      const trimmed = String(input || '').trim();
+      return trimmed || null;
+    }
+
+    function list(input) {
+      return String(input || '')
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean);
+    }
+
+    function join(items) {
+      return Array.isArray(items) ? items.join(', ') : '';
+    }
+
+    function slug(input) {
+      return String(input || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 70);
+    }
+
+    function username(input) {
+      const normalized = slug(input);
+      return normalized || null;
+    }
+
+    function moneyDate(input) {
+      if (!input) return '';
+      const date = new Date(input);
+      if (Number.isNaN(date.getTime())) return input;
+      return date.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function escapeHtml(input) {
+      return String(input || '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[char]);
+    }
+
+    function selectTab(tab) {
+      $$('.tab-btn').forEach(btn => btn.setAttribute('aria-selected', String(btn.dataset.tab === tab)));
+      $$('.view-panel').forEach(panel => panel.classList.toggle('on', panel.dataset.panel === tab));
+    }
+
+    function accountName() {
+      return state.profile?.display_name || state.profile?.username || state.user?.email || 'MapleDevs account';
+    }
+
+    function renderIdentity() {
+      const name = accountName();
+      text('identity-name', name);
+      text('identity-email', state.user?.email || '');
+      text('avatar-initial', name.trim().charAt(0).toUpperCase() || 'M');
+      text('stat-resume', state.resumeSections.length);
+      text('stat-saved', state.savedJobs.length);
+      const studioStatus = state.studio?.published ? 'Published' : state.studio ? 'Draft' : 'Not set';
+      text('stat-studio', studioStatus);
+    }
+
+    function renderAuth(session) {
+      const signedIn = Boolean(session?.user);
+      $('#auth-panel').classList.toggle('hidden', signedIn);
+      $('#dashboard').classList.toggle('hidden', !signedIn);
+      $('#sign-out-btn').classList.toggle('hidden', !signedIn);
+    }
+
+    async function requireOk(result, fallback) {
+      if (result.error) throw new Error(result.error.message || fallback);
+      return result.data;
+    }
+
+    async function ensureProfile() {
+      const user = state.user;
+      let result = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+      if (result.error) throw result.error;
+      if (!result.data) {
+        result = await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            email: user.email,
+            account_type: 'candidate',
+            visibility: 'private'
+          })
+          .select('*')
+          .single();
+        if (result.error) throw result.error;
+      }
+      state.profile = result.data;
+    }
+
+    async function loadCandidate() {
+      let result = await supabase.from('candidate_profiles').select('*').eq('user_id', state.user.id).maybeSingle();
+      if (result.error) throw result.error;
+      if (!result.data) {
+        result = await supabase
+          .from('candidate_profiles')
+          .insert({ user_id: state.user.id })
+          .select('*')
+          .single();
+        if (result.error) throw result.error;
+      }
+      state.candidate = result.data;
+    }
+
+    async function loadStudio() {
+      const result = await supabase
+        .from('studio_profiles')
+        .select('*')
+        .eq('owner_id', state.user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (result.error) throw result.error;
+      state.studio = result.data;
+    }
+
+    async function loadResumeSections() {
+      const result = await supabase
+        .from('resume_sections')
+        .select('*')
+        .eq('user_id', state.user.id)
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false });
+      if (result.error) throw result.error;
+      state.resumeSections = result.data || [];
+    }
+
+    async function loadSavedJobs() {
+      const result = await supabase
+        .from('saved_jobs')
+        .select('*')
+        .eq('user_id', state.user.id)
+        .order('created_at', { ascending: false });
+      if (result.error) throw result.error;
+      state.savedJobs = result.data || [];
+    }
+
+    async function loadDashboard() {
+      setStatus('Loading your account...', 'warn');
+      await ensureProfile();
+      await Promise.all([loadCandidate(), loadStudio(), loadResumeSections(), loadSavedJobs()]);
+      fillProfileForm();
+      fillCandidateForm();
+      fillStudioForm();
+      renderResumeSections();
+      renderSavedJobs();
+      renderIdentity();
+      setStatus('Account dashboard loaded.', 'ok');
+      setTimeout(() => setStatus(''), 2400);
+    }
+
+    function fillProfileForm() {
+      const profile = state.profile || {};
+      value('profile-display-name', profile.display_name || '');
+      value('profile-username', profile.username || '');
+      value('profile-account-type', profile.account_type || 'candidate');
+      value('profile-visibility', profile.visibility || 'private');
+      value('profile-location', profile.location || '');
+      value('profile-website', profile.website_url || '');
+      value('profile-headline', profile.headline || '');
+    }
+
+    function fillCandidateForm() {
+      const c = state.candidate || {};
+      value('candidate-title-input', c.resume_title || '');
+      value('candidate-years', c.years_experience ?? '');
+      value('candidate-portfolio', c.portfolio_url || '');
+      value('candidate-linkedin', c.linkedin_url || '');
+      value('candidate-github', c.github_url || '');
+      value('candidate-visa', c.visa_status || '');
+      value('candidate-summary', c.summary || '');
+      value('candidate-skills', join(c.skills));
+      value('candidate-engines', join(c.engines));
+      value('candidate-locations', join(c.preferred_locations));
+      value('candidate-work-modes', join(c.preferred_work_modes));
+      value('candidate-open', c.open_to_work !== false);
+      renderCandidateTags();
+    }
+
+    function fillStudioForm() {
+      const s = state.studio || {};
+      value('studio-name', s.studio_name || '');
+      value('studio-contact', s.contact_email || state.user?.email || '');
+      value('studio-website', s.website_url || '');
+      value('studio-careers', s.careers_url || '');
+      value('studio-team-size', s.team_size || '');
+      value('studio-remote-policy', s.remote_policy || '');
+      value('studio-description', s.description || '');
+      value('studio-locations', join(s.locations));
+      value('studio-engines', join(s.engines));
+      value('studio-specialties', join(s.specialties));
+      value('job-studio', s.studio_name || '');
+      value('job-contact-email', s.contact_email || state.user?.email || '');
+    }
+
+    function renderCandidateTags() {
+      const c = state.candidate || {};
+      const tags = [
+        c.open_to_work !== false ? 'Open to work' : 'Not marked open',
+        ...(c.engines || []),
+        ...(c.skills || []).slice(0, 4),
+        ...(c.preferred_work_modes || [])
+      ].filter(Boolean);
+      $('#candidate-tags').innerHTML = tags.length
+        ? tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')
+        : '<div class="empty">Save your candidate profile to create matching signals.</div>';
+    }
+
+    function renderResumeSections() {
+      const listEl = $('#resume-list');
+      if (!state.resumeSections.length) {
+        listEl.innerHTML = '<div class="empty">No resume sections yet.</div>';
+        return;
+      }
+      listEl.innerHTML = state.resumeSections.map(section => {
+        const dates = [moneyDate(section.start_date), section.is_current ? 'Present' : moneyDate(section.end_date)].filter(Boolean).join(' - ');
+        return `
+          <article class="list-item">
+            <div class="list-item-head">
+              <div>
+                <h4>${escapeHtml(section.title)}</h4>
+                <p>${escapeHtml([section.organization, section.location, dates].filter(Boolean).join(' | '))}</p>
+              </div>
+              <button class="btn btn-danger" type="button" data-delete-resume="${escapeHtml(section.id)}">Remove</button>
+            </div>
+            ${section.description ? `<p>${escapeHtml(section.description)}</p>` : ''}
+            <div class="tag-row"><span class="tag">${escapeHtml(section.section_type || 'section')}</span></div>
+          </article>`;
+      }).join('');
+      renderIdentity();
+    }
+
+    function renderSavedJobs() {
+      const listEl = $('#saved-list');
+      if (!state.savedJobs.length) {
+        listEl.innerHTML = '<div class="empty">No cloud saved jobs yet.</div>';
+        return;
+      }
+      listEl.innerHTML = state.savedJobs.map(job => `
+        <article class="list-item">
+          <div class="list-item-head">
+            <div>
+              <h4>${escapeHtml(job.job_title)}</h4>
+              <p>${escapeHtml([job.studio_name, moneyDate(job.created_at)].filter(Boolean).join(' | '))}</p>
+            </div>
+            <button class="btn btn-danger" type="button" data-delete-saved="${escapeHtml(job.job_key)}">Remove</button>
+          </div>
+          ${job.notes ? `<p>${escapeHtml(job.notes)}</p>` : ''}
+          ${job.job_url ? `<a href="${escapeHtml(job.job_url)}" target="_blank" rel="noopener">Open job</a>` : ''}
+        </article>
+      `).join('');
+      renderIdentity();
+    }
+
+    async function handleSignIn(event) {
+      event.preventDefault();
+      const email = value('signin-email');
+      const password = value('signin-password');
+      if (!password) {
+        setStatus('Enter your password, or use the magic link button.', 'warn');
+        return;
+      }
+      setStatus('Signing in...', 'warn');
+      const result = await supabase.auth.signInWithPassword({ email, password });
+      if (result.error) {
+        setStatus(result.error.message, 'err');
+        return;
+      }
+      setStatus('Signed in.', 'ok');
+    }
+
+    async function handleMagicLink() {
+      const email = value('signin-email') || value('signup-email');
+      if (!email) {
+        setStatus('Enter your email first.', 'warn');
+        return;
+      }
+      const result = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.href.split('#')[0] }
+      });
+      if (result.error) {
+        setStatus(result.error.message, 'err');
+        return;
+      }
+      setStatus('Magic link sent. Check your email.', 'ok');
+    }
+
+    async function handleSignUp(event) {
+      event.preventDefault();
+      setStatus('Creating your account...', 'warn');
+      const result = await supabase.auth.signUp({
+        email: value('signup-email'),
+        password: value('signup-password'),
+        options: { emailRedirectTo: window.location.href.split('#')[0] }
+      });
+      if (result.error) {
+        setStatus(result.error.message, 'err');
+        return;
+      }
+      setStatus('Account created. Check your email if confirmation is enabled.', 'ok');
+    }
+
+    async function handleSignOut() {
+      await supabase.auth.signOut();
+      state.user = null;
+      state.profile = null;
+      state.candidate = null;
+      state.studio = null;
+      state.resumeSections = [];
+      state.savedJobs = [];
+      renderAuth(null);
+      setStatus('Signed out.', 'ok');
+    }
+
+    async function saveProfile(event) {
+      event.preventDefault();
+      setStatus('Saving account...', 'warn');
+      const payload = {
+        id: state.user.id,
+        email: state.user.email,
+        display_name: cleanText(value('profile-display-name')),
+        username: username(value('profile-username')),
+        account_type: value('profile-account-type') || 'candidate',
+        visibility: value('profile-visibility') || 'private',
+        location: cleanText(value('profile-location')),
+        website_url: cleanUrl(value('profile-website')),
+        headline: cleanText(value('profile-headline')),
+        updated_at: new Date().toISOString()
+      };
+      const data = await requireOk(
+        await supabase.from('profiles').upsert(payload, { onConflict: 'id' }).select('*').single(),
+        'Could not save account.'
+      );
+      state.profile = data;
+      renderIdentity();
+      setStatus('Account saved.', 'ok');
+    }
+
+    async function saveCandidate(event) {
+      event.preventDefault();
+      setStatus('Saving candidate profile...', 'warn');
+      const years = value('candidate-years');
+      const payload = {
+        user_id: state.user.id,
+        resume_title: cleanText(value('candidate-title-input')),
+        years_experience: years === '' ? null : Number(years),
+        portfolio_url: cleanUrl(value('candidate-portfolio')),
+        linkedin_url: cleanUrl(value('candidate-linkedin')),
+        github_url: cleanUrl(value('candidate-github')),
+        visa_status: cleanText(value('candidate-visa')),
+        summary: cleanText(value('candidate-summary')),
+        skills: list(value('candidate-skills')),
+        engines: list(value('candidate-engines')),
+        preferred_locations: list(value('candidate-locations')),
+        preferred_work_modes: list(value('candidate-work-modes')),
+        open_to_work: value('candidate-open'),
+        updated_at: new Date().toISOString()
+      };
+      const data = await requireOk(
+        await supabase.from('candidate_profiles').upsert(payload, { onConflict: 'user_id' }).select('*').single(),
+        'Could not save candidate profile.'
+      );
+      state.candidate = data;
+      renderCandidateTags();
+      setStatus('Candidate profile saved.', 'ok');
+    }
+
+    async function addResumeSection(event) {
+      event.preventDefault();
+      setStatus('Adding resume section...', 'warn');
+      const payload = {
+        user_id: state.user.id,
+        section_type: value('resume-type'),
+        title: cleanText(value('resume-section-title')),
+        organization: cleanText(value('resume-organization')),
+        location: cleanText(value('resume-location')),
+        start_date: cleanText(value('resume-start')),
+        end_date: value('resume-current') ? null : cleanText(value('resume-end')),
+        is_current: value('resume-current'),
+        description: cleanText(value('resume-description')),
+        sort_order: state.resumeSections.length + 1
+      };
+      await requireOk(
+        await supabase.from('resume_sections').insert(payload).select('*').single(),
+        'Could not add resume section.'
+      );
+      event.target.reset();
+      await loadResumeSections();
+      renderResumeSections();
+      setStatus('Resume section added.', 'ok');
+    }
+
+    async function deleteResumeSection(id) {
+      setStatus('Removing resume section...', 'warn');
+      await requireOk(
+        await supabase.from('resume_sections').delete().eq('id', id).eq('user_id', state.user.id),
+        'Could not remove resume section.'
+      );
+      await loadResumeSections();
+      renderResumeSections();
+      setStatus('Resume section removed.', 'ok');
+    }
+
+    async function saveStudio(event) {
+      event.preventDefault();
+      setStatus('Saving studio draft...', 'warn');
+      const studioName = cleanText(value('studio-name'));
+      if (!studioName) {
+        setStatus('Studio name is required.', 'warn');
+        return;
+      }
+      const basePayload = {
+        owner_id: state.user.id,
+        studio_name: studioName,
+        slug: state.studio?.slug || `${slug(studioName)}-${state.user.id.slice(0, 6)}`,
+        description: cleanText(value('studio-description')),
+        website_url: cleanUrl(value('studio-website')),
+        careers_url: cleanUrl(value('studio-careers')),
+        contact_email: cleanText(value('studio-contact')),
+        locations: list(value('studio-locations')),
+        engines: list(value('studio-engines')),
+        specialties: list(value('studio-specialties')),
+        remote_policy: cleanText(value('studio-remote-policy')),
+        team_size: cleanText(value('studio-team-size')),
+        updated_at: new Date().toISOString()
+      };
+      const result = state.studio?.id
+        ? await supabase.from('studio_profiles').update(basePayload).eq('id', state.studio.id).eq('owner_id', state.user.id).select('*').single()
+        : await supabase.from('studio_profiles').insert(basePayload).select('*').single();
+      const data = await requireOk(result, 'Could not save studio draft.');
+      state.studio = data;
+      fillStudioForm();
+      renderIdentity();
+      setStatus('Studio draft saved.', 'ok');
+    }
+
+    function jobEmailHref(payload) {
+      const subject = `MapleDevs job request - ${payload.job_title || 'New role'}`;
+      const body = [
+        `Studio: ${payload.studio_name || ''}`,
+        `Role: ${payload.job_title || ''}`,
+        `Contact: ${payload.contact_name || ''} <${payload.contact_email || ''}>`,
+        `Location: ${payload.location || ''}`,
+        `Type: ${payload.job_type || ''}`,
+        `Work mode: ${payload.work_mode || ''}`,
+        `Salary: ${payload.salary_range || ''}`,
+        `Engine: ${payload.engine || ''}`,
+        `Visa sponsorship: ${payload.visa_sponsorship ? 'Yes' : 'No'}`,
+        `Student friendly: ${payload.student_friendly ? 'Yes' : 'No'}`,
+        `Featured requested: ${payload.featured_requested ? 'Yes, $29 CAD' : 'No'}`,
+        `Apply link: ${payload.apply_link || ''}`,
+        '',
+        payload.description || ''
+      ].join('\n');
+      return `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    async function sendJobRequest(event) {
+      event.preventDefault();
+      setStatus('Saving job request...', 'warn');
+      const payload = {
+        submitted_by: state.user.id,
+        studio_id: state.studio?.id || null,
+        studio_name: cleanText(value('job-studio')),
+        contact_name: cleanText(value('job-contact-name')),
+        contact_email: cleanText(value('job-contact-email')),
+        job_title: cleanText(value('job-title')),
+        location: cleanText(value('job-location')),
+        job_type: value('job-type'),
+        work_mode: value('job-work-mode'),
+        salary_range: cleanText(value('job-salary')),
+        engine: cleanText(value('job-engine')),
+        visa_sponsorship: value('job-visa'),
+        student_friendly: value('job-student'),
+        description: cleanText(value('job-description')),
+        apply_link: cleanUrl(value('job-apply')),
+        featured_requested: value('job-featured')
+      };
+      await requireOk(
+        await supabase.from('job_requests').insert(payload).select('*').single(),
+        'Could not save job request.'
+      );
+      $('#job-mail-link').href = jobEmailHref(payload);
+      $('#job-mail-card').classList.add('on');
+      event.target.reset();
+      fillStudioForm();
+      setStatus('Job request saved.', 'ok');
+    }
+
+    async function saveCloudJob(event) {
+      event.preventDefault();
+      setStatus('Saving job...', 'warn');
+      const title = cleanText(value('saved-job-title'));
+      const studio = cleanText(value('saved-studio'));
+      const url = cleanUrl(value('saved-url'));
+      const key = slug([title, studio, url].filter(Boolean).join('-')) || `${Date.now()}`;
+      const payload = {
+        user_id: state.user.id,
+        job_key: key,
+        job_title: title,
+        studio_name: studio,
+        job_url: url,
+        notes: cleanText(value('saved-notes'))
+      };
+      await requireOk(
+        await supabase.from('saved_jobs').upsert(payload, { onConflict: 'user_id,job_key' }).select('*'),
+        'Could not save job.'
+      );
+      event.target.reset();
+      await loadSavedJobs();
+      renderSavedJobs();
+      setStatus('Job saved to your account.', 'ok');
+    }
+
+    async function deleteCloudJob(key) {
+      setStatus('Removing saved job...', 'warn');
+      await requireOk(
+        await supabase.from('saved_jobs').delete().eq('user_id', state.user.id).eq('job_key', key),
+        'Could not remove saved job.'
+      );
+      await loadSavedJobs();
+      renderSavedJobs();
+      setStatus('Saved job removed.', 'ok');
+    }
+
+    function bindEvents() {
+      $('#sign-in-form').addEventListener('submit', handleSignIn);
+      $('#sign-up-form').addEventListener('submit', handleSignUp);
+      $('#magic-link-btn').addEventListener('click', handleMagicLink);
+      $('#sign-out-btn').addEventListener('click', handleSignOut);
+      $('#profile-form').addEventListener('submit', saveProfile);
+      $('#candidate-form').addEventListener('submit', saveCandidate);
+      $('#resume-form').addEventListener('submit', addResumeSection);
+      $('#studio-form').addEventListener('submit', saveStudio);
+      $('#job-request-form').addEventListener('submit', sendJobRequest);
+      $('#saved-form').addEventListener('submit', saveCloudJob);
+
+      document.addEventListener('click', event => {
+        const tab = event.target.closest('[data-tab]');
+        if (tab) selectTab(tab.dataset.tab);
+
+        const resumeDelete = event.target.closest('[data-delete-resume]');
+        if (resumeDelete) deleteResumeSection(resumeDelete.dataset.deleteResume).catch(showError);
+
+        const savedDelete = event.target.closest('[data-delete-saved]');
+        if (savedDelete) deleteCloudJob(savedDelete.dataset.deleteSaved).catch(showError);
+      });
+    }
+
+    function showError(error) {
+      setStatus(error.message || 'Something went wrong.', 'err');
+    }
+
+    async function handleSession(session) {
+      state.user = session?.user || null;
+      renderAuth(session);
+      if (!state.user) return;
+      try {
+        await loadDashboard();
+      } catch (error) {
+        showError(error);
+      }
+    }
+
+    async function init() {
+      bindEvents();
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        showError(error);
+        return;
+      }
+      await handleSession(data.session);
+      supabase.auth.onAuthStateChange((_event, session) => {
+        handleSession(session).catch(showError);
+      });
+    }
+
+    init().catch(showError);
+  </script>
+</body>
+</html>
