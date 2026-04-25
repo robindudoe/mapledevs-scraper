@@ -2146,6 +2146,7 @@ select {
     </a>
     <nav class="h-nav" role="navigation" aria-label="Main">
       <a href="/blog/index.html" class="n-link">Maple Feed</a>
+      <a href="/talent/" class="n-link" onclick="goLocalPage(event,'talent')">Talent</a>
       <button class="n-link" id="nav-studios" onclick="showStudios()">Studios</button>
       <button class="n-link" id="nav-about" onclick="showAbout()">About</button>
       <button class="n-link" id="nav-saved" onclick="showSaved()">Saved<span class="n-badge" id="sv-badge">0</span></button>
@@ -2441,7 +2442,7 @@ select {
       <div class="proof-item"><b>Verified Canadian studios</b><span>Listings come from studios with a Canadian presence.</span></div>
       <div class="proof-item"><b>Official application links</b><span>Roles point candidates to studio career pages or direct hiring contacts.</span></div>
       <div class="proof-item"><b>Useful job details</b><span>Salary, engine, work mode, visa, and student-friendly data are surfaced when available.</span></div>
-      <div class="proof-item"><b>No account required</b><span>Save jobs locally and apply directly without a MapleDevs login.</span></div>
+      <div class="proof-item"><b>No account required to browse</b><span>Browse and apply without login, or create an account for profiles, saved jobs, and studio tools.</span></div>
     </div>
   </section>
 
@@ -2808,7 +2809,7 @@ select {
   <p>MapleDevs (mapledevs.ca) is Canada's #1 game industry job board. We are a Canadian-owned and operated platform dedicated to helping talent find roles at verified Canadian studios. You can contact us at <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a>.</p>
   
   <h2>2. Data we collect</h2>
-  <p><strong>For Job Seekers:</strong> We do not require account creation. We collect your email address only if you voluntarily sign up for our newsletter or job alerts. Basic usage data is collected via Google Analytics to help us improve the platform.</p>
+  <p><strong>For Job Seekers:</strong> We do not require account creation to browse jobs. If you create an account, we store the profile, resume, saved job, and studio/candidate information you choose to provide. Candidate profiles stay private unless you mark them Public for the MapleDevs Talent Directory. Public directory pages do not show login email addresses. We collect your email address if you voluntarily sign up for our newsletter or job alerts. Basic usage data is collected via Google Analytics to help us improve the platform.</p>
   <p><strong>For Employers:</strong> We collect your name, studio email, and job details when you submit a listing. We do <strong>not</strong> collect or store credit card or banking information. All payments for featured listings are handled externally via Interac e-Transfer.</p>
   
   <h2>3. Automated Data Collection</h2>
@@ -2902,7 +2903,7 @@ select {
   </section>
   <div class="ft-inner">
   <div class="ft-brand"><img src="/favicon.png" alt="MapleDevs" width="16" height="16" style="border-radius:2px;"> Maple<span>Devs</span></div>
-  <nav class="ft-links"><button onclick="showStudios()">Studios</button><button onclick="showAbout()">About</button><a href="/account/" onclick="goAccount(event)">Account</a><button onclick="openPostModal()">Post a Job</button><a href="mailto:mapledevsbusiness@gmail.com">Contact</a><button onclick="showPrivacy()">Privacy</button><button onclick="showTerms()">Terms</button></nav>
+  <nav class="ft-links"><a href="/talent/" onclick="goLocalPage(event,'talent')">Talent</a><button onclick="showStudios()">Studios</button><button onclick="showAbout()">About</button><a href="/account/" onclick="goAccount(event)">Account</a><button onclick="openPostModal()">Post a Job</button><a href="mailto:mapledevsbusiness@gmail.com">Contact</a><button onclick="showPrivacy()">Privacy</button><button onclick="showTerms()">Terms</button></nav>
   <p class="ft-copy">© 2026 MapleDevs · Canada's game industry job board · <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a></p>
 </div></footer>
 
@@ -3560,10 +3561,13 @@ function localSiteRoot(){
   if(idx>-1)return href.slice(0,idx+marker.length);
   return new URL('./',location.href).href;
 }
-function goAccount(e){
+function goLocalPage(e,page){
   if(location.protocol!=='file:')return;
   e.preventDefault();
-  location.href=localSiteRoot()+'account/index.html';
+  location.href=localSiteRoot()+page+'/index.html';
+}
+function goAccount(e){
+  goLocalPage(e,'account');
 }
 
 function showAbout(){history.pushState({v:'about'},"","#about");hideAll();document.getElementById("about-view").classList.add("on");clearNav();document.getElementById("nav-about").classList.add("active");window.scrollTo(0,0);trackView('About | MapleDevs');}

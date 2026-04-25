@@ -481,7 +481,7 @@ async function build() {
     }
     const jobs = parseCSV(csvData);
 
-    let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://mapledevs.ca/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`;
+    let sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://mapledevs.ca/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n  <url><loc>https://mapledevs.ca/talent/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>`;
 
     for (const target of SEO_TARGETS) {
         const targetDir = path.join(ROOT_DIR, target.folder);

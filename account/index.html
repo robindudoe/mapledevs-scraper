@@ -498,6 +498,7 @@
       <nav class="nav-actions" aria-label="Account navigation">
         <a class="nav-link" href="../">Jobs</a>
         <a class="nav-link" href="../studios/">Studios</a>
+        <a class="nav-link" href="../talent/">Talent</a>
         <a class="nav-link" href="mailto:mapledevsbusiness@gmail.com">Business</a>
         <button class="btn btn-secondary hidden" id="sign-out-btn" type="button">Sign out</button>
       </nav>
@@ -565,7 +566,7 @@
             <button class="btn btn-primary" type="submit">Create account</button>
           </form>
           <ul class="compact-list" style="margin-top:18px">
-            <li>Candidate profiles stay private unless you change visibility.</li>
+            <li>Candidate profiles stay private unless you change visibility to Public.</li>
             <li>Studio pages require MapleDevs review before public publishing.</li>
             <li>Job requests are stored and still route through MapleDevs business email.</li>
           </ul>
@@ -628,6 +629,7 @@
                       <option value="private">Private</option>
                       <option value="public">Public</option>
                     </select>
+                    <p class="hint">Public profiles can appear in the MapleDevs Talent Directory. Your login email is never shown.</p>
                   </div>
                   <div class="field">
                     <label for="profile-location">Location</label>
@@ -654,7 +656,7 @@
               <div class="panel-head">
                 <div>
                   <h2 id="candidate-title">Candidate profile</h2>
-                  <p>Structured data for future resume pages, recruiter review, and better job matching.</p>
+                  <p>Structured data for the Talent Directory, future resume pages, recruiter review, and better job matching.</p>
                 </div>
               </div>
               <div class="panel-body">
@@ -1127,8 +1129,7 @@
           .insert({
             id: user.id,
             email: user.email,
-            account_type: 'candidate',
-            visibility: 'private'
+            account_type: 'candidate'
           })
           .select('*')
           .single();
@@ -1203,7 +1204,7 @@
       value('profile-display-name', profile.display_name || '');
       value('profile-username', profile.username || '');
       value('profile-account-type', profile.account_type || 'candidate');
-      value('profile-visibility', profile.visibility || 'private');
+      value('profile-visibility', state.candidate?.visibility || profile.visibility || 'private');
       value('profile-location', profile.location || '');
       value('profile-website', profile.website_url || '');
       value('profile-headline', profile.headline || '');
@@ -1371,17 +1372,30 @@
         display_name: cleanText(value('profile-display-name')),
         username: username(value('profile-username')),
         account_type: value('profile-account-type') || 'candidate',
-        visibility: value('profile-visibility') || 'private',
         location: cleanText(value('profile-location')),
         website_url: cleanUrl(value('profile-website')),
         headline: cleanText(value('profile-headline')),
         updated_at: new Date().toISOString()
       };
+      const profileVisibility = value('profile-visibility') || 'private';
       const data = await requireOk(
         await supabase.from('profiles').upsert(payload, { onConflict: 'id' }).select('*').single(),
         'Could not save account.'
       );
+      const candidateData = await requireOk(
+        await supabase
+          .from('candidate_profiles')
+          .upsert({
+            user_id: state.user.id,
+            visibility: profileVisibility,
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'user_id' })
+          .select('*')
+          .single(),
+        'Could not save profile visibility.'
+      );
       state.profile = data;
+      state.candidate = candidateData;
       renderIdentity();
       setStatus('Account saved.', 'ok');
     }
@@ -1404,6 +1418,7 @@
         preferred_locations: list(value('candidate-locations')),
         preferred_work_modes: list(value('candidate-work-modes')),
         open_to_work: value('candidate-open'),
+        visibility: value('profile-visibility') || state.candidate?.visibility || 'private',
         updated_at: new Date().toISOString()
       };
       const data = await requireOk(

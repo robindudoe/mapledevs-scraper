@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canadian Game Developer Talent | MapleDevs</title>
+  <meta name="description" content="Discover public MapleDevs candidate profiles across Canada's game industry. Find developers by engine, skill, work mode, and location.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mapledevs.ca/talent/">
+  <link rel="icon" href="../favicon.png">
+  <style>
+    :root {
+      --maple: #c7352d;
+      --maple-dark: #9f2822;
+      --ink: #151515;
+      --ink-soft: #40403c;
+      --muted: #727168;
+      --line: #dedbd5;
+      --line-strong: #cfc9c0;
+      --paper: #f7f5f0;
+      --panel: #fffefa;
+      --panel-alt: #fbfaf6;
+      --forest: #246b4b;
+      --gold: #9d7a16;
+      --focus: rgba(199, 53, 45, 0.16);
+      --shadow: 0 16px 46px rgba(30, 24, 20, 0.08);
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(199, 53, 45, 0.07), rgba(199, 53, 45, 0) 300px),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(222, 219, 213, 0.84);
+      background: rgba(255, 254, 250, 0.94);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 850;
+    }
+    .brand img { width: 28px; height: 28px; border-radius: 6px; }
+    .brand span span { color: var(--maple); }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav a, .btn {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink-soft);
+      padding: 8px 13px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 760;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .nav a:hover, .btn:hover { transform: translateY(-1px); border-color: var(--line-strong); }
+    .btn-primary {
+      border-color: var(--maple);
+      background: var(--maple);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--maple-dark); border-color: var(--maple-dark); }
+
+    .shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 36px 22px 56px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.48fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--maple);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 5vw, 4.35rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      max-width: 820px;
+    }
+    .hero-copy {
+      margin: 13px 0 0;
+      color: var(--ink-soft);
+      max-width: 720px;
+      font-size: 16px;
+    }
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .hero-card strong {
+      display: block;
+      font-size: 27px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .hero-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) repeat(3, minmax(150px, 0.38fr));
+      gap: 10px;
+      margin: 18px 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+    .control {
+      display: grid;
+      gap: 5px;
+    }
+    label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    input, select {
+      min-height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      padding: 9px 11px;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    input:focus, select:focus {
+      border-color: var(--maple);
+      box-shadow: 0 0 0 4px var(--focus);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 18px 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+    .privacy-note {
+      border: 1px solid rgba(36, 107, 75, 0.22);
+      border-radius: var(--radius);
+      background: #f1fbf5;
+      color: #245b41;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card {
+      min-height: 320px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius);
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--ink);
+      font-weight: 900;
+    }
+    .name {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+    .headline {
+      margin: 4px 0 0;
+      color: var(--ink-soft);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .fact {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-alt);
+      padding: 9px;
+    }
+    .fact b {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .fact span {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 740;
+      margin-top: 2px;
+      overflow-wrap: anywhere;
+    }
+    .summary {
+      color: var(--ink-soft);
+      font-size: 13px;
+      margin: 0;
+      flex: 1;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink-soft);
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 760;
+    }
+    .tag.open {
+      border-color: rgba(36, 107, 75, 0.22);
+      background: #eef9f2;
+      color: var(--forest);
+    }
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .links a {
+      color: var(--maple);
+      font-size: 13px;
+      font-weight: 760;
+      text-decoration: none;
+    }
+    .links a:hover { text-decoration: underline; }
+    .empty {
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--muted);
+      padding: 22px;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+    .setup {
+      border-color: rgba(157, 122, 22, 0.28);
+      background: #fff9ea;
+      color: #7b5b0e;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .controls { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner, .shell { padding-left: 14px; padding-right: 14px; }
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .nav { justify-content: flex-start; width: 100%; }
+      .nav a, .btn { width: 100%; }
+      .grid { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; }
+      h1 { font-size: 2.45rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../">
+        <img src="../favicon.png" alt="">
+        <span>Maple<span>Devs</span></span>
+      </a>
+      <nav class="nav" aria-label="Talent navigation">
+        <a href="../">Jobs</a>
+        <a href="../studios/">Studios</a>
+        <a href="../account/">Account</a>
+        <a href="mailto:mapledevsbusiness@gmail.com">Business</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">MapleDevs Talent</p>
+        <h1 id="page-title">Find Canadian game developers who want to be found.</h1>
+        <p class="hero-copy">Browse public candidate profiles by engine, discipline, work mode, and location. Candidate emails stay private; studios can request an intro through MapleDevs.</p>
+      </div>
+      <aside class="hero-card">
+        <strong id="talent-count">0</strong>
+        <span>Public candidate profiles in the directory.</span>
+      </aside>
+    </section>
+
+    <section class="controls" aria-label="Talent filters">
+      <div class="control">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Gameplay, Unreal, tools, Vancouver">
+      </div>
+      <div class="control">
+        <label for="engine">Engine</label>
+        <select id="engine"><option value="">Any engine</option></select>
+      </div>
+      <div class="control">
+        <label for="location">Location</label>
+        <select id="location"><option value="">Any location</option></select>
+      </div>
+      <div class="control">
+        <label for="mode">Work mode</label>
+        <select id="mode"><option value="">Any mode</option></select>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <span id="result-count">Loading candidate profiles...</span>
+      <span class="privacy-note">Only profiles marked Public appear here. Login emails are never shown.</span>
+    </div>
+
+    <section class="grid" id="talent-grid" aria-label="Public candidate profiles">
+      <div class="empty">Loading public talent directory...</div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://wihermvoldapicvtksds.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpaGVybXZvbGRhcGljdnRrc2RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwOTQzNTYsImV4cCI6MjA5MjY3MDM1Nn0.zqDWwusOf0qwrzGG7c-sQmCGts3WrNChwqMfKVlkvSg';
+    const BUSINESS_EMAIL = 'mapledevsbusiness@gmail.com';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let talent = [];
+
+    const $ = id => document.getElementById(id);
+
+    function escapeHtml(input) {
+      return String(input || '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[char]);
+    }
+
+    function array(value) {
+      return Array.isArray(value) ? value.filter(Boolean) : [];
+    }
+
+    function displayName(person) {
+      return person.display_name || person.username || person.resume_title || 'MapleDevs candidate';
+    }
+
+    function profileKey(person) {
+      return person.public_id || person.username || displayName(person).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    }
+
+    function initials(person) {
+      return displayName(person).split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'MD';
+    }
+
+    function cleanUrl(url) {
+      const text = String(url || '').trim();
+      if (!text) return '';
+      return /^https?:\/\//i.test(text) ? text : `https://${text}`;
+    }
+
+    function mailto(person) {
+      const name = displayName(person);
+      const subject = `Candidate intro request - ${name}`;
+      const body = [
+        `Candidate: ${name}`,
+        `Profile key: ${profileKey(person)}`,
+        `Headline: ${person.headline || person.resume_title || ''}`,
+        `Location: ${person.location || ''}`,
+        '',
+        'Hi MapleDevs,',
+        'I would like an introduction to this candidate. My studio and role details are:'
+      ].join('\n');
+      return `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function uniqueFrom(field) {
+      return [...new Set(talent.flatMap(person => array(person[field])).concat(talent.map(person => person[field]).filter(Boolean)))]
+        .map(item => String(item).trim())
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+    }
+
+    function fillSelect(id, values, fallback) {
+      const select = $(id);
+      const current = select.value;
+      select.innerHTML = `<option value="">${fallback}</option>` + values.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join('');
+      select.value = values.includes(current) ? current : '';
+    }
+
+    function hydrateFilters() {
+      fillSelect('engine', uniqueFrom('engines'), 'Any engine');
+      fillSelect('location', uniqueFrom('preferred_locations').concat(uniqueFrom('location')), 'Any location');
+      fillSelect('mode', uniqueFrom('preferred_work_modes'), 'Any mode');
+    }
+
+    function matches(person) {
+      const query = $('search').value.trim().toLowerCase();
+      const engine = $('engine').value;
+      const location = $('location').value;
+      const mode = $('mode').value;
+      const haystack = [
+        displayName(person),
+        person.headline,
+        person.resume_title,
+        person.summary,
+        person.location,
+        ...array(person.skills),
+        ...array(person.engines),
+        ...array(person.preferred_locations),
+        ...array(person.preferred_work_modes)
+      ].join(' ').toLowerCase();
+
+      if (query && !haystack.includes(query)) return false;
+      if (engine && !array(person.engines).includes(engine)) return false;
+      if (location && person.location !== location && !array(person.preferred_locations).includes(location)) return false;
+      if (mode && !array(person.preferred_work_modes).includes(mode)) return false;
+      return true;
+    }
+
+    function link(label, url) {
+      const href = cleanUrl(url);
+      return href ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>` : '';
+    }
+
+    function card(person) {
+      const name = displayName(person);
+      const headline = person.headline || person.resume_title || 'Game industry candidate';
+      const summary = person.summary || 'This candidate has made their MapleDevs profile public for studio discovery.';
+      const tags = [
+        person.open_to_work ? '<span class="tag open">Open to work</span>' : '',
+        ...array(person.engines).slice(0, 3).map(item => `<span class="tag">${escapeHtml(item)}</span>`),
+        ...array(person.skills).slice(0, 4).map(item => `<span class="tag">${escapeHtml(item)}</span>`)
+      ].join('');
+      const links = [
+        link('Portfolio', person.portfolio_url),
+        link('LinkedIn', person.linkedin_url),
+        link('GitHub', person.github_url),
+        link('Website', person.website_url),
+        `<a href="${escapeHtml(mailto(person))}">Request intro</a>`
+      ].filter(Boolean).join('');
+
+      return `
+        <article class="card">
+          <div class="card-head">
+            <div class="avatar" aria-hidden="true">${escapeHtml(initials(person))}</div>
+            <div>
+              <h2 class="name">${escapeHtml(name)}</h2>
+              <p class="headline">${escapeHtml(headline)}</p>
+            </div>
+          </div>
+          <div class="facts">
+            <div class="fact"><b>Location</b><span>${escapeHtml(person.location || 'Canada')}</span></div>
+            <div class="fact"><b>Experience</b><span>${person.years_experience == null ? 'Not listed' : `${escapeHtml(person.years_experience)} years`}</span></div>
+          </div>
+          <p class="summary">${escapeHtml(summary)}</p>
+          <div class="tags">${tags || '<span class="tag">Public profile</span>'}</div>
+          <div class="links">${links}</div>
+        </article>
+      `;
+    }
+
+    function render() {
+      const filtered = talent.filter(matches);
+      $('talent-count').textContent = talent.length;
+      $('result-count').textContent = `${filtered.length} candidate${filtered.length === 1 ? '' : 's'} shown`;
+      $('talent-grid').innerHTML = filtered.length
+        ? filtered.map(card).join('')
+        : '<div class="empty">No public candidates match those filters yet.</div>';
+    }
+
+    async function loadTalent() {
+      const { data, error } = await supabase.rpc('get_public_candidate_directory');
+      if (error) {
+        $('result-count').textContent = 'Talent directory setup needed';
+        $('talent-grid').innerHTML = '<div class="empty setup">The public candidate directory database function is not installed yet. Run the MapleDevs talent directory SQL in Supabase, then refresh this page.</div>';
+        return;
+      }
+      talent = (data || []).sort((a, b) => Number(Boolean(b.open_to_work)) - Number(Boolean(a.open_to_work)) || displayName(a).localeCompare(displayName(b)));
+      hydrateFilters();
+      render();
+    }
+
+    ['search', 'engine', 'location', 'mode'].forEach(id => $(id).addEventListener('input', render));
+    loadTalent();
+  </script>
+</body>
+</html>
