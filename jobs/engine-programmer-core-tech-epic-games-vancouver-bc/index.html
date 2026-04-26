@@ -648,15 +648,109 @@ mark.hl { background: rgba(200,55,45,0.1); color: inherit; padding: 1px 2px; bor
 .sim-sec h3 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text-1); margin-bottom: 0.75rem; font-weight: 400; }
 
 /* ═══════ ABOUT ═══════ */
-.about-c { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-.about-c h1 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; letter-spacing: -0.02em; color: var(--text-1); margin-bottom: 0.6rem; line-height: 1.15; }
-.about-c h1 em { background: var(--maple-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
-.about-c h2 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text-1); margin: 2rem 0 0.5rem; font-weight: 400; }
-.about-c p { font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 0.9rem; }
-.about-c a { color: var(--maple); text-decoration: underline; text-underline-offset: 3px; }
-.about-cta { background: var(--maple-glow); border: 1px solid rgba(200,55,45,0.1); border-radius: var(--r-l); padding: 1.5rem; margin-top: 1.75rem; }
-.about-cta p { color: var(--text-1); margin-bottom: 0.6rem; }
-.about-cta p:last-child { margin-bottom: 0; }
+.about-c { max-width: 1060px; margin: 0 auto; padding: 2.4rem 1.5rem 4rem; }
+.about-c a { color: var(--maple); text-decoration: none; }
+.about-c a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.about-hero {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background:
+    linear-gradient(135deg, rgba(216,59,46,0.10), transparent 38%),
+    var(--bg-card);
+  box-shadow: var(--shadow-s);
+  padding: clamp(1.4rem, 4vw, 2.3rem);
+  margin-top: 1rem;
+}
+.about-eyebrow {
+  width: max-content;
+  max-width: 100%;
+  color: var(--maple);
+  background: var(--maple-glow);
+  border: 1px solid rgba(200,55,45,0.14);
+  border-radius: var(--r-s);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.about-c h1 {
+  max-width: 820px;
+  color: var(--text-1);
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: 0;
+  margin: 0;
+}
+.about-c h2 { color: var(--text-1); font-size: 1.35rem; margin: 0 0 0.45rem; }
+.about-lede {
+  max-width: 660px;
+  color: var(--text-2);
+  font-size: 17px;
+  line-height: 1.65;
+  margin: 0;
+}
+.about-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 0.2rem; }
+.about-actions .btn-p { color: #fff; }
+.about-actions .btn-s { color: var(--text-2); }
+.about-actions .btn-s:hover { color: var(--text-1); text-decoration: none; }
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 1.25rem;
+}
+.about-card,
+.about-steps,
+.about-cta {
+  border: 1px solid var(--border);
+  border-radius: var(--r-l);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-s);
+}
+.about-card { padding: 18px; min-height: 154px; }
+.about-card span,
+.about-step span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-s);
+  background: #111820;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 850;
+  margin-bottom: 14px;
+}
+.about-card h2,
+.about-step h3 { color: var(--text-1); font-size: 18px; line-height: 1.22; margin: 0 0 8px; }
+.about-card p,
+.about-step p,
+.about-cta p { color: var(--text-3); font-size: 14px; line-height: 1.65; margin: 0; }
+.about-steps { margin-top: 1.25rem; padding: 20px; }
+.about-steps-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 16px; }
+.about-steps-head p { max-width: 440px; color: var(--text-3); font-size: 14px; margin: 0; }
+.about-step-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.about-step { border: 1px solid var(--border); border-radius: var(--r); background: var(--bg-body); padding: 16px; }
+.about-cta { padding: 20px; margin-top: 1.25rem; background: var(--maple-glow); border-color: rgba(200,55,45,0.16); }
+.about-cta h2 { margin-bottom: 8px; }
+.about-price { color: var(--text-2); font-size: 13px; margin-top: 12px; }
+.about-reveal {
+  opacity: 1;
+  transform: none;
+}
+#about-view.motion-ready .about-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+  transition-delay: var(--about-delay, 0ms);
+}
+#about-view.motion-ready .about-reveal.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .about-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 
 /* ═══════ STUDIOS VIEW ═══════ */
 .studios-c { max-width: var(--max-w); margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -1910,6 +2004,26 @@ select {
 }
 .job-list { gap: 10px; }
 
+#board-view {
+  display: flex;
+  flex-direction: column;
+}
+#board-view.off { display: none; }
+#board-view > .hero { order: 1; }
+#board-view > #spotlight-s { order: 2; }
+#board-view > #trusted-bar { order: 3; }
+#board-view > .controls { order: 4; }
+#board-view > main#main-content { order: 5; }
+#board-view > .cta-section { order: 6; }
+#board-view > .fit-s { order: 7; }
+#board-view > .feed-s { order: 8; }
+#board-view > .hubs-s { order: 9; }
+#board-view > .proof-s { order: 10; }
+#board-view > .intelligence-s { order: 11; }
+#board-view > .command-s { order: 12; }
+#board-view > .proof-wall-s { order: 13; }
+#board-view > .signup-s { order: 14; }
+
 .jc {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(190px, 240px);
@@ -2074,6 +2188,12 @@ select {
   .jc { grid-template-columns: 1fr; }
   .jc-side { border-left: 0; border-top: 1px solid var(--border); padding-left: 0; padding-top: 12px; }
   .jc-meta { grid-template-columns: 1fr; }
+  .about-c h1 { font-size: 2.05rem; }
+  .about-grid,
+  .about-step-list { grid-template-columns: 1fr; }
+  .about-steps-head { align-items: flex-start; flex-direction: column; }
+  .about-actions .btn-p,
+  .about-actions .btn-s { width: 100%; justify-content: center; }
 }
 
 @media (max-width: 520px) {
@@ -2264,7 +2384,7 @@ select {
       <div class="hero-copy">
         <div class="hero-tag"><span class="pulse"></span> Verified Canadian game studio jobs</div>
         <h1 id="hero-heading">A serious job board for Canada's game industry.</h1>
-        <p>Search verified studio roles by engine, salary, work mode, visa support, student-friendly paths, and Canadian region. Built for candidates who want signal, not noise.</p>
+        <p>Find Canadian game studio jobs by role, city, engine, salary, work mode, visa support, and student-friendly paths.</p>
         <form class="hero-search" onsubmit="return heroSearch(event)" role="search" aria-label="Search MapleDevs jobs">
           <input id="hero-search" type="search" placeholder="Search role, studio, engine, city, salary..." autocomplete="off">
           <button type="submit">Search jobs</button>
@@ -2282,7 +2402,7 @@ select {
       </div>
       <aside class="hero-panel" aria-label="Hiring market snapshot">
         <h2>Hiring market snapshot</h2>
-        <p>MapleDevs prioritizes practical job-search signals for game developers: compensation, engine stack, location model, verified Canadian studios, and application quality.</p>
+        <p>Quick signals candidates need before applying: pay, engine, location model, visa notes, and student-friendly fit.</p>
         <div class="market-list">
           <a href="/remote/"><span>Remote and hybrid roles</span><b>Browse</b></a>
           <a href="/junior/"><span>Junior and student pathways</span><b>Find</b></a>
@@ -2322,8 +2442,8 @@ select {
       <div class="feed-head">
         <div>
           <span class="feed-k">The Maple Feed</span>
-          <h2>Hiring intelligence for Canadian game developers.</h2>
-          <p>Editorial that makes the job board feel alive: studio signals, regional hiring trends, salary context, engine demand, and practical career moves.</p>
+          <h2>Hiring intel that helps you apply smarter.</h2>
+          <p>Short reads on studios, cities, salary signals, engines, and career moves in Canadian games.</p>
         </div>
         <a class="btn-s" href="/blog/index.html">View all posts</a>
       </div>
@@ -2408,7 +2528,7 @@ select {
     <div class="section-shell">
       <div class="section-headline">
         <h2>Built from Canadian game-dev feedback.</h2>
-        <p>MapleDevs is prioritizing the gaps people actually asked for: fresher listings, indie discovery, student paths, Alberta coverage, and Canada-friendly remote roles.</p>
+        <p>Fresher jobs, indie discovery, student paths, Alberta coverage, and Canada-friendly remote roles.</p>
       </div>
       <div class="signal-card-grid">
         <div class="signal-card"><span class="k">Freshness</span><strong>Report stale jobs</strong><p>If a studio closes an application before the next scrape, candidates can flag it directly from the job detail page.</p></div>
@@ -2427,7 +2547,7 @@ select {
           <span class="feed-k">Market command center</span>
           <h2>See where the Canadian game jobs are moving.</h2>
         </div>
-        <p>Live job data turns into city demand, engine demand, salary visibility, and return-worthy Maple Feed signals.</p>
+        <p>City demand, engine demand, salary visibility, and weekly market signals.</p>
       </div>
       <div class="command-grid">
         <div class="command-panel primary">
@@ -2452,7 +2572,7 @@ select {
     <div class="section-shell">
       <div class="section-headline">
         <h2>Built like an industry intelligence layer, not just a list of links.</h2>
-        <p>MapleDevs can become the place candidates check before LinkedIn because it explains the role, the studio, and the market context in one fast workflow.</p>
+        <p>Roles, studios, and market context in one fast workflow.</p>
       </div>
       <div class="intelligence-grid">
         <div class="ops-panel">
@@ -2638,22 +2758,68 @@ select {
 
 <!-- ═══════ ABOUT VIEW ═══════ -->
 <div id="about-view" class="view" role="main"><div class="about-c">
-  <button class="back-b" onclick="showBoard()">← Back to jobs</button>
-  <h1>About <em>MapleDevs</em></h1>
-  <p>MapleDevs is a job board built exclusively for the Canadian game industry. No US-only roles, no noise — just real opportunities at studios based in Canada.</p>
-  <h2>Why we built this</h2>
-  <p>If you've ever searched for game dev jobs in Canada, you know the frustration. Most job boards are flooded with US positions that Canadian candidates can't apply to. MapleDevs exists to fix that — every single listing on this board is from a studio operating in Canada.</p>
-  <h2>Who it's for</h2>
-  <p>Whether you're a student looking for your first internship, a seasoned developer considering relocation, or a Canadian game dev who just wants to stay local — MapleDevs is for you. We tag student-friendly roles so newcomers to the industry can find the right opportunities faster.</p>
-  <h2>How it works</h2>
-  <p>Listings are sourced directly from official studio career pages and verified before going live. We update the board regularly with new roles from studios across Vancouver, Montreal, Toronto, and beyond.</p>
-  <h2>For studios</h2>
-  <p>Want to reach thousands of Canadian game dev job seekers? Get your roles in front of the right audience.</p>
-  <div class="about-cta">
-    <p><strong>Post a job on MapleDevs</strong></p>
-    <p>Use our <a href="#" onclick="closeAllViews();openPostModal();return false;">job submission form</a> or contact us at <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a>.</p>
-    <p style="font-size:0.9rem; margin-top:1rem; color:var(--text-3)">Standard listings are <b>Free</b>. <br>Featured listings are <b>$29 CAD</b> (payable via Interac e-Transfer to <b>wupeiheng11@gmail.com</b>).</p>
+  <button class="back-b" onclick="showBoard()">&larr; Back to jobs</button>
+
+  <section class="about-hero about-reveal">
+    <span class="about-eyebrow">Canada-only game jobs</span>
+    <h1>Find Canadian game studio jobs faster.</h1>
+    <p class="about-lede">MapleDevs collects verified roles from studios operating in Canada and shows the details candidates check first.</p>
+    <div class="about-actions">
+      <a class="btn-p" href="#main-content" onclick="showBoard();setTimeout(()=>document.getElementById('main-content').scrollIntoView({behavior:'smooth'}),0);return false;">Browse jobs</a>
+      <button class="btn-s" onclick="closeAllViews();openPostModal();return false;">Post a job</button>
+    </div>
+  </section>
+
+  <div class="about-grid" aria-label="What MapleDevs does">
+    <article class="about-card about-reveal">
+      <span>01</span>
+      <h2>Jobs first</h2>
+      <p>Open roles are easy to reach. Filters help candidates sort by city, role, salary, engine, work mode, visa support, and student fit.</p>
+    </article>
+    <article class="about-card about-reveal">
+      <span>02</span>
+      <h2>Canada focused</h2>
+      <p>No broad global board. MapleDevs focuses on studios with a Canadian presence so the search stays relevant.</p>
+    </article>
+    <article class="about-card about-reveal">
+      <span>03</span>
+      <h2>Clear signals</h2>
+      <p>Listings are reviewed, tagged, and checked for freshness before they become public job pages.</p>
+    </article>
   </div>
+
+  <section class="about-steps about-reveal" aria-labelledby="about-how-title">
+    <div class="about-steps-head">
+      <div>
+        <span class="about-eyebrow">How it works</span>
+        <h2 id="about-how-title">Simple pipeline, useful listings.</h2>
+      </div>
+      <p>MapleDevs keeps the static site fast while the scraper and review process keep job data clean.</p>
+    </div>
+    <div class="about-step-list">
+      <article class="about-step">
+        <span>1</span>
+        <h3>Collect</h3>
+        <p>Jobs come from official studio sources and direct submissions.</p>
+      </article>
+      <article class="about-step">
+        <span>2</span>
+        <h3>Review</h3>
+        <p>Roles are checked for Canada relevance, useful fields, and stale dates.</p>
+      </article>
+      <article class="about-step">
+        <span>3</span>
+        <h3>Publish</h3>
+        <p>Approved jobs appear on the board, city pages, role pages, and job detail pages.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-cta about-reveal">
+    <h2>Hiring at a Canadian game studio?</h2>
+    <p>Use the job submission form or email <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a>.</p>
+    <div class="about-price">Standard listings are <b>free</b>. Featured listings stay <b>$29 CAD</b>, payable by Interac e-Transfer to <b>wupeiheng11@gmail.com</b>.</div>
+  </section>
 </div></div>
 
 <!-- ═══════ STUDIOS VIEW ═══════ -->
@@ -2991,6 +3157,27 @@ const scrollObserver = new IntersectionObserver((entries) => {
 
 function observeCards() {
   document.querySelectorAll('.jc.scroll-in').forEach(el => scrollObserver.observe(el));
+}
+
+const aboutRevealObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          aboutRevealObserver.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' })
+  : null;
+
+function observeAboutReveal() {
+  document.getElementById('about-view').classList.add('motion-ready');
+  const items = document.querySelectorAll('#about-view .about-reveal');
+  items.forEach((el, index) => {
+    el.style.setProperty('--about-delay', Math.min(index * 75, 300) + 'ms');
+    if (aboutRevealObserver) aboutRevealObserver.observe(el);
+    else el.classList.add('is-visible');
+  });
 }
 
 /* Hot job detection */
@@ -3451,7 +3638,7 @@ function goAccount(e){
   goLocalPage(e,'account');
 }
 
-function showAbout(){history.pushState({v:'about'},"","#about");hideAll();document.getElementById("about-view").classList.add("on");clearNav();document.getElementById("nav-about").classList.add("active");window.scrollTo(0,0);trackView('About | MapleDevs');}
+function showAbout(){history.pushState({v:'about'},"","#about");hideAll();document.getElementById("about-view").classList.add("on");clearNav();document.getElementById("nav-about").classList.add("active");observeAboutReveal();window.scrollTo(0,0);trackView('About | MapleDevs');}
 
 function showPrivacy(){history.pushState({v:'privacy'},"","#privacy");hideAll();document.getElementById("privacy-view").classList.add("on");window.scrollTo(0,0);trackView('Privacy Policy | MapleDevs');}
 
