@@ -750,6 +750,15 @@ mark.hl { background: rgba(200,55,45,0.1); color: inherit; padding: 1px 2px; bor
 .about-cta { padding: 20px; margin-top: 1.25rem; background: var(--maple-glow); border-color: rgba(200,55,45,0.16); }
 .about-cta h2 { margin-bottom: 8px; }
 .about-price { color: var(--text-2); font-size: 13px; margin-top: 12px; }
+.about-platform-sections {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0;
+}
+.about-platform-sections > section {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
 .about-reveal {
   opacity: 1;
   transform: none;
@@ -2873,6 +2882,8 @@ select {
     <p>Use the job submission form or email <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a>.</p>
     <div class="about-price">Standard listings are <b>free</b>. Featured listings stay <b>$29 CAD</b>, payable by Interac e-Transfer to <b>wupeiheng11@gmail.com</b>.</div>
   </section>
+
+  <div id="about-platform-sections" class="about-platform-sections" aria-label="More about MapleDevs"></div>
 </div></div>
 
 <!-- ═══════ STUDIOS VIEW ═══════ -->
@@ -3376,9 +3387,10 @@ function applyPreset(kind){
   if(kind==='student')document.getElementById('f-student').checked=true;
   if(kind==='visa')document.getElementById('f-visa').value='yes';
   if(kind==='engine')document.getElementById('f-role').value='programming';
+  showBoard();
   render();
   const target=document.getElementById('main-content');
-  if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  if(target)setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),0);
 }
 function isCompared(j){return compare.includes(jKey(j));}
 function saveCompare(){localStorage.setItem('md_compare',JSON.stringify(compare));}
@@ -3836,7 +3848,20 @@ document.getElementById('browse-btn').addEventListener('click',function(e){e.pre
 
 /* Background particle canvas removed for a cleaner hiring-platform feel. */
 
+function movePlatformSectionsToAbout(){
+  const target=document.getElementById('about-platform-sections');
+  if(!target)return;
+  const selectors=['.feed-s','.hubs-s','.proof-s','.intelligence-s','.command-s','.proof-wall-s','.fit-s','.signup-s'];
+  selectors.forEach(sel=>{
+    document.querySelectorAll('#board-view > '+sel).forEach(section=>{
+      section.classList.add('about-reveal');
+      target.appendChild(section);
+    });
+  });
+}
+
 /* ═══════ INIT ═══════ */
+movePlatformSectionsToAbout();
 function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#privacy')showPrivacy();else if(h==='#terms')showTerms();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}
 loadJobs().then(() => { handleHash(); trackView(); });
 </script>
