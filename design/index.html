@@ -171,6 +171,15 @@
     });
   });
 </script>
+<script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog&&window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Ai Ri init Vi Yi Rr zi Gi Zi capture calculateEventProperties en register register_once register_for_session unregister unregister_for_session sn getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync an identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty rn Ki createPersonProfile setInternalOrTestUser nn $i hn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Xi debug Mr tn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_vVQhxGSYD6WgW6mLhYZrGkpGirfaPoS6pk46xunZ6E5g', {
+    api_host: 'https://us.i.posthog.com',
+    defaults: '2026-01-30',
+    person_profiles: 'identified_only',
+    capture_pageview: false
+  });
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -3075,7 +3084,7 @@ select {
   <p>MapleDevs (mapledevs.ca) is Canada's #1 game industry job board. We are a Canadian-owned and operated platform dedicated to helping talent find roles at verified Canadian studios. You can contact us at <a href="mailto:mapledevsbusiness@gmail.com">mapledevsbusiness@gmail.com</a>.</p>
   
   <h2>2. Data we collect</h2>
-  <p><strong>For Job Seekers:</strong> We do not require account creation to browse jobs. If you create an account, we store the profile, resume, saved job, and studio/candidate information you choose to provide. Candidate profiles stay private unless you mark them Public for the MapleDevs Talent Directory. Public directory pages do not show login email addresses. We collect your email address if you voluntarily sign up for our newsletter or job alerts. Basic usage data is collected via Google Analytics and Datadog RUM to help us improve the platform.</p>
+  <p><strong>For Job Seekers:</strong> We do not require account creation to browse jobs. If you create an account, we store the profile, resume, saved job, and studio/candidate information you choose to provide. Candidate profiles stay private unless you mark them Public for the MapleDevs Talent Directory. Public directory pages do not show login email addresses. We collect your email address if you voluntarily sign up for our newsletter or job alerts. Basic usage data is collected via Google Analytics, Datadog RUM, and PostHog to help us improve the platform.</p>
   <p><strong>For Employers:</strong> We collect your name, studio email, and job details when you submit a listing. We do <strong>not</strong> collect or store credit card or banking information. All payments for featured listings are handled externally via Interac e-Transfer.</p>
   
   <h2>3. Automated Data Collection</h2>
@@ -3086,6 +3095,7 @@ select {
   <ul>
     <li><strong>Google Analytics:</strong> To understand site traffic (anonymous).</li>
     <li><strong>Datadog RUM:</strong> To monitor frontend errors, page performance, and user experience. Form input is masked by default.</li>
+    <li><strong>PostHog:</strong> To understand page views, feature usage, and product flow across MapleDevs.</li>
     <li><strong>Mailchimp:</strong> To manage our newsletter and job alert emails.</li>
     <li><strong>Google Sheets:</strong> To securely store our job database.</li>
     <li><strong>Discord:</strong> Our community the hub is hosted on Discord, which has its own privacy policy.</li>
@@ -3942,11 +3952,20 @@ function showPrivacy(){history.pushState({v:'privacy'},"","#privacy");hideAll();
 function showTerms(){history.pushState({v:'terms'},"","#terms");hideAll();document.getElementById("terms-view").classList.add("on");window.scrollTo(0,0);trackView('Terms of Use | MapleDevs');}
 
 function trackView(title) {
+  const pageTitle = title || document.title;
+  const pagePath = window.location.pathname + (window.location.hash || '');
   if (typeof gtag === 'function') {
     gtag('event', 'page_view', {
-      page_title: title || document.title,
+      page_title: pageTitle,
       page_location: window.location.href,
-      page_path: window.location.pathname + (window.location.hash || '')
+      page_path: pagePath
+    });
+  }
+  if (window.posthog && typeof window.posthog.capture === 'function') {
+    window.posthog.capture('$pageview', {
+      $current_url: window.location.href,
+      page_title: pageTitle,
+      page_path: pagePath
     });
   }
 }
