@@ -273,6 +273,28 @@
             .article-content { padding: 22px; }
         }
     </style>
+    <script>
+      (function(h,o,u,n,d) {
+        h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
+        d = o.createElement(u); d.async = 1; d.src = n; d.crossOrigin=''
+        n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
+      })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js', 'DD_RUM')
+      window.DD_RUM.onReady(function () {
+        window.DD_RUM.init({
+          clientToken: 'pub4e371293c377f9ebb8d29cf402719cc4',
+          applicationId: 'fac714c5-9145-479b-8e8b-9b5200e4a5a1',
+          site: 'us5.datadoghq.com',
+          service: 'mapledevs-web',
+          env: 'prod',
+          version: '1.0.0',
+          sessionSamplerRate: 100,
+          sessionReplaySamplerRate: 20,
+          trackResources: true,
+          trackLongTasks: true,
+          trackUserInteractions: true,
+        })
+      })
+    </script>
 </head>
 <body>
     <div class="container">
