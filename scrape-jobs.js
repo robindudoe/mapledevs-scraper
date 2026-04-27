@@ -809,8 +809,11 @@ async function scrapeWorkday(studio) {
 // SMART GUESSERS
 // ═══════════════════════════════════════════════
 function guessJobType(title, content) {
+  const titleLower = title.toLowerCase();
+  const isSenior = /\b(senior|lead|director|manager|principal|vp|head|staff)\b/.test(titleLower);
+
   const text = (title + ' ' + content).toLowerCase();
-  if (text.includes('intern') || text.includes('co-op') || text.includes('coop')) return 'Internship';
+  if (!isSenior && (titleLower.includes('intern') || titleLower.includes('co-op') || text.includes('internship') || text.includes('co-op program') || (text.includes('intern') && !text.includes('internal')) || text.includes('coop'))) return 'Internship';
   if (text.includes('contract') || text.includes('temporary') || text.includes('temp ')) return 'Contract';
   if (text.includes('part-time') || text.includes('part time')) return 'Part-time';
   return 'Full-time';
@@ -841,6 +844,9 @@ function guessWorkMode(title, location, content) {
 }
 
 function guessStudentFriendly(title, content) {
+  const titleLower = title.toLowerCase();
+  if (/\b(senior|lead|director|manager|principal|vp|head|staff)\b/.test(titleLower)) return false;
+
   const text = (title + ' ' + content).toLowerCase();
   return text.includes('intern') || text.includes('co-op') || text.includes('coop')
     || text.includes('junior') || text.includes('entry level') || text.includes('entry-level')
@@ -1360,6 +1366,7 @@ async function updatePipelineRow(sheets, spreadsheetId, sheetName, rowNumber, ro
     valueInputOption: 'USER_ENTERED',
     resource: { values: [row] },
   });
+  await new Promise(r => setTimeout(r, 1200)); // Delay to prevent 429 Too Many Requests (max 60 req/min)
 }
 
 async function appendPipelineRows(sheets, spreadsheetId, sheetName, rows) {
@@ -1371,6 +1378,7 @@ async function appendPipelineRows(sheets, spreadsheetId, sheetName, rows) {
     insertDataOption: 'INSERT_ROWS',
     resource: { values: rows },
   });
+  await new Promise(r => setTimeout(r, 1200)); // Delay to prevent 429 Too Many Requests (max 60 req/min)
 }
 
 async function updatePipelineSheets(sheets, sheetId, scrapedJobs) {
