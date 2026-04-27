@@ -3783,6 +3783,7 @@ function setText(id,value){const el=document.getElementById(id);if(el)el.textCon
 function updateStats(){
   const jc=ALL.length, sc=new Set(ALL.map(j=>j.studio)).size;
   const fc=ALL.filter(j=>{const d=new Date(j.posted); return !isNaN(d) && (Date.now()-d)/864e5<=7;}).length;
+  console.log("Stats debug:", {jc, sc, fc, sJobs:!!document.getElementById('s-jobs'), sStudios:!!document.getElementById('s-studios'), sFresh:!!document.getElementById('s-fresh')});
   setText('premium-role-count',jc); setText('premium-studio-count',sc);
   if(!statsAni){
     statsAni=true;
