@@ -1999,19 +1999,38 @@ select {
 }
 #board-view.off { display: none; }
 #board-view > .hero { order: 1; }
-#board-view > #spotlight-s { order: 2; }
-#board-view > #trusted-bar { order: 3; }
-#board-view > .controls { order: 4; }
-#board-view > main#main-content { order: 5; }
-#board-view > .cta-section { order: 6; }
-#board-view > .fit-s { order: 7; }
-#board-view > .feed-s { order: 8; }
-#board-view > .hubs-s { order: 9; }
-#board-view > .proof-s { order: 10; }
-#board-view > .intelligence-s { order: 11; }
-#board-view > .command-s { order: 12; }
-#board-view > .proof-wall-s { order: 13; }
-#board-view > .signup-s { order: 14; }
+#board-view > .controls { order: 2; }
+#board-view > #spotlight-s { order: 3; }
+#board-view > main#main-content { order: 4; }
+#board-view > .cta-section { order: 5; }
+
+/* ═══════ HIDDEN FILLER SECTIONS ═══════ */
+/* Simplified layout: hero → filters → jobs. All these sections are hidden. */
+#board-view > #trusted-bar,
+#board-view > .feed-s,
+#board-view > .hubs-s,
+#board-view > .proof-s,
+#board-view > .intelligence-s,
+#board-view > .command-s,
+#board-view > .proof-wall-s,
+#board-view > .fit-s,
+#board-view > .signup-s { display: none !important; }
+
+/* Simplify hero: hide snapshot panel, CTA buttons, stats */
+.hero-panel,
+.hero-cta,
+.hero-stats { display: none !important; }
+
+/* Make hero single-column since panel is hidden */
+.hero-inner {
+  grid-template-columns: 1fr !important;
+}
+
+/* Compact hero padding */
+.hero {
+  padding-top: 2rem !important;
+  padding-bottom: 1.8rem !important;
+}
 
 .jc {
   display: grid;
