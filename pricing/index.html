@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feature Your Job | MapleDevs</title>
+  <meta name="description" content="Reach Canadian game developers by featuring your job on MapleDevs for $29 CAD.">
+  <link rel="icon" href="../favicon.png">
+  <style>
+    :root {
+      --maple: #c7352d;
+      --maple-dark: #9f2822;
+      --ink: #151515;
+      --ink-soft: #40403c;
+      --muted: #727168;
+      --line: #dedbd5;
+      --paper: #f7f5f0;
+      --panel: #fffefa;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, system-ui, sans-serif;
+      line-height: 1.5;
+    }
+    .topbar { border-bottom: 1px solid var(--line); background: var(--panel); padding: 16px 24px; display: flex; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); font-weight: 800; font-size: 1.1rem; }
+    .brand img { width: 24px; border-radius: 4px; }
+    .nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 12px; }
+    
+    .hero { background: linear-gradient(135deg, #111820 0%, #17202b 55%, #1c242d 100%); color: #fff; padding: 80px 24px; text-align: center; }
+    .eyebrow { color: #C79231; font-weight: 700; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: 3rem; margin: 0 0 24px 0; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.2; }
+    .price { font-size: 2.5rem; font-weight: 800; margin-bottom: 32px; color: #C79231; }
+    .price small { font-size: 1rem; color: rgba(255,255,255,0.6); font-weight: 600; }
+    
+    .benefits { max-width: 600px; margin: 0 auto 40px; text-align: left; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .benefit { display: flex; align-items: flex-start; gap: 12px; font-size: 1.1rem; }
+    .benefit svg { color: #C79231; flex-shrink: 0; margin-top: 4px; }
+    
+    .cta-btn { display: inline-block; background: #C79231; color: #111820; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-weight: 800; font-size: 1.1rem; transition: 0.2s; border: none; cursor: pointer; }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(199,146,49,0.4); }
+    .free-note { margin-top: 16px; color: rgba(255,255,255,0.45); font-size: 0.9rem; }
+    
+    .content { max-width: 800px; margin: 60px auto; padding: 0 24px; }
+    .content h2 { font-size: 2rem; margin-bottom: 24px; }
+    .content p { font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 24px; }
+    
+    .faq-item { margin-bottom: 24px; }
+    .faq-item h3 { margin: 0 0 8px 0; font-size: 1.2rem; }
+    .faq-item p { margin: 0; color: var(--ink-soft); }
+    
+    @media (max-width: 640px) {
+      h1 { font-size: 2.2rem; }
+      .hero { padding: 60px 20px; }
+      .benefits { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../">
+      <img src="../favicon.png" alt="">
+      MapleDevs
+    </a>
+    <nav class="nav">
+      <a href="../">← Back to Jobs</a>
+    </nav>
+  </header>
+  
+  <section class="hero">
+    <div class="eyebrow">★ For Studios</div>
+    <h1>Feature Your Job to Targeted Canadian Developers</h1>
+    <div class="price">$29 <small>CAD</small></div>
+    
+    <div class="benefits">
+      <div class="benefit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Homepage spotlight placement
+      </div>
+      <div class="benefit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Highlighted listing with badge
+      </div>
+      <div class="benefit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Priority visibility in all filters
+      </div>
+      <div class="benefit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Exposure to student developers
+      </div>
+      <div class="benefit">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Live within 24 hours
+      </div>
+    </div>
+    
+    <button onclick="window.location.href='../#post'" class="cta-btn">Feature Your Job →</button>
+    <div class="free-note">Standard listings are free. No account required.</div>
+  </section>
+  
+  <section class="content">
+    <h2>Why Feature Your Job?</h2>
+    <p>MapleDevs is Canada's most focused game industry job board. By featuring your job, you skip the noise and place your role directly in front of active Canadian game developers, students, and artists.</p>
+    
+    <div class="faq-item">
+      <h3>How does payment work?</h3>
+      <p>Payments are currently processed via Interac e-Transfer to <b>wupeiheng11@gmail.com</b>. We will manually verify the payment and feature your job within 24 hours.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>What is your refund policy?</h3>
+      <p>Featured placement payments are final and non-refundable once the listing has been published or moved into featured placement on the board.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>Do I have to pay to post a job?</h3>
+      <p>No! Standard job listings are 100% free. Featuring is simply an option to boost your visibility and fill roles faster.</p>
+    </div>
+  </section>
+  
+  <script>
+    if(window.location.hash === '#post') {
+       window.location.href = '../#post';
+    }
+  </script>
+</body>
+</html>

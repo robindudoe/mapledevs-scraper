@@ -2055,21 +2055,6 @@ select {
 .trust-bar-inner span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 .trust-bar-inner .trust-dot { width: 6px; height: 6px; background: #34A853; border-radius: 50%; animation: liveDot 2s ease-in-out infinite; }
 
-/* ═══ FEATURED PRICING SECTION ═══ */
-.featured-pitch { background: linear-gradient(135deg, #111820 0%, #17202b 55%, #1c242d 100%); color: #fff; border-top: 1px solid rgba(255,255,255,0.08); padding: 3.5rem 1.5rem; text-align: center; position: relative; overflow: hidden; }
-.featured-pitch::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(199,146,49,0.12), transparent 60%); pointer-events: none; }
-.featured-pitch-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
-.featured-pitch .fp-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem; }
-.featured-pitch h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 850; line-height: 1.1; margin-bottom: 0.5rem; }
-.featured-pitch .fp-price { font-size: 2.5rem; font-weight: 900; color: var(--gold); margin: 1rem 0; line-height: 1; }
-.featured-pitch .fp-price small { font-size: 0.5em; font-weight: 700; color: rgba(255,255,255,0.6); }
-.featured-pitch .fp-scarcity { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
-.fp-benefits { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; max-width: 480px; margin: 0 auto 1.5rem; }
-.fp-benefit { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.82); line-height: 1.45; }
-.fp-benefit svg { flex-shrink: 0; margin-top: 2px; color: var(--gold); }
-.fp-cta { display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 15px; font-weight: 800; color: #111820; background: var(--gold); border: none; border-radius: var(--r-s); padding: 14px 32px; cursor: pointer; transition: all var(--dur); box-shadow: 0 4px 16px rgba(199,146,49,0.3); }
-.fp-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(199,146,49,0.4); }
-.fp-free { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 1rem; }
 @media (max-width: 520px) { .fp-benefits { grid-template-columns: 1fr; } }
 
 /* ═══ COMPACT NEWSLETTER BAR ═══ */
@@ -2882,7 +2867,7 @@ select {
         </form>
         <div class="hero-cta">
           <a href="#main-content" class="btn-p" id="browse-btn">Browse Jobs</a>
-          <button class="btn-feature" onclick="openPostModal()">★ Feature Your Job — $29</button>
+          <button class="btn-feature" onclick="window.location.href='/pricing/'">★ Feature Your Job — $29</button>
         </div>
         <div class="hero-stats" role="region" aria-label="MapleDevs statistics">
           <div><span class="stat-n" id="s-jobs" data-t="0">0</span><div class="stat-l">Open roles</div></div>
@@ -2897,7 +2882,7 @@ select {
           <a href="/remote/"><span>Remote and hybrid roles</span><b>Browse</b></a>
           <a href="/junior/"><span>Junior and student pathways</span><b>Find</b></a>
           <a href="/programming/"><span>Programming and engine roles</span><b>Explore</b></a>
-          <span><span>Featured listing price</span><b>$29 CAD</b></span>
+          <a href="/pricing/"><span>Featured listing price</span><b>$29 CAD</b></a>
         </div>
         <div class="signal-engine" aria-label="Animated hiring signal visualization">
           <span class="signal-sweep"></span>
@@ -3248,24 +3233,7 @@ select {
     </div>
   </section>
 
-  <section class="featured-pitch">
-    <div class="featured-pitch-inner">
-      <div class="fp-eyebrow">★ For studios</div>
-      <h2>Feature Your Job to Targeted Canadian Developers</h2>
-      <div class="fp-price">$29 <small>CAD</small></div>
-      <div class="fp-scarcity">Limited featured slots available</div>
-      <div class="fp-benefits">
-        <div class="fp-benefit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Homepage spotlight placement</div>
-        <div class="fp-benefit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Highlighted listing with badge</div>
-        <div class="fp-benefit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority visibility in all filters</div>
-        <div class="fp-benefit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Exposure to student developers</div>
 
-        <div class="fp-benefit"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live within 24 hours</div>
-      </div>
-      <button class="fp-cta" onclick="openPostModal()">Feature Your Job →</button>
-      <div class="fp-free">Standard listings are free. No account required.</div>
-    </div>
-  </section>
 </div>
 
 <!-- ═══════ DETAIL VIEW ═══════ -->
@@ -3914,6 +3882,11 @@ function renderCompareTable(jobs){const table=document.getElementById('compare-t
 /* ═══════ URL FILTERS ═══════ */
 function applyHash(){
   const h = location.hash.replace('#','');
+  if(h === 'post') {
+    openPostModal();
+    history.replaceState(null, '', location.pathname);
+    return;
+  }
   if(h.startsWith('id=')){
     const slug = h.replace('id=','');
     const idx = ALL.findIndex(j => toSlug(`${j.title}-${j.studio}-${j.location}`) === slug);
