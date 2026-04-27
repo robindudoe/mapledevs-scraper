@@ -6,6 +6,9 @@
   <title>Feature Your Job | MapleDevs</title>
   <meta name="description" content="Reach Canadian game developers by featuring your job on MapleDevs for $29 CAD.">
   <link rel="icon" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --maple: #c7352d;
@@ -62,12 +65,12 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../">
+    <a class="brand" href="../index.html">
       <img src="../favicon.png" alt="">
       MapleDevs
     </a>
     <nav class="nav">
-      <a href="../">← Back to Jobs</a>
+      <a href="../index.html">← Back to Jobs</a>
     </nav>
   </header>
   
@@ -99,7 +102,7 @@
       </div>
     </div>
     
-    <button onclick="window.location.href='../#post'" class="cta-btn">Feature Your Job →</button>
+    <button onclick="window.location.href='../index.html#post'" class="cta-btn">Feature Your Job →</button>
     <div class="free-note">Standard listings are free. No account required.</div>
   </section>
   
@@ -125,7 +128,7 @@
   
   <script>
     if(window.location.hash === '#post') {
-       window.location.href = '../#post';
+       window.location.href = '../index.html#post';
     }
   </script>
 </body>
