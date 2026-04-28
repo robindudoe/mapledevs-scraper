@@ -57,6 +57,44 @@
     .contact-info { text-align: center; margin-top: 40px; color: var(--ink-soft); font-size: 1.1rem; }
     .contact-info a { color: var(--maple); text-decoration: underline; font-weight: 600; }
   </style>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mapledevs.ca/#organization",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "logo": "https://mapledevs.ca/og-image.png",
+      "sameAs": [
+        "https://mapledevs.ca/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mapledevs.ca/#website",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "publisher": {
+        "@id": "https://mapledevs.ca/#organization"
+      },
+      "inLanguage": "en-CA"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mapledevs.ca/contact/#webpage",
+      "name": "Contact Us | MapleDevs",
+      "url": "https://mapledevs.ca/contact/",
+      "isPartOf": {
+        "@id": "https://mapledevs.ca/#website"
+      },
+      "inLanguage": "en-CA"
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <header class="topbar">

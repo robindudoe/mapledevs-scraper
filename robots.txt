@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /account/
+Disallow: /saved/
+Disallow: /traffic/
 
 Sitemap: https://mapledevs.ca/sitemap.xml

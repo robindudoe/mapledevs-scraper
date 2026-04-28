@@ -294,11 +294,49 @@
         })
       })
     </script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mapledevs.ca/#organization",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "logo": "https://mapledevs.ca/og-image.png",
+      "sameAs": [
+        "https://mapledevs.ca/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mapledevs.ca/#website",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "publisher": {
+        "@id": "https://mapledevs.ca/#organization"
+      },
+      "inLanguage": "en-CA"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mapledevs.ca/blog/#webpage",
+      "name": "The Maple Feed | MapleDevs Industry News",
+      "url": "https://mapledevs.ca/blog/",
+      "isPartOf": {
+        "@id": "https://mapledevs.ca/#website"
+      },
+      "inLanguage": "en-CA"
+    }
+  ]
+}
+</script>
 </head>
 <body>
     <div class="container">
         <nav class="back-nav">
-            <a href="/" class="back-link">← Back to MapleDevs</a>
+            <a href="../index.html" class="back-link">← Back to MapleDevs</a>
             <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
                 <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></svg>
             </button>
@@ -311,12 +349,12 @@
 
         <div class="blog-grid" id="blog-archive">
             <!-- ═══════ BLOG POSTS START ═══════ -->
-            <a href="/blog/montreal-silicon-valley-north-game-dev-2026.html" class="blog-card">
+            <a href="montreal-silicon-valley-north-game-dev-2026.html" class="blog-card">
                 <span class="date">April 22, 2026</span>
                 <h2>Why Montreal Is Still a Global Game Development Hub in 2026 (And What It Means for Your Career)</h2>
                 <p>Explore why Montreal remains a world leader in game development in 2026 and how the Quebec ecosystem offers unparalleled career growth for developers.</p>
             </a>
-            <a href="/blog/mapledevs-editorial-launch.html" class="blog-card">
+            <a href="mapledevs-editorial-launch.html" class="blog-card">
                 <span class="date">April 22, 2026</span>
                 <h2>Introducing The Maple Feed</h2>
                 <p>Welcome to your definitive source for Canadian game industry news and insights.</p>

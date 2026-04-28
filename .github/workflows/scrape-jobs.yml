@@ -49,16 +49,15 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}
         run: node google-index.js
 
-      - name: Generate Email Digest
+      - name: Submit IndexNow Updates
         continue-on-error: true
-        run: node generate-digest.js
+        run: node indexnow-submit.js
 
-      - name: Post to LinkedIn
+      - name: Confirm Review Drafts
         continue-on-error: true
-        env:
-          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
-          LINKEDIN_AUTHOR_URN: ${{ secrets.LINKEDIN_AUTHOR_URN }}
-        run: node post-linkedin.js
+        run: |
+          ls -la traffic || true
+          echo "Social snippets and newsletter drafts are generated for manual review only."
 
       - name: Run Swarm Intelligence
         continue-on-error: true
@@ -76,6 +75,10 @@ jobs:
           cp index.html dist/ || true
           cp sitemap.xml dist/ || true
           cp robots.txt dist/ || true
+          cp rss.xml dist/ || true
+          cp feed.xml dist/ || true
+          cp indexnow-urls.json dist/ || true
+          cp mapledevs-indexnow-20260428.txt dist/ || true
           cp og-image.png dist/ || true
           cp favicon.png dist/ || true
           cp favicon.ico dist/ || true
@@ -84,11 +87,14 @@ jobs:
           cp -r assets dist/ || true
           cp -r js dist/ || true
           cp -r jobs dist/ || true
+          cp -r locations dist/ || true
           
-          # 2. Copy all SEO Hub folders (folders created by the build-seo script)
-          # This looks for folders like /vancouver, /art, /programming and copies them
-          for dir in vancouver toronto montreal ottawa quebec-city edmonton calgary victoria london halifax kitchener burnaby programming art design producer qa audio ui-ux junior remote internship about studios saved blog account talent admin swarm; do
-            if [ -d "$dir" ]; then
+          # 2. Copy generated static page folders without publishing local-only review files.
+          for dir in */; do
+            case "$dir" in
+              node_modules/|dist/|.git/|.github/|.codex-backups/|traffic/) continue ;;
+            esac
+            if [ -f "$dir/index.html" ]; then
               cp -r "$dir" dist/
             fi
           done

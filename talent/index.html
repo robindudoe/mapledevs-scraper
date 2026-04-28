@@ -368,18 +368,56 @@
       })
     })
   </script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mapledevs.ca/#organization",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "logo": "https://mapledevs.ca/og-image.png",
+      "sameAs": [
+        "https://mapledevs.ca/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mapledevs.ca/#website",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "publisher": {
+        "@id": "https://mapledevs.ca/#organization"
+      },
+      "inLanguage": "en-CA"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mapledevs.ca/talent/#webpage",
+      "name": "Canadian Game Developer Talent | MapleDevs",
+      "url": "https://mapledevs.ca/talent/",
+      "isPartOf": {
+        "@id": "https://mapledevs.ca/#website"
+      },
+      "inLanguage": "en-CA"
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="../">
+      <a class="brand" href="../index.html">
         <img src="../favicon.png" alt="">
         <span>Maple<span>Devs</span></span>
       </a>
       <nav class="nav" aria-label="Talent navigation">
-        <a href="../">Jobs</a>
-        <a href="../studios/">Studios</a>
-        <a href="../account/">Account</a>
+        <a href="../index.html">Jobs</a>
+        <a href="../studios/index.html">Studios</a>
+        <a href="../account/index.html">Account</a>
         <a href="mailto:mapledevsbusiness@gmail.com">Business</a>
       </nav>
     </div>

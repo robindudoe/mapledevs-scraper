@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-04-28T22:13:04.587Z",
+  "totalJobs": 124,
+  "newJobsThisWeek": 0,
+  "seoPagesCreated": 29,
+  "sitemap": {
+    "exists": true,
+    "urlCount": 163
+  },
+  "rss": {
+    "exists": true,
+    "latestJobs": 30
+  },
+  "missingTitle": [],
+  "missingDescription": [
+    "admin/index.html",
+    "admin/swarm.html"
+  ],
+  "missingSchema": [
+    "account/index.html",
+    "admin/index.html",
+    "admin/swarm.html",
+    "blog-template.html"
+  ],
+  "brokenInternalLinks": []
+}

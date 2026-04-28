@@ -232,16 +232,54 @@
         })
       })
     </script>
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mapledevs.ca/#organization",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "logo": "https://mapledevs.ca/og-image.png",
+      "sameAs": [
+        "https://mapledevs.ca/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mapledevs.ca/#website",
+      "name": "MapleDevs",
+      "url": "https://mapledevs.ca/",
+      "publisher": {
+        "@id": "https://mapledevs.ca/#organization"
+      },
+      "inLanguage": "en-CA"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mapledevs.ca/blog/montreal-silicon-valley-north-game-dev-2026.html#webpage",
+      "name": "Why Montreal Is Still a Global Game Development Hub in 2026 (And What It Means for Your Career) | MapleDevs Editorial",
+      "url": "https://mapledevs.ca/blog/montreal-silicon-valley-north-game-dev-2026.html",
+      "isPartOf": {
+        "@id": "https://mapledevs.ca/#website"
+      },
+      "inLanguage": "en-CA"
+    }
+  ]
+}
+</script>
 </head>
 <body>
     <div class="container">
         <div class="nav-header">
-            <a href="/blog/index.html" class="back-link">← Back to The Maple Feed</a>
+            <a href="index.html" class="back-link">← Back to The Maple Feed</a>
             <div style="display: flex; align-items: center; gap: 16px;">
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
                     <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></svg>
                 </button>
-                <img src="/favicon.png" alt="MapleDevs" style="height: 20px; opacity: 0.8;">
+                <img src="../favicon.png" alt="MapleDevs" style="height: 20px; opacity: 0.8;">
             </div>
         </div>
 
