@@ -88,7 +88,7 @@
       "identifier": {
         "@type": "PropertyValue",
         "name": "Blackbird Interactive",
-        "value": "lv_blackbirdinteractive_7c686e02_dc80_4d78_9b05_b53f6457add2"
+        "value": "producer-blackbird-interactive-vancouver-bc"
       },
       "hiringOrganization": {
         "@type": "Organization",
@@ -3028,6 +3028,645 @@ select {
   padding-bottom: 1.5rem !important;
   border-bottom: 1px solid var(--border) !important;
 }
+/* Clean MapleDevs refresh */
+:root {
+  --bg-body: #ffffff;
+  --bg-card: #ffffff;
+  --bg-elevated: #fbfaf8;
+  --bg-subtle: #f5f4f1;
+  --bg-input: #ffffff;
+  --text-1: #101010;
+  --text-2: #56514c;
+  --text-3: #8b8580;
+  --border: rgba(16, 16, 16, 0.08);
+  --border-s: rgba(16, 16, 16, 0.14);
+  --glass: rgba(255, 255, 255, 0.88);
+  --glass-b: rgba(255, 255, 255, 0.6);
+  --maple-glow: rgba(200, 55, 45, 0.09);
+  --shadow-xs: 0 1px 2px rgba(16, 16, 16, 0.04);
+  --shadow-s: 0 1px 3px rgba(16, 16, 16, 0.05);
+  --shadow-m: 0 10px 28px rgba(16, 16, 16, 0.08);
+  --shadow-l: 0 22px 60px rgba(16, 16, 16, 0.10);
+  --max-w: 1180px;
+}
+
+[data-theme="dark"] {
+  --bg-body: #050505;
+  --bg-card: #0b0b0b;
+  --bg-elevated: #111111;
+  --bg-subtle: #171717;
+  --bg-input: #101010;
+  --text-1: #f7f5f2;
+  --text-2: #c8c2bc;
+  --text-3: #85817b;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-s: rgba(255, 255, 255, 0.16);
+  --glass: rgba(5, 5, 5, 0.86);
+  --glass-b: rgba(255, 255, 255, 0.06);
+  --maple-glow: rgba(200, 55, 45, 0.18);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-s: 0 1px 3px rgba(0, 0, 0, 0.42);
+  --shadow-m: 0 14px 34px rgba(0, 0, 0, 0.44);
+  --shadow-l: 0 28px 70px rgba(0, 0, 0, 0.52);
+}
+
+body,
+[data-theme="dark"] body {
+  background: var(--bg-body) !important;
+  color: var(--text-1);
+}
+
+#news-ticker,
+#feature-banner,
+#trust-bar {
+  display: none !important;
+}
+
+header {
+  background: var(--glass) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+}
+
+header::after,
+.hero-bg,
+.hero-panel {
+  display: none !important;
+}
+
+.h-inner {
+  max-width: var(--max-w);
+  gap: 1rem;
+}
+
+.h-nav {
+  gap: 4px;
+}
+
+.h-nav .nav-optional {
+  display: none !important;
+}
+
+.n-link,
+.post-job-nav,
+.theme-btn,
+.btn-p,
+.btn-s,
+.alert-btn,
+.load-btn,
+.d-act-btn,
+.apply-btn {
+  border-radius: 8px !important;
+}
+
+.n-link {
+  color: var(--text-2);
+  font-weight: 650;
+  padding: 8px 10px;
+}
+
+.n-link:hover {
+  color: var(--text-1);
+  background: var(--bg-subtle);
+}
+
+.post-job-nav {
+  min-height: 34px !important;
+  padding: 7px 12px !important;
+  font-size: 12.5px !important;
+}
+
+.post-job-nav,
+.btn-p,
+.apply-btn {
+  background: var(--maple) !important;
+  color: #fff !important;
+  border: 1px solid var(--maple) !important;
+  box-shadow: none !important;
+}
+
+.post-job-nav:hover,
+.btn-p:hover,
+.apply-btn:hover {
+  background: var(--maple-dark) !important;
+  border-color: var(--maple-dark) !important;
+  transform: translateY(-1px);
+}
+
+.btn-s,
+.hero .btn-s {
+  background: transparent !important;
+  color: var(--text-2) !important;
+  border: 1px solid var(--border-s) !important;
+  box-shadow: none !important;
+}
+
+.btn-s:hover,
+.hero .btn-s:hover {
+  background: var(--bg-subtle) !important;
+  color: var(--text-1) !important;
+  border-color: var(--text-3) !important;
+}
+
+.hero {
+  padding: clamp(3.2rem, 7vw, 6.2rem) 1.5rem clamp(2.5rem, 5vw, 4.5rem) !important;
+  background: var(--bg-body) !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text-1) !important;
+}
+
+.hero-inner {
+  display: block !important;
+  max-width: var(--max-w);
+}
+
+.hero-copy {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-tag {
+  color: var(--maple) !important;
+  background: var(--maple-glow) !important;
+  border-color: rgba(200, 55, 45, 0.18) !important;
+  border-radius: 999px !important;
+  margin-bottom: 1.15rem;
+}
+
+.hero-tag .pulse {
+  background: var(--maple) !important;
+}
+
+.hero h1 {
+  max-width: 820px;
+  margin: 0 auto 1rem;
+  color: var(--text-1) !important;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  line-height: 0.98;
+  font-weight: 860;
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto 1.55rem;
+  color: var(--text-2) !important;
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  line-height: 1.65;
+}
+
+.hero-search {
+  max-width: 760px;
+  margin: 0 auto 1rem;
+  padding: 6px;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-s) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-m);
+  backdrop-filter: none;
+}
+
+.hero-search input {
+  min-height: 54px;
+  background: var(--bg-input) !important;
+  color: var(--text-1) !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-size: 15px;
+}
+
+.hero-search button {
+  min-height: 54px;
+  background: var(--maple) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: none;
+}
+
+.hero-search button:hover {
+  background: var(--maple-dark) !important;
+}
+
+.hero-cta {
+  justify-content: center;
+  margin: 0 0 1.35rem !important;
+  gap: 8px;
+}
+
+.hero-stats {
+  max-width: 760px;
+  margin: 1.4rem auto 0;
+  padding-top: 1.1rem !important;
+  border-top: 1px solid var(--border) !important;
+  justify-content: center;
+  gap: 0 !important;
+}
+
+.hero-stats > div {
+  flex: 1 1 0;
+  min-width: 150px;
+  padding: 0.45rem 1rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.stat-n {
+  color: var(--text-1) !important;
+  font-size: 28px;
+}
+
+.stat-l {
+  color: var(--text-3) !important;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.controls {
+  top: var(--header-h);
+  background: var(--bg-body) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: none !important;
+  padding: 12px 1.5rem !important;
+}
+
+.ctrl-inner {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  max-width: var(--max-w);
+}
+
+.s-wrap {
+  flex: 1 1 320px;
+  min-width: 240px;
+  order: 1;
+}
+
+#f-city { order: 2; }
+#f-role { order: 3; }
+#f-mode { order: 4; }
+.mobile-filter-toggle { order: 5; }
+.r-count { order: 6; }
+#f-exp,
+#f-type,
+#f-engine,
+#f-visa,
+.stu-label,
+.alert-btn {
+  order: 7;
+}
+
+.s-wrap input,
+select,
+.stu-label,
+.alert-btn {
+  min-height: 42px !important;
+  height: 42px !important;
+  border-radius: 8px !important;
+  background: var(--bg-input) !important;
+  border: 1px solid var(--border-s) !important;
+  color: var(--text-1) !important;
+  box-shadow: none !important;
+}
+
+.controls select {
+  flex: 0 1 150px;
+  font-weight: 650;
+}
+
+.mobile-filter-toggle {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 13px;
+  border: 1px solid var(--border-s);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text-1);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.mobile-filter-toggle:hover,
+.mobile-filter-toggle.has-filters {
+  color: var(--maple);
+  border-color: rgba(200, 55, 45, 0.28);
+  background: var(--maple-glow);
+}
+
+.filter-sheet {
+  display: contents !important;
+}
+
+.filter-sheet-head,
+.filter-apply,
+.quick-filters {
+  display: none !important;
+}
+
+.controls:not(.filters-open) #f-exp,
+.controls:not(.filters-open) #f-type,
+.controls:not(.filters-open) #f-engine,
+.controls:not(.filters-open) #f-visa,
+.controls:not(.filters-open) .stu-label,
+.controls:not(.filters-open) .alert-btn {
+  display: none !important;
+}
+
+.controls.filters-open #f-exp,
+.controls.filters-open #f-type,
+.controls.filters-open #f-engine,
+.controls.filters-open #f-visa {
+  display: block !important;
+}
+
+.controls.filters-open .stu-label,
+.controls.filters-open .alert-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.r-count {
+  margin-left: auto;
+  color: var(--text-3);
+}
+
+.f-pills {
+  max-width: var(--max-w);
+  padding: 7px 0 0;
+}
+
+#main-content {
+  max-width: var(--max-w);
+  padding-top: 1.15rem;
+}
+
+.split-layout {
+  gap: 16px;
+}
+
+.jc {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  padding: 16px !important;
+}
+
+.jc:hover {
+  border-color: rgba(200, 55, 45, 0.28) !important;
+  box-shadow: var(--shadow-m) !important;
+  transform: translateY(-1px);
+}
+
+.jc-score-mini {
+  display: none;
+}
+
+.jc.active {
+  background: var(--bg-card) !important;
+  border-color: var(--maple) !important;
+  box-shadow: 0 0 0 2px var(--maple-glow) !important;
+}
+
+#inline-detail-pane {
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+.detail-col .detail-apply-btn {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.newsletter-bar {
+  background: var(--bg-body) !important;
+}
+
+.resources-c .res-hdr h1,
+.resources-c .res-section-hdr h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 860;
+  letter-spacing: 0;
+}
+
+.resources-c .res-hdr h1 {
+  font-size: clamp(2.1rem, 6vw, 4.6rem);
+  line-height: 1;
+}
+
+.res-card-link {
+  cursor: pointer;
+}
+
+.res-card-link:focus-visible {
+  outline: 3px solid var(--maple-glow);
+  outline-offset: 3px;
+  border-color: var(--maple);
+}
+
+#post-modal .modal {
+  max-width: 540px;
+}
+
+#post-modal .modal-hdr {
+  padding: 1.1rem 1.25rem 0;
+}
+
+#post-modal .modal-body {
+  padding: 0.9rem 1.25rem 1.25rem;
+}
+
+#post-modal .post-summary {
+  display: none;
+}
+
+#post-modal .form-grid {
+  gap: 9px 10px;
+}
+
+#post-modal .option-row {
+  padding: 8px 10px !important;
+}
+
+#post-modal .option-row span,
+#post-modal .fg input,
+#post-modal .fg select,
+#post-modal .fg textarea {
+  font-size: 12.5px;
+}
+
+#post-modal .fg select {
+  flex: none !important;
+  height: 38px !important;
+  min-height: 38px !important;
+}
+
+#post-modal .fg textarea {
+  min-height: 74px !important;
+}
+
+#post-modal .policy-note {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+#post-submit-btn {
+  min-height: 38px !important;
+  padding: 10px 16px !important;
+  font-size: 13px !important;
+}
+
+@media (max-width: 900px) {
+  .h-nav .nav-optional,
+  .h-nav #nav-resources {
+    display: none !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .hero {
+    padding: 2.2rem 1rem 1.6rem !important;
+  }
+
+  .hero h1 {
+    max-width: 480px;
+    font-size: clamp(2.1rem, 13vw, 3.3rem);
+  }
+
+  .hero p {
+    font-size: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-search {
+    grid-template-columns: 1fr !important;
+    box-shadow: none;
+  }
+
+  .hero-search button {
+    width: 100%;
+  }
+
+  .hero-stats {
+    display: none !important;
+  }
+
+  .hero-cta {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 0.9rem !important;
+  }
+
+  .hero-cta .btn-p {
+    grid-column: 1 / -1;
+  }
+
+  .hero-cta .btn-p,
+  .hero-cta .btn-s {
+    width: 100%;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .controls {
+    position: relative;
+    top: auto;
+    padding: 8px 10px 9px !important;
+    background: var(--bg-card) !important;
+  }
+
+  .ctrl-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .s-wrap {
+    min-width: 0;
+  }
+
+  .filter-sheet {
+    display: grid !important;
+    position: fixed;
+    top: auto !important;
+    left: 0;
+    right: 0;
+    bottom: 0 !important;
+    z-index: 2;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    max-height: min(76vh, 620px);
+    overflow-y: auto;
+    padding: 14px 14px calc(16px + env(safe-area-inset-bottom));
+    border: 1px solid var(--border);
+    border-bottom: 0;
+    border-radius: 18px 18px 0 0;
+    background: var(--bg-card);
+    box-shadow: 0 -18px 40px rgba(0, 0, 0, 0.22);
+    transform: none !important;
+    transition: transform 0.22s var(--ease);
+  }
+
+  .controls:not(.filters-open) .filter-sheet {
+    bottom: -120vh !important;
+    transform: none !important;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .controls.filters-open .filter-sheet {
+    bottom: 0 !important;
+    transform: none !important;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .filter-sheet-head {
+    display: flex !important;
+    order: 0 !important;
+  }
+
+  .filter-apply {
+    display: inline-flex !important;
+    order: 20 !important;
+  }
+
+  .filter-sheet select,
+  .filter-sheet .stu-label,
+  .filter-sheet .alert-btn {
+    order: 10 !important;
+  }
+
+  .filter-sheet select,
+  .filter-sheet .stu-label,
+  .filter-sheet .alert-btn,
+  .filter-apply {
+    width: 100%;
+    min-height: 44px !important;
+  }
+
+  .resources-c {
+    padding: 1.4rem 1rem 3rem;
+  }
+
+  .resources-c .res-hdr {
+    margin-bottom: 2.4rem;
+  }
+
+  .resources-c .res-hdr h1 {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+}
+
 /* Timestamp: 2026-04-27T20:47:00Z */
 </style>
 
@@ -3053,22 +3692,23 @@ select {
 <header role="banner">
   <div class="h-inner">
     <a href="/" class="logo" onclick="goHome(event)" aria-label="MapleDevs home">
-      <img class="logo-i" src="/favicon.png" alt="MapleDevs" width="24" height="24" style="border-radius:2px;">
+      <img class="logo-i" src="favicon.png" alt="MapleDevs" width="24" height="24" style="border-radius:2px;">
       <span class="logo-w">Maple<span>Devs</span></span>
     </a>
     <nav class="h-nav" role="navigation" aria-label="Main">
-      <a href="/blog/index.html" class="n-link">Maple Feed</a>
+      <a href="/blog/index.html" class="n-link nav-optional">Maple Feed</a>
       <a href="/talent/" class="n-link" onclick="goLocalPage(event,'talent')">Talent</a>
       <button class="n-link" id="nav-studios" onclick="showStudios()">Studios</button>
       <button class="n-link" id="nav-about" onclick="showAbout()">About</button>
       <button class="n-link" id="nav-saved" onclick="showSaved()">Saved<span class="n-badge" id="sv-badge">0</span></button>
-      <a href="/account/" class="n-link" onclick="goAccount(event)">Account</a>
-      <a href="https://discord.com/invite/TXGyQYRYg9" target="_blank" rel="noopener noreferrer" class="n-link" style="display:flex; align-items:center; gap:5px" aria-label="Join our Discord" onclick="return openDiscord(event)">
+      <a href="/account/" class="n-link nav-optional" onclick="goAccount(event)">Account</a>
+      <a href="https://discord.com/invite/TXGyQYRYg9" target="_blank" rel="noopener noreferrer" class="n-link nav-optional" style="display:flex; align-items:center; gap:5px" aria-label="Join our Discord" onclick="return openDiscord(event)">
         <svg width="14" height="14" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a67.59,67.59,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.2,46,96.09,53,91.08,65.69,84.69,65.69Z"/></svg>
         Discord
       </a>
       <button class="n-link" id="nav-resources" onclick="showResources()">Resources</button>
-      <button class="post-job-nav" onclick="openPostModal()">Post a Job</button>
+      <a href="/hire/" class="n-link nav-hire" onclick="goLocalPage(event,'hire')">Hiring</a>
+      <button class="post-job-nav" onclick="openPostModal()">Post job</button>
       <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-ic"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
     </nav>
   </div>
@@ -3214,18 +3854,16 @@ select {
     <div class="hero-inner">
       <div class="hero-copy">
         <div class="hero-tag"><span class="pulse"></span> Live · Updated daily</div>
-        <h1 id="hero-heading">Find Game Dev Jobs in Canada</h1>
-        <p>Built for students, indie teams, and experienced developers. Filter by role, city, engine, salary, work mode, visa support, and more.</p>
+        <h1 id="hero-heading">Find your next game job in Canada</h1>
+        <p>A calmer job board for verified Canadian studio roles, with the details candidates actually need before applying.</p>
         <form class="hero-search" onsubmit="return heroSearch(event)" role="search" aria-label="Search MapleDevs jobs">
           <input id="hero-search" type="search" placeholder="Search role, studio, engine, city, salary..." autocomplete="off">
           <button type="submit">Search jobs</button>
         </form>
         <div class="hero-cta">
-          <a href="#main-content" class="btn-p" id="browse-btn">Browse Jobs</a>
-          <div class="cta-stack">
-            <button class="btn-feature" onclick="window.location.href='/hire/index.html'">★ Boost Your Job</button>
-            <button class="btn-s" onclick="showResources()" style="width: 100%; justify-content: center; background: var(--bg-subtle);">🛠️ View Resources</button>
-          </div>
+          <a href="/jobs/" class="btn-p" id="browse-btn">Browse jobs</a>
+          <button class="btn-s" onclick="showResources()">Resources</button>
+          <button class="btn-s" onclick="openPage('hire')">Hiring</button>
         </div>
         <div class="hero-stats" role="region" aria-label="MapleDevs statistics">
           <div><span class="stat-n" id="s-jobs" data-t="0">0</span><div class="stat-l">Open roles</div></div>
@@ -3575,6 +4213,13 @@ select {
   </div>
 
   <main id="main-content" role="main">
+    <nav class="seo-branch-nav" aria-label="Job page links" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 auto 1rem;max-width:1120px;padding:1rem 1.5rem;font-size:14px;">
+        <a href="/" style="color:var(--maple);font-weight:700;text-decoration:none;">MapleDevs home</a>
+        <span style="color:var(--text-3);">/</span>
+        <a href="/jobs/" style="color:var(--maple);font-weight:700;text-decoration:none;">All jobs</a>
+        <span style="color:var(--text-3);">/</span><a href="/#city=Vancouver%2C%20BC" style="color:var(--maple);font-weight:700;text-decoration:none;">Vancouver, BC jobs</a>
+        <span style="color:var(--text-3);">/</span><a href="/#q=Blackbird%20Interactive" style="color:var(--maple);font-weight:700;text-decoration:none;">Blackbird Interactive jobs</a>
+    </nav>
     <div id="hub-highlights" class="hub-highlights"></div>
     <div class="split-layout"><div class="list-col"><div id="job-list" class="job-list"><article class="jc " style="margin-bottom:1rem;">
         <div class="jc-main">
@@ -3862,7 +4507,7 @@ select {
    ═══════════════════════════════════════════════════ */
 const SHEET_DOC_ID = "1L2KcTO32jK5MVY1m3qdqdja7LTZ38f8lYXsK5mNMMDo";
 const LIVE_SHEET_NAME = "jobs_live";
-const KNOWN_DEAD_APPLY_URLS = new Set(["https://job-boards.greenhouse.io/2k/jobs/7678028003"]);
+const KNOWN_DEAD_APPLY_URLS = new Set(["https://job-boards.greenhouse.io/2k/jobs/7678028003","https://epicgames.com/careers/jobs/5764691004?gh_jid=5764691004"]);
 const PER_PAGE = 20;
 const DISCORD_INVITE_URL = "https://discord.com/invite/TXGyQYRYg9";
 let ALL = [], dispCount = PER_PAGE;
@@ -4166,7 +4811,7 @@ updBadge();
 async function loadJobs(){
   const url="https://docs.google.com/spreadsheets/d/"+SHEET_DOC_ID+"/gviz/tq?tqx=out:csv&sheet="+encodeURIComponent(LIVE_SHEET_NAME);
   try{const r=await fetch(url);if(!r.ok)throw 0;const csv=await r.text();ALL=parseCSV(csv);injectJobSchema(ALL);initFilters();updateStats();buildDashboard();updateLatestJobs();applyHash();render();buildTrusted();updateCompareTray();}
-  catch(e){console.error('Job Load Error:',e);document.getElementById("job-list").innerHTML='<div class="state-msg"><span class="ic">⚠️</span>Couldn\'t load jobs.<span class="sub">Please refresh or check back later.</span></div>';}
+  catch(e){console.error('Job Load Error:',e);document.getElementById("job-list").innerHTML='<div class="state-msg"><span class="ic">⚠️</span>Couldn\'t load jobs.<span class="sub">Please refresh or check back later.</span></div>';applyHash();}
 }
 function hkey(s){return cl(s).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');}
 function cell(r,h,names,fallback){for(const n of names){const i=h.indexOf(hkey(n));if(i>-1)return cl(r[i]);}return fallback!==undefined?cl(r[fallback]):"";}
@@ -4307,6 +4952,10 @@ function renderCompareTable(jobs){const table=document.getElementById('compare-t
 /* ═══════ URL FILTERS ═══════ */
 function applyHash(){
   const h = location.hash.replace('#','');
+  if(h==='resources'){showResources();return;}
+  if(h==='about'){showAbout();return;}
+  if(h==='studios'){showStudios();return;}
+  if(h==='saved'){showSaved();return;}
   if(h.startsWith('id=')){
     const slug = h.replace('id=','');
     const idx = ALL.findIndex(j => toSlug(`${j.title}-${j.studio}-${j.location}`) === slug);
@@ -4609,29 +5258,50 @@ async function renderResources(){
     'Career':document.getElementById('grid-career'),
     'Featured':document.getElementById('grid-featured')
   };
-  
+
   Object.values(grids).forEach(g=>g.innerHTML='<div class="state-msg">Loading resources...</div>');
-  
+
   try {
-    const r=await fetch('/resources.json'); 
-    if(!r.ok)throw 0; 
+    const r=await fetch(sitePath('resources.json'));
+    if(!r.ok)throw 0;
     const data=await r.json();
-    
-    Object.values(grids).forEach(g=>g.innerHTML='');
-    data.forEach(item=>{
-      const grid=grids[item.category];
-      if(grid) {
-        const btnText = item.buttonText || 'View Resource';
-        grid.innerHTML+=`<article class="res-card">
-          <div class="res-tags">${item.tags ? item.tags.map(t=>`<span class="res-tag ${t.toLowerCase()==='new'?'new':''}">${esc(t)}</span>`).join('') : ''}</div>
-          <h3>${item.icon||''} ${esc(item.title)}</h3>
-          <p>${esc(item.description)}</p>
-          <a href="${item.link==='#'?'javascript:void(0)':esc(item.link)}" onclick="${item.link==='#'?`openGuide('${item.id}')`:''}" target="${item.link==='#'?'':'_blank'}" rel="noopener" class="res-btn">${esc(btnText)} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
-        </article>`;
-      }
-    });
-    Object.keys(grids).forEach(cat=>{const s=document.getElementById('res-'+cat.toLowerCase()); if(s)s.style.display=grids[cat].children.length?'block':'none';});
-  }catch(e){Object.values(grids).forEach(g=>g.innerHTML='<div class="state-msg">Couldn\'t load resources.</div>');}
+    paintResources(data,grids);
+  }catch(e){
+    paintResources(fallbackResources(),grids);
+  }
+}
+
+function paintResources(data,grids){
+  Object.values(grids).forEach(g=>g.innerHTML='');
+  data.forEach(item=>{
+    const grid=grids[item.category];
+    if(grid) {
+      const btnText = item.buttonText || 'View Resource';
+      const action = item.link==='#' ? `openGuide('${item.id}')` : `window.open('${esc(item.link)}','_blank','noopener')`;
+      grid.innerHTML+=`<article class="res-card res-card-link" role="link" tabindex="0" onclick="if(!event.target.closest('a,button')){${action}}" onkeydown="if((event.key==='Enter'||event.key===' ')&&!event.target.closest('a,button')){event.preventDefault();${action}}">
+        <div class="res-tags">${item.tags ? item.tags.map(t=>`<span class="res-tag ${t.toLowerCase()==='new'?'new':''}">${esc(t)}</span>`).join('') : ''}</div>
+        <h3>${item.icon||''} ${esc(item.title)}</h3>
+        <p>${esc(item.description)}</p>
+        <a href="${item.link==='#'?'javascript:void(0)':esc(item.link)}" onclick="${item.link==='#'?`openGuide('${item.id}')`:''}" target="${item.link==='#'?'':'_blank'}" rel="noopener" class="res-btn">${esc(btnText)} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
+      </article>`;
+    }
+  });
+  Object.keys(grids).forEach(cat=>{const s=document.getElementById('res-'+cat.toLowerCase()); if(s)s.style.display=grids[cat].children.length?'block':'none';});
+}
+
+function fallbackResources(){
+  return [
+    {title:'Learn Unreal Engine',description:'Official Unreal Engine learning paths for building game development skills.',link:'https://dev.epicgames.com/community/unreal-engine/learning',category:'Featured',buttonText:'Start Learning Unreal',tags:['Official','AAA']},
+    {title:'GameDev.tv Courses',description:'Project-based courses covering Unity, Unreal, C++, C#, Blender, and portfolio projects.',link:'https://www.gamedev.tv/',category:'Featured',buttonText:'Browse Courses',tags:['Course']},
+    {title:'Unity Learn',description:'Guided Unity learning paths for indie and professional game developers.',link:'https://learn.unity.com/',category:'Featured',buttonText:'Start Learning Unity',tags:['Official']},
+    {title:'Quixel Megascans',description:'High-quality assets and materials for speeding up environment and level work.',link:'https://quixel.com/megascans/',category:'Tools',buttonText:'Browse Assets',tags:['Assets']},
+    {title:'ArtStation',description:'A portfolio platform for showing studio-ready art, animation, and visual development work.',link:'https://www.artstation.com/',category:'Tools',buttonText:'Build Portfolio',tags:['Portfolio']},
+    {title:'GitHub for Gamedev',description:'Host code, collaborate, and show technical work that supports your applications.',link:'https://github.com/',category:'Tools',buttonText:'Explore GitHub',tags:['DevOps']},
+    {id:'resume',title:'Game Industry Resume Guide',description:'Structure your resume so studios can quickly understand your game development fit.',link:'#',category:'Career',buttonText:'Read Resume Guide',tags:['Guide']},
+    {id:'portfolio',title:'Portfolio Review Checklist',description:'A practical checklist for presenting your best work clearly to hiring teams.',link:'#',category:'Career',buttonText:'View Checklist',tags:['Guide']},
+    {id:'interview',title:'Interview Prep Kit',description:'Prepare for technical and behavioral interviews in game development roles.',link:'#',category:'Career',buttonText:'Prepare',tags:['Guide']},
+    {title:'Canadian Gamedev Discord',description:'Join the MapleDevs community to network, share work, and find opportunities.',link:'https://discord.com/invite/TXGyQYRYg9',category:'Tools',buttonText:'Join Discord',tags:['Community']}
+  ];
 }
 
 function renderStudios(){const m={};ALL.forEach(j=>{if(!m[j.studio])m[j.studio]={n:j.studio,c:j.location,ct:0};m[j.studio].ct++;});const ss=Object.values(m).sort((a,b)=>b.ct-a.ct),g=document.getElementById("st-grid");if(!ss.length){g.innerHTML='<div class="state-msg"><span class="ic">🏢</span>No studios yet.</div>';return;}
@@ -4716,6 +5386,14 @@ function localSiteRoot(){
   if(idx>-1)return href.slice(0,idx+marker.length);
   return new URL('./',location.href).href;
 }
+function sitePath(path){
+  const clean=String(path||'').replace(/^\/+/,'');
+  return location.protocol==='file:' ? localSiteRoot()+clean : '/'+clean;
+}
+function openPage(page){
+  const clean=String(page||'').replace(/^\/+|\/+$/g,'');
+  location.href=sitePath(clean+'/index.html');
+}
 function goHome(e){
   if(location.protocol==='file:'){
     e.preventDefault();
@@ -4756,6 +5434,12 @@ window.addEventListener("popstate",function(e){
 });
 
 /* ═══════ POST A JOB MODAL ═══════ */
+window.addEventListener("hashchange",function(){
+  if(location.hash) applyHash();
+  else showBoard();
+  if(!document.getElementById("board-view").classList.contains("off")) render();
+});
+
 function openPostModal(){document.getElementById('post-modal').classList.add('on');document.body.style.overflow='hidden';}
 function closePostModal(){document.getElementById('post-modal').classList.remove('on');document.body.style.overflow='';}
 
@@ -4913,8 +5597,8 @@ function movePlatformSectionsToAbout(){
 /* ═══════ INIT ═══════ */
 movePlatformSectionsToAbout();
 function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#resources')showResources();else if(h==='#privacy')showPrivacy();else if(h==='#terms')showTerms();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}
-loadJobs().then(() => { 
-  handleHash(); 
+loadJobs().then(() => {
+  handleHash();
   if(location.hash==='#resources') showResources();
 });
 </script>

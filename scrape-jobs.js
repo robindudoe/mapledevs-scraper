@@ -33,6 +33,9 @@ const VALIDATE_APPLY_LINKS = process.env.VALIDATE_APPLY_LINKS !== 'false';
 const LINK_CHECK_CONCURRENCY = Math.max(1, Number(process.env.LINK_CHECK_CONCURRENCY || 6));
 const LINK_CHECK_TIMEOUT_MS = Math.max(1000, Number(process.env.LINK_CHECK_TIMEOUT_MS || 8000));
 const LINK_CHECK_MAX_REDIRECTS = 5;
+const KNOWN_DEAD_APPLY_URLS = new Set([
+  'https://epicgames.com/careers/jobs/5764691004?gh_jid=5764691004'
+]);
 
 // ═══════════════════════════════════════════════
 // STUDIO CONFIGURATION
@@ -216,6 +219,13 @@ const STUDIOS = [
     platform: "smartrecruiters",
     token: "gameloft",
     city: "Montreal, Quebec",
+    locationFilter: "Canada"
+  },
+  {
+    name: "CD PROJEKT RED",
+    platform: "smartrecruiters",
+    token: "CDPROJEKTRED",
+    city: "Vancouver, BC",
     locationFilter: "Canada"
   },
   // ─── Ashby Studios ───
@@ -537,6 +547,12 @@ async function filterDeadApplyLinks(jobs) {
       const job = jobs[index];
       const applyUrl = String(job.applyUrl || '').trim();
       if (!applyUrl || /^mailto:/i.test(applyUrl)) continue;
+      if (KNOWN_DEAD_APPLY_URLS.has(applyUrl)) {
+        keep[index] = false;
+        dead++;
+        console.log(`  Known dead apply link: ${job.title} at ${job.studio} -> ${applyUrl}`);
+        continue;
+      }
 
       const probe = await probeApplyURL(applyUrl);
       checked++;
@@ -649,8 +665,25 @@ async function scrapeLever(studio) {
 // ═══════════════════════════════════════════════
 // SMARTRECRUITERS SCRAPER
 // ═══════════════════════════════════════════════
+function smartRecruitersLocationText(job) {
+  const location = job.location || {};
+  const parts = [];
+  if (location.remote) parts.push('Remote');
+  if (location.city) parts.push(location.city);
+  if (location.region) parts.push(location.region);
+  if (location.country) {
+    const country = String(location.country).toLowerCase() === 'ca'
+      ? 'Canada'
+      : String(location.country).toLowerCase() === 'us'
+        ? 'United States'
+        : location.country;
+    parts.push(country);
+  }
+  return parts.filter(Boolean).join(', ');
+}
+
 async function scrapeSmartRecruiters(studio) {
-  const url = `https://api.smartrecruiters.com/v1/companies/${studio.token}/postings`;
+  const url = `https://api.smartrecruiters.com/v1/companies/${studio.token}/postings?limit=100`;
   console.log(`  📡 Fetching: ${url}`);
 
   try {
@@ -660,7 +693,7 @@ async function scrapeSmartRecruiters(studio) {
 
     return jobs
       .map(job => {
-        const rawLoc = `${job.location?.city || ''}, ${job.location?.region || ''}`.trim().replace(/^,|,$/g, '');
+        const rawLoc = smartRecruitersLocationText(job);
         const cleanLoc = normalizeLocation(rawLoc, studio.city, studio.locationFilter);
         if (!cleanLoc) return null;
 
