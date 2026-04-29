@@ -9,8 +9,16 @@ const SHEET_DOC_ID = '1L2KcTO32jK5MVY1m3qdqdja7LTZ38f8lYXsK5mNMMDo';
 const LIVE_SHEET_NAME = 'jobs_live';
 const LIVE_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_DOC_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(LIVE_SHEET_NAME)}`;
 const KNOWN_DEAD_APPLY_URLS = new Set([
-    'https://job-boards.greenhouse.io/2k/jobs/7678028003'
+    'https://job-boards.greenhouse.io/2k/jobs/7678028003',
+    'https://epicgames.com/careers/jobs/5764691004?gh_jid=5764691004'
 ]);
+const LEGACY_JOB_REDIRECTS = [
+    {
+        slug: 'senior-software-engineer-developer-relations-easy-anti-cheat-epic-games-montreal-qc',
+        title: 'Senior Software Engineer, Developer Relations - Easy Anti-Cheat',
+        destination: '/#q=Epic%20Games&city=Montreal%2C%20QC'
+    }
+];
 
 const SEO_TARGETS = [
     { folder: 'about', hash: '#about', title: 'About MapleDevs | Canada\'s Game Industry Job Board', desc: 'Why we built MapleDevs and how we are helping Canadian game developers find local opportunities.' },
@@ -18,6 +26,12 @@ const SEO_TARGETS = [
     { folder: 'saved', hash: '#saved', title: 'Your Saved Jobs | MapleDevs', desc: 'Manage your bookmarked game industry opportunities in Canada.' },
     { folder: 'resources', hash: '#resources', title: 'Best Tools & Resources for Game Developers in Canada | MapleDevs', desc: 'Curated tools, courses, and resources to help you improve your skills and get hired in the Canadian game industry.' }
 ];
+const JOBS_INDEX_TARGET = {
+    folder: 'jobs',
+    hash: '#main-content',
+    title: 'Canadian Game Industry Jobs | MapleDevs',
+    desc: 'Browse current Canadian game industry jobs from verified studios. Filter by city, role, engine, work mode, salary, visa support, and student-friendly paths.'
+};
 
 const NOINDEX_FOLDERS = new Set(['saved']);
 const PUBLIC_STATIC_PAGES = [
@@ -122,6 +136,79 @@ function truncate(value, max = 165) {
 
 function pageURL(folder) {
     return `https://mapledevs.ca/${folder ? `${folder.replace(/^\/|\/$/g, '')}/` : ''}`;
+}
+
+function boardFilterURL(param, value) {
+    return `/#${param}=${encodeURIComponent(value || '')}`;
+}
+
+function jobBranchNavHTML(job) {
+    const city = job.location || '';
+    const studio = job.studio || '';
+    return `<nav class="seo-branch-nav" aria-label="Job page links" style="display:flex;flex-wrap:wrap;gap:10px;margin:0 auto 1rem;max-width:1120px;padding:1rem 1.5rem;font-size:14px;">
+        <a href="/" style="color:var(--maple);font-weight:700;text-decoration:none;">MapleDevs home</a>
+        <span style="color:var(--text-3);">/</span>
+        <a href="/jobs/" style="color:var(--maple);font-weight:700;text-decoration:none;">All jobs</a>
+        ${city ? `<span style="color:var(--text-3);">/</span><a href="${escapeHTML(boardFilterURL('city', city))}" style="color:var(--maple);font-weight:700;text-decoration:none;">${escapeHTML(city)} jobs</a>` : ''}
+        ${studio ? `<span style="color:var(--text-3);">/</span><a href="${escapeHTML(boardFilterURL('q', studio))}" style="color:var(--maple);font-weight:700;text-decoration:none;">${escapeHTML(studio)} jobs</a>` : ''}
+    </nav>`;
+}
+
+function legacyRedirectHTML(redirect) {
+    const destination = redirect.destination || '/';
+    const canonicalUrl = destination.startsWith('http')
+        ? destination
+        : `https://mapledevs.ca${destination}`;
+    const title = `${redirect.title} is no longer active | MapleDevs`;
+    return `<!doctype html>
+<html lang="en-CA">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${escapeHTML(title)}</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="This MapleDevs job listing is no longer active. Browse current Canadian game industry roles.">
+    <link rel="canonical" href="${escapeHTML(canonicalUrl)}">
+    <meta http-equiv="refresh" content="0; url=${escapeHTML(destination)}">
+    <script>window.location.replace(${JSON.stringify(destination)});</script>
+</head>
+<body>
+    <main>
+        <h1>This job listing is no longer active</h1>
+        <p>Redirecting to current MapleDevs jobs.</p>
+        <p><a href="${escapeHTML(destination)}">Browse current jobs</a></p>
+    </main>
+</body>
+</html>`;
+}
+
+function listExistingJobSlugs(jobsDir) {
+    if (!fs.existsSync(jobsDir)) return new Set();
+    return new Set(fs.readdirSync(jobsDir, { withFileTypes: true })
+        .filter(entry => entry.isDirectory() && fs.existsSync(path.join(jobsDir, entry.name, 'index.html')))
+        .map(entry => entry.name));
+}
+
+function writeLegacyJobRedirects(jobsDir, activeSlugs, legacySlugs = new Set()) {
+    const redirects = new Map();
+    for (const redirect of LEGACY_JOB_REDIRECTS) {
+        if (redirect.slug) redirects.set(redirect.slug, redirect);
+    }
+    for (const slug of legacySlugs) {
+        if (!slug || activeSlugs.has(slug) || redirects.has(slug)) continue;
+        redirects.set(slug, {
+            slug,
+            title: 'This job listing',
+            destination: '/jobs/'
+        });
+    }
+
+    for (const redirect of redirects.values()) {
+        if (!redirect.slug || activeSlugs.has(redirect.slug)) continue;
+        const legacyPath = path.join(jobsDir, redirect.slug);
+        if (!fs.existsSync(legacyPath)) fs.mkdirSync(legacyPath, { recursive: true });
+        fs.writeFileSync(path.join(legacyPath, 'index.html'), legacyRedirectHTML(redirect));
+    }
 }
 
 function hasVisa(job) {
@@ -399,6 +486,13 @@ function injectSEO(html, target, targetJobs = []) {
     const redirectScript = `\n    <script>if(!window.location.hash) window.location.hash = ${JSON.stringify(target.hash)};</script>\n`;
     output = output.replace('<head>', '<head>' + redirectScript);
 
+    if (target.folder.startsWith('jobs/') && targetJobs.length > 0) {
+        output = output.replace(
+            /<main id="main-content" role="main">/,
+            `<main id="main-content" role="main">\n    ${jobBranchNavHTML(targetJobs[0])}`
+        );
+    }
+
     // 4. STATIC INJECTION (The "Fortress" of SEO)
     // We replace the skeleton list with actual HTML for search engines
     if (targetJobs.length > 0) {
@@ -515,11 +609,21 @@ async function build() {
     }
 
     const jobsDir = path.join(ROOT_DIR, 'jobs');
+    const legacyJobSlugs = listExistingJobSlugs(jobsDir);
     fs.rmSync(jobsDir, { recursive: true, force: true });
     if (!fs.existsSync(jobsDir)) fs.mkdirSync(jobsDir);
 
+    const jobsIndexTarget = {
+        ...JOBS_INDEX_TARGET,
+        desc: truncate(`${jobs.length} current Canadian game industry role${jobs.length === 1 ? '' : 's'} from verified studios. ${JOBS_INDEX_TARGET.desc}`, 160)
+    };
+    fs.writeFileSync(path.join(jobsDir, 'index.html'), injectSEO(baseHTML, jobsIndexTarget, jobs));
+    sitemapXML += `\n  <url><loc>https://mapledevs.ca/jobs/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>`;
+
+    const activeJobSlugs = new Set();
     for (const job of jobs) {
         const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
+        activeJobSlugs.add(slug);
         const jobPath = path.join(jobsDir, slug);
         if (!fs.existsSync(jobPath)) fs.mkdirSync(jobPath);
         const jobFacts = [job.location, job.mode, job.salary, job.engine].filter(Boolean).join(' | ');
@@ -533,6 +637,8 @@ async function build() {
         fs.writeFileSync(path.join(jobPath, 'index.html'), html);
         sitemapXML += `\n  <url><loc>https://mapledevs.ca/jobs/${slug}/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>`;
     }
+
+    writeLegacyJobRedirects(jobsDir, activeJobSlugs, legacyJobSlugs);
 
     sitemapXML += `\n</urlset>`;
     fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXML);

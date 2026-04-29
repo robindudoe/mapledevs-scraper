@@ -3795,7 +3795,7 @@ select,
           <button type="submit">Search jobs</button>
         </form>
         <div class="hero-cta">
-          <a href="#main-content" class="btn-p" id="browse-btn">Browse jobs</a>
+          <a href="/jobs/" class="btn-p" id="browse-btn">Browse jobs</a>
           <button class="btn-s" onclick="showResources()">Resources</button>
           <button class="btn-s" onclick="openPage('hire')">Hiring</button>
         </div>
@@ -4430,7 +4430,7 @@ select,
    ═══════════════════════════════════════════════════ */
 const SHEET_DOC_ID = "1L2KcTO32jK5MVY1m3qdqdja7LTZ38f8lYXsK5mNMMDo";
 const LIVE_SHEET_NAME = "jobs_live";
-const KNOWN_DEAD_APPLY_URLS = new Set(["https://job-boards.greenhouse.io/2k/jobs/7678028003"]);
+const KNOWN_DEAD_APPLY_URLS = new Set(["https://job-boards.greenhouse.io/2k/jobs/7678028003","https://epicgames.com/careers/jobs/5764691004?gh_jid=5764691004"]);
 const PER_PAGE = 20;
 const DISCORD_INVITE_URL = "https://discord.com/invite/TXGyQYRYg9";
 let ALL = [], dispCount = PER_PAGE;
@@ -5181,12 +5181,12 @@ async function renderResources(){
     'Career':document.getElementById('grid-career'),
     'Featured':document.getElementById('grid-featured')
   };
-  
+
   Object.values(grids).forEach(g=>g.innerHTML='<div class="state-msg">Loading resources...</div>');
-  
+
   try {
-    const r=await fetch(sitePath('resources.json')); 
-    if(!r.ok)throw 0; 
+    const r=await fetch(sitePath('resources.json'));
+    if(!r.ok)throw 0;
     const data=await r.json();
     paintResources(data,grids);
   }catch(e){
@@ -5520,8 +5520,8 @@ function movePlatformSectionsToAbout(){
 /* ═══════ INIT ═══════ */
 movePlatformSectionsToAbout();
 function handleHash(){const h=location.hash;if(h==='#about')showAbout();else if(h==='#resources')showResources();else if(h==='#privacy')showPrivacy();else if(h==='#terms')showTerms();else if(h==='#studios')showStudios();else if(h==='#saved')showSaved();else if(h.startsWith('#job-')){const i=parseInt(h.replace('#job-',''),10);if(!isNaN(i)&&ALL[i])openDet(i);}else if(h.startsWith('#studio-')){const sn=h.replace('#studio-','').replace(/-/g,' ').toLowerCase();const s=ALL.find(j=>j.studio.toLowerCase()==sn);if(s)openStudioProfile(s.studio);}}
-loadJobs().then(() => { 
-  handleHash(); 
+loadJobs().then(() => {
+  handleHash();
   if(location.hash==='#resources') showResources();
 });
 </script>
