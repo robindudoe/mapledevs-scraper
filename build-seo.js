@@ -35,6 +35,7 @@ const JOBS_INDEX_TARGET = {
 
 const NOINDEX_FOLDERS = new Set(['saved']);
 const PUBLIC_STATIC_PAGES = [
+    { path: 'hire/', changefreq: 'monthly', priority: '0.7' },
     { path: 'talent/', changefreq: 'weekly', priority: '0.7' },
     { path: 'blog/', changefreq: 'weekly', priority: '0.7' },
     { path: 'blog/mapledevs-editorial-launch.html', changefreq: 'monthly', priority: '0.6' },
