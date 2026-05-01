@@ -4,347 +4,75 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hire Canadian Game Developers | MapleDevs</title>
-  <meta name="description" content="MapleDevs connects your studio directly with a focused audience of Canadian game developers actively looking for jobs.">
+  <meta name="description" content="Post Canadian game industry jobs on MapleDevs. Standard listings are free, with featured placement available for studios that want more visibility.">
+  <link rel="canonical" href="https://mapledevs.ca/hire/">
   <link rel="icon" href="../favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --maple: #c7352d;
-      --maple-dark: #9f2822;
-      --gold: #FFD600;
-      --ink: #151515;
-      --ink-soft: #40403c;
-      --muted: #727168;
-      --line: #dedbd5;
-      --paper: #f7f5f0;
-      --panel: #fffefa;
-      --radius: 8px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: Inter, system-ui, sans-serif;
-      line-height: 1.5;
-    }
-    .topbar { border-bottom: 1px solid var(--line); background: var(--panel); padding: 16px 24px; display: flex; justify-content: space-between; }
-    .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); font-weight: 800; font-size: 1.1rem; }
-    .brand img { width: 24px; border-radius: 4px; }
-    .nav a { color: var(--ink-soft); text-decoration: none; font-size: 14px; font-weight: 600; padding: 8px 12px; }
-    
-    .hero { background: linear-gradient(135deg, #111820 0%, #17202b 55%, #1c242d 100%); color: #fff; padding: 80px 24px; text-align: center; }
-    h1 { font-size: 3rem; margin: 0 0 16px 0; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.2; }
-    .subhead { font-size: 1.2rem; max-width: 600px; margin: 0 auto 32px; color: rgba(255,255,255,0.8); }
-    
-    .cta-btn { display: inline-block; background: var(--gold); color: #111820; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-weight: 800; font-size: 1.1rem; transition: 0.2s; border: none; cursor: pointer; }
-    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(199,146,49,0.4); }
-    
-    .content { max-width: 1000px; margin: 60px auto; padding: 0 24px; }
-    h2 { font-size: 2rem; margin-top: 40px; margin-bottom: 24px; }
-    p { font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 24px; }
-    
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
-    .card h3 { margin: 0 0 12px 0; font-size: 1.25rem; }
-    .card p { font-size: 1rem; margin: 0; color: var(--ink-soft); }
-    
-    .pricing-table { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 40px 0; }
-    .tier { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px 24px; text-align: left; display: flex; flex-direction: column; }
-    .tier h3 { margin: 0 0 8px 0; font-size: 1.5rem; }
-    .tier .price { font-size: 2rem; font-weight: 800; margin-bottom: 24px; color: var(--ink); }
-    .tier .price small { font-size: 1rem; color: var(--muted); font-weight: 500; }
-    .tier ul { list-style: none; padding: 0; margin: 0 0 24px 0; flex-grow: 1; }
-    .tier li { margin-bottom: 12px; display: flex; gap: 10px; font-size: 1.05rem; }
-    .tier li::before { content: "✓"; color: var(--maple); font-weight: bold; }
-    
-    .tier.boost { border-color: var(--gold); border-width: 2px; box-shadow: 0 4px 20px rgba(199,146,49,0.1); position: relative; }
-    .tier.boost .badge { position: absolute; top: -12px; right: 24px; background: var(--gold); color: #000; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
-    
-    .scarcity { background: #fff8e1; border-left: 4px solid var(--gold); padding: 16px 20px; margin-top: 16px; border-radius: 0 8px 8px 0; font-weight: 600; color: #8a6400; font-size: 0.95rem; }
-    
-    .payment-box { background: rgba(199,146,49,0.1); padding: 24px; border-radius: var(--radius); border: 1px solid rgba(199,146,49,0.3); margin: 40px 0; }
-    
-    .final-cta { text-align: center; padding: 60px 0; }
-    
-    @media (max-width: 768px) {
-      h1 { font-size: 2.2rem; }
-      .grid { grid-template-columns: 1fr; }
-    }
+    :root{--maple:#c7352d;--maple-dark:#9f2822;--gold:#ffd600;--ink:#151515;--muted:#66635d;--line:#dedbd5;--paper:#f7f5f0;--panel:#fffefa}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:8px;color:var(--ink);font-weight:800;text-decoration:none}.brand img{width:24px;border-radius:4px}.nav a{color:var(--muted);font-weight:700;text-decoration:none}.hero{padding:72px 24px;text-align:center;background:#111820;color:#fff}.hero h1{max-width:850px;margin:0 auto 16px;font-size:clamp(2.2rem,5vw,4rem);line-height:1.08}.hero p{max-width:650px;margin:0 auto 28px;color:rgba(255,255,255,.82);font-size:1.15rem}.btn{display:inline-block;border:0;border-radius:8px;background:var(--gold);color:#111820;padding:14px 24px;font-weight:900;text-decoration:none;cursor:pointer}.content{max-width:1040px;margin:0 auto;padding:52px 24px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.tier,.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}.tier.featured{border:2px solid var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.06)}.price{font-size:2rem;font-weight:900;margin:8px 0 16px}.tier ul{padding-left:20px;color:var(--muted)}.notice{margin:28px 0;padding:18px 20px;border-left:4px solid var(--gold);background:#fff8de;border-radius:8px;color:#6b5200}.form{display:grid;gap:14px;max-width:760px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-weight:800;font-size:.92rem}input,select,textarea{width:100%;margin-top:6px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff;font:inherit}.submit{background:var(--maple);color:#fff}.submit:hover{background:var(--maple-dark)}@media(max-width:760px){.grid,.row{grid-template-columns:1fr}.hero{padding:52px 18px}.content{padding:36px 18px}}
   </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html">
-      <img src="../favicon.png" alt="">
-      MapleDevs
-    </a>
-    <nav class="nav">
-      <a href="../index.html">← Back to Jobs</a>
-    </nav>
+    <a class="brand" href="../index.html"><img src="../favicon.png" alt="">MapleDevs</a>
+    <nav class="nav"><a href="../index.html">Back to jobs</a></nav>
   </header>
-  
+
   <section class="hero">
     <h1>Hire Canadian Game Developers Faster</h1>
-    <p class="subhead">MapleDevs connects your studio directly with a focused audience of Canadian game developers actively looking for jobs.</p>
-    <button  class="cta-btn"onclick="document.getElementById('post-section').scrollIntoView({behavior: 'smooth'})">Post a Job</button>
+    <p>Reach a focused audience of Canadian game developers looking for studio roles. Standard listings are free, and paid featured placement is available for more visibility.</p>
+    <a class="btn" href="#post">Post a job</a>
   </section>
-  
-  <section class="content">
-    <h2>Why MapleDevs</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Targeted Canadian audience only</h3>
-        <p>No more sifting through international applicants who can't work in Canada. Our audience is entirely focused on the Canadian game industry.</p>
-      </div>
-      <div class="card">
-        <h3>Game development niche focus</h3>
-        <p>We only post roles related to game development. Artists, programmers, designers, and producers know exactly where to look.</p>
-      </div>
-      <div class="card">
-        <h3>Simple and fast posting</h3>
-        <p>No accounts required. Submit your job in under 2 minutes and get it in front of developers fast.</p>
-      </div>
-      <div class="card">
-        <h3>Growing platform visibility</h3>
-        <p>We actively promote our board and highlighted jobs to student groups and professional communities across the country.</p>
-      </div>
-    </div>
-    
-    <h2>Pricing</h2>
-    <p>Early adopter pricing — rates will increase as MapleDevs grows.</p>
-    
-    <div class="pricing-table">
-      <div class="tier">
-        <h3>Free</h3>
+
+  <main class="content">
+    <section class="grid" aria-label="Pricing tiers">
+      <article class="tier">
+        <h2>Free</h2>
         <div class="price">$0 <small>CAD</small></div>
-        <ul>
-          <li>Standard listing in the feed</li><li>Searchable via all filters</li><li>Considered for weekly newsletter</li><li>7-day initial highlight</li><li>Great for general roles</li>
-        </ul>
-        <button  style="width:100%" class="cta-btn"onclick="selectTier('free')">Post Free</button>
-      </div>
-      
-      <div class="tier">
-        <h3>Featured</h3>
-        <div class="price">$19 <small>CAD</small></div>
-        <ul>
-          <li>Highlighted listing with badge</li>
-          <li>Appears above free jobs</li>
-          <li>More visibility across the site</li>
-        </ul>
-        <button  style="width:100%" class="cta-btn"onclick="selectTier('featured')">Get Featured</button>
-      </div>
-      
-      <div class="tier boost">
-        <span class="badge">Maximum Visibility</span>
-        <h3>Hiring Boost</h3>
+        <ul><li>Standard listing in the feed</li><li>Searchable through filters</li><li>Manual review before publishing</li></ul>
+      </article>
+      <article class="tier featured">
+        <h2>Featured</h2>
+        <div class="price">$29 <small>CAD</small></div>
+        <ul><li>Featured badge</li><li>Priority above free jobs</li><li>Spotlight visibility on MapleDevs</li></ul>
+      </article>
+      <article class="tier">
+        <h2>Hiring Boost</h2>
         <div class="price">$39 <small>CAD</small></div>
-        <ul>
-          <li>Top homepage placement</li>
-          <li>Maximum visibility</li>
-          <li>Strong visual highlight</li>
-        </ul>
-        <div class="scarcity">
-          Limited to 5 active listings. If full: "All Hiring Boost slots are currently filled".
-        </div>
-        <button  style="width:100%; margin-top:20px;" class="cta-btn"onclick="selectTier('hiring_boost')">Boost Job</button>
-      </div>
-    </div>
-    
-    <div class="payment-box">
-      <h3 style="margin-top:0">Payment Information</h3>
-      <p style="margin-bottom:0">After submitting your job, you will receive instructions to complete payment via Interac e-Transfer. Once payment is received, your job will be approved and published.</p>
-    </div>
-    
-    
-  
-  <style>
-    .post-form-container { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 40px; max-width: 700px; margin: 0 auto; box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-    .form-grid { display: grid; gap: 20px; text-align: left; }
-    .fg { display: flex; flex-direction: column; gap: 8px; }
-    .fg.full { grid-column: 1 / -1; }
-    .fg label { font-weight: 600; color: var(--ink); font-size: 0.95rem; }
-    .fg input[type="text"], .fg input[type="url"], .fg input[type="email"], .fg select, .fg textarea { padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font-family: inherit; font-size: 1rem; color: var(--ink); }
-    .fg input:focus, .fg select:focus, .fg textarea:focus { outline: 2px solid var(--maple); border-color: transparent; }
-    .option-row { display: flex; gap: 12px; align-items: flex-start; background: var(--paper); padding: 16px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; transition: 0.2s; }
-    .option-row:hover { border-color: var(--maple); }
-    .option-row input { margin-top: 4px; accent-color: var(--maple); width: 18px; height: 18px; }
-    .option-row span { font-size: 0.95rem; color: var(--ink-soft); }
-    .option-row strong { color: var(--ink); font-size: 1rem; }
-    .policy-note { display: block; margin-top: 8px; font-size: 0.85rem; color: var(--muted); }
-    .form-submit { margin-top: 10px; text-align: center; }
-    .btn-p { display: inline-block; background: var(--maple); color: #fff; padding: 14px 28px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; font-size: 1.05rem; }
-    .btn-p:hover { background: var(--maple-dark); }
-    .form-msg { margin-bottom: 20px; font-size: 1rem; display: none; }
-    .form-msg.show { display: block; }
-    .form-msg.err { color: var(--maple); }
-  </style>
-  
-  <div class="final-cta" id="post-section">
-    <h2>Post your job and start reaching Canadian game developers today</h2>
-    <div class="post-form-container">
-      <form id="post-form" class="form-grid" onsubmit="return submitPostForm(event)">
-        <!-- Honeypot for spam -->
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <ul><li>Maximum visibility placement</li><li>Strong visual highlight</li><li>Limited active slots</li></ul>
+      </article>
+    </section>
+
+    <p class="notice">Featured and Hiring Boost payments are sent by Interac e-Transfer to <strong>wupeiheng11@gmail.com</strong>. Paid placement is final and non-refundable once the listing is live.</p>
+
+    <section id="post" class="panel">
+      <h2>Submit a job</h2>
+      <form class="form" action="https://formsubmit.co/mapledevsbusiness@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="[MapleDevs] New Job Posting Request">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="Featured Refund Policy" value="Featured placement payments are final and non-refundable once the listing is live.">
-
-        <div class="fg full">
-          <label>Job Title <span class="req">*</span></label>
-          <input type="text" name="Job Title" required placeholder="e.g. Senior Game Designer">
+        <div class="row">
+          <label>Job title<input name="Job Title" required placeholder="Senior Game Designer"></label>
+          <label>Studio name<input name="Studio Name" required placeholder="Your Studio"></label>
         </div>
-        <div class="fg">
-          <label>Studio Name <span class="req">*</span></label>
-          <input type="text" name="Studio Name" required placeholder="e.g. Your Studio Inc.">
+        <div class="row">
+          <label>Location<input name="Location" required placeholder="Vancouver, BC"></label>
+          <label>Application URL or email<input name="Apply Link" required placeholder="https://studio.com/careers or hiring@studio.com"></label>
         </div>
-        <div class="fg">
-          <label>Location <span class="req">*</span></label>
-          <input type="text" name="Location" required placeholder="e.g. Vancouver, BC">
-          <span class="hint">Must be in Canada</span>
+        <div class="row">
+          <label>Job type<select name="Job Type" required><option value="">Select</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select></label>
+          <label>Work mode<select name="Work Mode" required><option value="">Select</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
         </div>
-        <div class="fg">
-          <label>Job Type <span class="req">*</span></label>
-          <select name="Job Type" required>
-            <option value="">Select…</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Contract</option>
-            <option>Internship</option>
-          </select>
+        <label>Package<select name="Tier"><option value="free">Free</option><option value="featured">Featured - $29 CAD</option><option value="hiring_boost">Hiring Boost - $39 CAD</option></select></label>
+        <label>Description<textarea name="Description" rows="6" required placeholder="Describe the role, requirements, and studio."></textarea></label>
+        <div class="row">
+          <label>Your name<input name="Contact Name" required></label>
+          <label>Your email<input type="email" name="Contact Email" required></label>
         </div>
-        <div class="fg">
-          <label>Work Mode <span class="req">*</span></label>
-          <select name="Work Mode" required>
-            <option value="">Select…</option>
-            <option>Remote</option>
-            <option>Hybrid</option>
-            <option>On-site</option>
-          </select>
-        </div>
-        <div class="fg full">
-          <label>Job Description <span class="req">*</span></label>
-          <textarea name="Description" required placeholder="Describe the role, responsibilities, requirements, and what makes your studio great…" rows="5"></textarea>
-        </div>
-        <div class="fg full">
-          <label>Application URL or Email <span class="req">*</span></label>
-          <input type="text" name="Apply Link" required placeholder="https://yoursite.com/careers/role or hiring@studio.com">
-        </div>
-        <div class="fg">
-          <label>Salary Range <span style="color:var(--text-3)">(optional)</span></label>
-          <input type="text" name="Salary Range" placeholder="e.g. $70K–$90K CAD">
-        </div>
-        <div class="fg">
-          <label>Game Engine <span style="color:var(--text-3)">(optional)</span></label>
-          <select name="Game Engine">
-            <option value="">Select Engine…</option>
-            <option>Unreal</option>
-            <option>Unity</option>
-            <option>Godot</option>
-            <option>Proprietary / C++</option>
-            <option>Other / N/A</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Visa Sponsorship?</label>
-          <select name="Visa Sponsorship">
-            <option value="No">No / Not for this role</option>
-            <option value="Yes">Yes (helping with relocation/LMIA)</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Student-Friendly?</label>
-          <select name="Student Friendly">
-            <option>No</option>
-            <option>Yes</option>
-          </select>
-        </div>
-        <div class="fg full">
-          <label style="font-weight:600;display:block;margin-bottom:0.5rem;">Select Package</label>
-          <label class="option-row" style="margin-bottom:8px">
-            <input type="radio" name="Tier" value="free" checked>
-            <span><strong>Free</strong><br>Standard listing in the job feed.</span>
-          </label>
-          <label class="option-row" style="margin-bottom:8px">
-            <input type="radio" name="Tier" value="featured">
-            <span><strong>Featured</strong><br>Highlighted card with priority above free jobs.</span>
-          </label>
-          <label class="option-row">
-            <input type="radio" name="Tier" value="hiring_boost">
-            <span><strong>Hiring Boost</strong><br>Pinned to the top of the homepage and searches. Maximum visibility.<small class="policy-note">By requesting a paid tier, you agree the payment is final and non-refundable once the listing is live.</small></span>
-          </label>
-          <input type="hidden" name="Featured Refund Policy" value="Featured placement payments are final and non-refundable once the listing is live.">
-        </div>
-        <div class="form-divider"></div>
-        <div class="fg">
-          <label>Your Name <span class="req">*</span></label>
-          <input type="text" name="Contact Name" required placeholder="Your name">
-        </div>
-        <div class="fg">
-          <label>Your Email <span class="req">*</span></label>
-          <input type="email" name="Contact Email" required placeholder="you@studio.com">
-        </div>
-        <div class="fg full">
-          <label>Anything else?</label>
-          <textarea name="Additional Notes" placeholder="Any extra details, timeline, or questions…" rows="2"></textarea>
-        </div>
-        <div class="form-submit">
-          <div class="form-msg" id="post-msg"></div>
-          <button type="submit" class="btn-p" id="post-submit-btn">Submit for Review →</button>
-        </div>
+        <button class="btn submit" type="submit">Submit for review</button>
       </form>
-    </div>
-  </div>
-  <script>
-    function submitPostForm(e){
-      e.preventDefault();
-      const form=document.getElementById('post-form');
-      const btn=document.getElementById('post-submit-btn');
-      const msg=document.getElementById('post-msg');
-      btn.disabled=true; btn.textContent='Sending…';
-      msg.className='form-msg'; msg.style.display='none';
-
-      const data=new FormData(form);
-      fetch('https://formsubmit.co/ajax/mapledevsbusiness@gmail.com',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify(Object.fromEntries(data))
-      }).then(r=>r.json()).then(d=>{
-        if(d.success){
-          msg.className='form-msg show'; 
-          const tierVal = form.querySelector('input[name="Tier"]:checked').value;
-          if (tierVal === 'free') {
-            msg.innerHTML = '<div class="success-box" style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:left;"><b>✅ Submitted successfully!</b><p style="margin:12px 0;">Your job has been sent for manual review and will be published shortly.</p></div>';
-          } else {
-            const amt = tierVal === 'hiring_boost' ? '$39 CAD' : '$19 CAD';
-            const tName = tierVal === 'hiring_boost' ? 'Hiring Boost' : 'Featured';
-            msg.innerHTML = `<div class="success-box" style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:left;"><b>✅ Submitted successfully!</b><p style="margin:12px 0;">To complete your job posting, please follow these steps:</p><ol style="margin:0 0 16px;padding-left:20px;color:var(--ink-soft);"><li>Send an Interac e-Transfer to <b>wupeiheng11@gmail.com</b></li><li>Amount: <b>${amt}</b> (${tName})</li><li><b>IMPORTANT:</b> Include your job title or studio name in the e-Transfer message.</li></ol><p style="margin:0;font-size:0.95rem;color:var(--muted);">Once payment is received, your listing will be manually approved and published.</p></div>`;
-          }
-          form.reset();
-        } else { throw 0; }
-      }).catch(()=>{
-        msg.className='form-msg show err'; msg.innerHTML='⚠ Error — try emailing mapledevsbusiness@gmail.com directly.';
-      }).finally(()=>{
-        btn.disabled=false; btn.textContent='Submit for Review →';
-      });
-      return false;
-    }
-    
-    function selectTier(val) {
-      document.querySelector('input[name="Tier"][value="'+val+'"]').checked = true;
-      document.getElementById('post-section').scrollIntoView({behavior: 'smooth'});
-    }
-  </script>
-  
-  </section>
-  
-  <script>
-    if(window.location.hash === '#post') {
-       window.location.href = '../index.html#post';
-    }
-  </script>
+    </section>
+  </main>
 </body>
 </html>
