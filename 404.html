@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found | MapleDevs</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Browse Canadian game industry jobs on MapleDevs." />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="https://mapledevs.ca/404.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    :root {
+      --maple: #C8372D;
+      --maple-dark: #A02820;
+      --maple-light: #E8564C;
+      --maple-glow: rgba(200, 55, 45, 0.12);
+      --maple-gradient: linear-gradient(135deg, #C8372D 0%, #E8564C 50%, #D44A3F 100%);
+      --navy: #1A2332;
+      --navy-dark: #0F1520;
+      --navy-light: #2A3545;
+      --bg-body: #F5F7FA;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #EEF0F4;
+      --text-1: #1A1D23;
+      --text-2: #4A4F5A;
+      --text-3: #7A7F8A;
+      --border: rgba(26, 35, 50, 0.08);
+      --shadow-m: 0 8px 24px rgba(26, 35, 50, 0.08);
+      --shadow-l: 0 16px 48px rgba(26, 35, 50, 0.12);
+      --r-s: 8px; --r-l: 16px; --r-xl: 20px; --r-pill: 100px;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --dur: 0.2s;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-1);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--maple);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--r-s);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--maple-gradient);
+      opacity: 0.5;
+    }
+    .h-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 0.75rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      transition: transform var(--dur);
+    }
+    .logo:hover { transform: scale(1.03); }
+    .logo-i { width: 30px; height: 30px; }
+    .logo-w {
+      font-family: 'DM Serif Display', serif;
+      font-size: 21px;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+    }
+    .logo-w span { color: var(--maple); }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .error-container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .error-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: var(--maple-glow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--maple);
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .error-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: var(--text-1);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--r-pill);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--dur);
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--maple);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(200, 55, 45, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--maple-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(200, 55, 45, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-subtle);
+      color: var(--text-1);
+      border-color: var(--border);
+    }
+
+    .helpful-links {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .helpful-links h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+
+    .helpful-links a {
+      display: inline-block;
+      margin: 0 1rem;
+      color: var(--text-2);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color var(--dur);
+    }
+    .helpful-links a:hover { color: var(--maple); }
+
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color var(--dur);
+    }
+    .footer-links a:hover { color: var(--maple); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    @media (max-width: 600px) {
+      .error-title { font-size: 2rem; }
+      .error-icon { width: 100px; height: 100px; font-size: 2.5rem; }
+      .error-actions { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .helpful-links a { display: block; margin: 0.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header role="banner">
+    <div class="h-inner">
+      <a href="/" class="logo" aria-label="MapleDevs home">
+        <img class="logo-i" src="/favicon.png" alt="MapleDevs" width="24" height="24" style="border-radius:2px;">
+        <span class="logo-w">Maple<span>Devs</span></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main-content" role="main">
+    <div class="error-container">
+      <div class="error-icon">404</div>
+      <h1 class="error-title">Page Not Found</h1>
+      <p class="error-message">
+        The page you're looking for doesn't exist or has been moved.
+        Let's get you back to finding your next game industry opportunity.
+      </p>
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          Browse Jobs
+        </a>
+        <a href="/about/" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          About MapleDevs
+        </a>
+      </div>
+      <div class="helpful-links">
+        <h3>Helpful Links</h3>
+        <a href="/studios/">Top Studios</a>
+        <a href="/resources/">Resources</a>
+        <a href="/talent/">Talent Directory</a>
+        <a href="/contact/">Contact Us</a>
+      </div>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="/about/">About</a>
+      <a href="/studios/">Studios</a>
+      <a href="/resources/">Resources</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <p class="footer-copy">© 2026 MapleDevs · Canada's game industry job board</p>
+  </footer>
+</body>
+</html>
