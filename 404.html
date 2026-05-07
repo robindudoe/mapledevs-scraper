@@ -9,151 +9,341 @@
   <link rel="canonical" href="https://mapledevs.ca/404.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="shortcut icon" href="/favicon.ico" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    /* ═══════════════════════════════════════════════════
+       MAPLEDEVS DESIGN SYSTEM v5.0 - Modern & Polished
+       ═══════════════════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
 
     :root {
-      --maple: #C8372D;
-      --maple-dark: #A02820;
-      --maple-light: #E8564C;
-      --maple-glow: rgba(200, 55, 45, 0.12);
-      --maple-gradient: linear-gradient(135deg, #C8372D 0%, #E8564C 50%, #D44A3F 100%);
+      /* Brand Colors */
+      --primary: #C8372D;
+      --primary-dark: #A02820;
+      --primary-light: #E8564C;
+      --primary-soft: rgba(200, 55, 45, 0.08);
+      --primary-gradient: linear-gradient(135deg, #C8372D 0%, #E8564C 100%);
+
+      /* Neutral Colors */
       --navy: #1A2332;
-      --navy-dark: #0F1520;
       --navy-light: #2A3545;
-      --bg-body: #F5F7FA;
-      --bg-card: #FFFFFF;
-      --bg-subtle: #EEF0F4;
-      --text-1: #1A1D23;
-      --text-2: #4A4F5A;
-      --text-3: #7A7F8A;
-      --border: rgba(26, 35, 50, 0.08);
-      --shadow-m: 0 8px 24px rgba(26, 35, 50, 0.08);
-      --shadow-l: 0 16px 48px rgba(26, 35, 50, 0.12);
-      --r-s: 8px; --r-l: 16px; --r-xl: 20px; --r-pill: 100px;
-      --ease: cubic-bezier(0.4, 0, 0.2, 1);
-      --dur: 0.2s;
+      --slate: #4A5568;
+      --gray: #718096;
+      --light: #A0AEC0;
+      --border: #E2E8F0;
+      --border-light: #EDF2F7;
+
+      /* Background Colors */
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F7FAFC;
+      --bg-tertiary: #EDF2F7;
+      --bg-elevated: #FFFFFF;
+
+      /* Text Colors */
+      --text-primary: #1A202C;
+      --text-secondary: #4A5568;
+      --text-tertiary: #718096;
+      --text-inverse: #FFFFFF;
+
+      /* Accent Colors */
+      --success: #48BB78;
+      --success-soft: rgba(72, 187, 120, 0.1);
+      --warning: #ECC94B;
+      --warning-soft: rgba(236, 201, 75, 0.1);
+      --info: #4299E1;
+      --info-soft: rgba(66, 153, 225, 0.1);
+
+      /* Shadows */
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+      --shadow-glow: 0 0 32px rgba(200, 55, 45, 0.15);
+
+      /* Border Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Layout */
+      --max-width: 1280px;
+      --header-height: 64px;
+      --container-padding: 1.5rem;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0F1419;
+      --bg-secondary: #1A202C;
+      --bg-tertiary: #2D3748;
+      --bg-elevated: #1A202C;
+      --text-primary: #F7FAFC;
+      --text-secondary: #CBD5E0;
+      --text-tertiary: #A0AEC0;
+      --border: #2D3748;
+      --border-light: #4A5568;
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-body);
-      color: var(--text-1);
-      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
+    /* Skip Link */
     .skip-link {
       position: absolute;
-      top: -100px;
+      top: -100%;
       left: 1rem;
-      background: var(--maple);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: var(--r-s);
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-md);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       text-decoration: none;
       z-index: 9999;
-      transition: top 0.2s;
+      transition: top var(--transition-base);
     }
-    .skip-link:focus { top: 1rem; }
+    .skip-link:focus {
+      top: 1rem;
+    }
 
-    header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-      padding: 0 1.5rem;
+    /* ═══════ HEADER ═══════ */
+    .header {
       position: sticky;
       top: 0;
-      z-index: 200;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: all var(--transition-base);
     }
-    header::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--maple-gradient);
-      opacity: 0.5;
+
+    [data-theme="dark"] .header {
+      background: rgba(15, 20, 25, 0.9);
     }
-    .h-inner {
-      max-width: 1200px;
+
+    .header-inner {
+      max-width: var(--max-width);
       margin: 0 auto;
+      padding: 0 var(--container-padding);
+      height: var(--header-height);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
-      gap: 0.75rem;
+      gap: 1.5rem;
     }
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 0.75rem;
       text-decoration: none;
-      transition: transform var(--dur);
+      transition: transform var(--transition-base);
     }
-    .logo:hover { transform: scale(1.03); }
-    .logo-i { width: 30px; height: 30px; }
-    .logo-w {
-      font-family: 'DM Serif Display', serif;
-      font-size: 21px;
-      color: var(--text-1);
+
+    .logo:hover {
+      transform: scale(1.02);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-md);
+    }
+
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
       letter-spacing: -0.02em;
     }
-    .logo-w span { color: var(--maple); }
 
-    main {
+    .logo-text span {
+      color: var(--primary);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      padding: 0.5rem 1rem;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-base);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+    }
+
+    /* ═══════ HERO ═══════ */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: white;
+      padding: 4rem var(--container-padding);
+      position: relative;
+      overflow: hidden;
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1.5rem;
     }
 
-    .error-container {
-      max-width: 600px;
-      width: 100%;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zm6 10v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 4V0H4v4H0v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
       text-align: center;
+      max-width: 500px;
     }
 
-    .error-icon {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 2rem;
-      background: var(--maple-glow);
-      border-radius: 50%;
+    .hero-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      border: none;
+    }
+
+    .hero-btn.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .hero-btn.primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ═══════ MAIN CONTENT ═══════ */
+    .main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--maple);
-      font-size: 3rem;
-      font-weight: 700;
+      padding: 2rem var(--container-padding);
+    }
+
+    .error-content {
+      text-align: center;
+      max-width: 500px;
     }
 
     .error-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.5rem;
-      color: var(--text-1);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
       margin-bottom: 1rem;
-      line-height: 1.2;
     }
 
     .error-message {
-      font-size: 1.1rem;
-      color: var(--text-2);
+      font-size: 1rem;
+      color: var(--text-secondary);
       margin-bottom: 2rem;
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     .error-actions {
@@ -163,41 +353,40 @@
       flex-wrap: wrap;
     }
 
-    .btn {
+    .error-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family: inherit;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
       font-size: 14px;
       font-weight: 600;
-      padding: 12px 24px;
-      border-radius: var(--r-pill);
-      cursor: pointer;
+      border-radius: var(--radius-full);
       text-decoration: none;
-      transition: all var(--dur);
+      cursor: pointer;
+      transition: all var(--transition-base);
       border: none;
     }
 
-    .btn-primary {
-      background: var(--maple);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(200, 55, 45, 0.25);
-    }
-    .btn-primary:hover {
-      background: var(--maple-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(200, 55, 45, 0.3);
+    .error-btn.primary {
+      background: var(--primary);
+      color: white;
     }
 
-    .btn-secondary {
-      background: var(--bg-card);
-      color: var(--text-2);
+    .error-btn.primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .error-btn.secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
       border: 1px solid var(--border);
     }
-    .btn-secondary:hover {
-      background: var(--bg-subtle);
-      color: var(--text-1);
-      border-color: var(--border);
+
+    .error-btn.secondary:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
     }
 
     .helpful-links {
@@ -207,9 +396,9 @@
     }
 
     .helpful-links h3 {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 700;
-      color: var(--text-3);
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 1rem;
@@ -218,95 +407,158 @@
     .helpful-links a {
       display: inline-block;
       margin: 0 1rem;
-      color: var(--text-2);
-      text-decoration: none;
       font-size: 14px;
-      transition: color var(--dur);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-base);
     }
-    .helpful-links a:hover { color: var(--maple); }
 
-    footer {
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      padding: 1.75rem 1.5rem;
-      text-align: center;
+    .helpful-links a:hover {
+      color: var(--primary);
     }
+
+    /* ═══════ FOOTER ═══════ */
+    .footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
+      padding: 2rem var(--container-padding);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
     .footer-links {
       display: flex;
       gap: 1.5rem;
-      justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: var(--text-3);
-      text-decoration: none;
-      transition: color var(--dur);
-    }
-    .footer-links a:hover { color: var(--maple); }
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-3);
+      justify-content: center;
     }
 
-    @media (max-width: 600px) {
-      .error-title { font-size: 2rem; }
-      .error-icon { width: 100px; height: 100px; font-size: 2.5rem; }
-      .error-actions { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
-      .helpful-links a { display: block; margin: 0.5rem 0; }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition-base);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-copy {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+    /* ═══════ RESPONSIVE ═══════ */
+    @media (max-width: 768px) {
+      :root {
+        --container-padding: 1rem;
+      }
+
+      .header-inner {
+        gap: 1rem;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 3rem var(--container-padding);
+      }
+
+      .hero-content {
+        max-width: 100%;
+      }
+
+      .hero-title {
+        font-size: 1.75rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .error-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .helpful-links a {
+        display: block;
+        margin: 0.5rem 0;
+      }
     }
   </style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header role="banner">
-    <div class="h-inner">
-      <a href="/" class="logo" aria-label="MapleDevs home">
-        <img class="logo-i" src="/favicon.png" alt="MapleDevs" width="24" height="24" style="border-radius:2px;">
-        <span class="logo-w">Maple<span>Devs</span></span>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/favicon.png" alt="" class="logo-icon">
+        <span class="logo-text">Maple<span>Devs</span></span>
       </a>
+      <nav class="nav">
+        <a href="/resources/" class="nav-link">Resources</a>
+        <a href="/studios/" class="nav-link">Studios</a>
+        <a href="/about/" class="nav-link">About</a>
+        <a href="/hire/" class="nav-link">Hire</a>
+      </nav>
     </div>
   </header>
 
-  <main id="main-content" role="main">
-    <div class="error-container">
-      <div class="error-icon">404</div>
-      <h1 class="error-title">Page Not Found</h1>
-      <p class="error-message">
-        The page you're looking for doesn't exist or has been moved.
-        Let's get you back to finding your next game industry opportunity.
-      </p>
-      <div class="error-actions">
-        <a href="/" class="btn btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-          Browse Jobs
-        </a>
-        <a href="/about/" class="btn btn-secondary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          About MapleDevs
-        </a>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-icon">🔍</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">The page you're looking for doesn't exist. Let's get you back to finding your next game industry opportunity.</p>
+        <div class="hero-actions">
+          <a href="/" class="hero-btn primary">Browse Jobs</a>
+          <a href="/resources/" class="hero-btn secondary">View Resources</a>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main" id="main-content">
+    <div class="error-content">
       <div class="helpful-links">
         <h3>Helpful Links</h3>
-        <a href="/studios/">Top Studios</a>
+        <a href="/">Home</a>
         <a href="/resources/">Resources</a>
+        <a href="/studios/">Top Studios</a>
         <a href="/talent/">Talent Directory</a>
         <a href="/contact/">Contact Us</a>
       </div>
     </div>
   </main>
 
-  <footer role="contentinfo">
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/about/">About</a>
-      <a href="/studios/">Studios</a>
-      <a href="/resources/">Resources</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-    <p class="footer-copy">© 2026 MapleDevs · Canada's game industry job board</p>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <nav class="footer-links">
+        <a href="/">Home</a>
+        <a href="/resources/">Resources</a>
+        <a href="/studios/">Studios</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <p class="footer-copy">© 2026 MapleDevs · Canada's game industry job board</p>
+    </div>
   </footer>
 </body>
 </html>
