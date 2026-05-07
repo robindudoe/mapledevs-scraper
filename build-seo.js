@@ -68,7 +68,12 @@ function parseCSV(t) {
 
     const cl = (s) => s ? s.trim() : "";
     const hkey = (s) => cl(s).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
-    const featuredValue = (s) => /^(yes|true|1|featured|hiring_boost|boost|paid)$/i.test(cl(s).replace(/\s+/g, '_'));
+    const paidTierValue = (s) => {
+        const value = hkey(s);
+        if (['hiring_boost', 'hiringboost', 'boost', 'boosted', 'boosting', 'paid_boost'].includes(value)) return 'hiring_boost';
+        if (['yes', 'true', '1', 'featured', 'paid', 'feature'].includes(value)) return 'featured';
+        return '';
+    };
     const header = (rows[0] || []).map(hkey);
     const cell = (row, names, fallback) => {
         for (const name of names) {
@@ -83,7 +88,8 @@ function parseCSV(t) {
         const rw=rows[i];
         const status = cell(rw, ['status']);
         const linkStatus = cell(rw, ['link_status']);
-        const featured = featuredValue(cell(rw, ['feature', 'Featured', '(Featured)', 'Tier'], 8));
+        const tier = paidTierValue(cell(rw, ['feature', 'Featured', '(Featured)', 'Tier'], 8));
+        const featured = !!tier;
         if(status && !['approved', 'live', 'active'].includes(hkey(status))) continue;
         const linkKey = hkey(linkStatus);
         if (['stale_by_date', 'outdated', 'date_expired'].includes(linkKey)) continue;
@@ -112,7 +118,9 @@ function parseCSV(t) {
             salary: cell(rw, ['Salary'], 10),
             engine: cell(rw, ['Engine'], 11),
             visa: cell(rw, ['Visa Sponsorship', 'visa'], 12),
-            featured
+            featured,
+            tier,
+            hiringBoost: tier === 'hiring_boost'
         });
     }
     return jobs;
@@ -235,8 +243,30 @@ function signalScore(job) {
     if (job.desc && job.desc.length > 140) score += 6;
     if (job.student) score += 4;
     if (hasVisa(job)) score += 4;
-    if (job.featured) score += 3;
+    if (job.tier === 'hiring_boost') score += 6;
+    else if (job.featured) score += 3;
     return Math.min(98, score);
+}
+
+function paidPriority(job) {
+    return job && job.tier === 'hiring_boost' ? 2 : (job && job.featured ? 1 : 0);
+}
+
+function paidSort(a, b) {
+    return paidPriority(b) - paidPriority(a)
+        || String(b.posted || '').localeCompare(String(a.posted || ''))
+        || String(a.title || '').localeCompare(String(b.title || ''));
+}
+
+function paidBadgeLabel(job) {
+    return job && job.tier === 'hiring_boost' ? 'Hiring Boost' : 'Featured';
+}
+
+function paidBadgeHTML(job) {
+    if (!job || !job.featured) return '';
+    return job.tier === 'hiring_boost'
+        ? '<span class="b-boost">Hiring Boost</span>'
+        : '<span class="b-feat">Featured</span>';
 }
 
 function isRemote(job) {
@@ -412,7 +442,9 @@ function buildStructuredData(target, targetJobs) {
 
 function staticSpotlightHTML(job) {
     const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
-    return `<div class="sc" onclick="window.location.href='/jobs/${slug}/'">
+    const boost = job.tier === 'hiring_boost';
+    return `<div class="sc${boost ? ' boost' : ''}" onclick="window.location.href='/jobs/${slug}/'">
+        ${boost ? '<span class="sc-badge boost">Hiring Boost</span>' : ''}
         <span class="sc-badge">★ Featured</span>
         <div class="sc-title">${escapeHTML(job.title)}</div>
         <div class="sc-studio">${escapeHTML(job.studio)}</div>
@@ -432,9 +464,9 @@ function staticJobCardHTML(job) {
         hasVisa(job) ? '<span class="pill p-visa">Visa support</span>' : '',
         job.student ? '<span class="pill p-stu">Student-friendly</span>' : ''
     ].filter(Boolean).join('');
-    const featuredBadge = job.featured ? '<div class="jc-badges"><span class="b-feat">Featured</span></div>' : '';
+    const featuredBadge = job.featured ? `<div class="jc-badges">${paidBadgeHTML(job)}</div>` : '';
     const descHtml = job.desc ? `<p class="jc-desc">${escapeHTML(truncate(job.desc, 220))}</p>` : '';
-    return `<article class="jc ${job.featured ? 'feat' : ''}" style="margin-bottom:1rem;">
+    return `<article class="jc ${job.tier === 'hiring_boost' ? 'boost' : (job.featured ? 'feat' : '')}" style="margin-bottom:1rem;">
         <div class="jc-main">
             <div class="jc-top">
                 <div class="jc-title-grp">${featuredBadge}<h2 class="jc-title" style="margin:0;"><a href="/jobs/${slug}/" style="color:inherit;text-decoration:none;">${escapeHTML(job.title)}</a></h2></div>
@@ -498,7 +530,7 @@ function injectSEO(html, target, targetJobs = []) {
     // 4. STATIC INJECTION (The "Fortress" of SEO)
     // We replace the skeleton list with actual HTML for search engines
     if (targetJobs.length > 0) {
-        const featured = targetJobs.filter(j => j.featured);
+        const featured = targetJobs.filter(j => j.featured).sort(paidSort);
         const standard = targetJobs.filter(j => !j.featured);
 
         if (featured.length > 0) {

@@ -91,5 +91,50 @@
     "buttonText": "Join Discord",
     "icon": "🍁",
     "tags": ["Community", "Free"]
+  },
+  {
+    "title": "Complete C# Unity Game Developer 3D",
+    "description": "Master C# programming and Unity 3D game development. Build real games from scratch with hands-on projects and expert instruction.",
+    "link": "https://trk.udemy.com/c/7242803/3193860/39854",
+    "category": "Recommended",
+    "buttonText": "Start Learning",
+    "icon": "🎮",
+    "tags": ["Bestseller", "C#", "Unity"]
+  },
+  {
+    "title": "Unreal Engine 5 C++ Developer",
+    "description": "Learn C++ and Unreal Engine 5 from scratch. Create professional games with the same tools used by AAA studios.",
+    "link": "https://trk.udemy.com/c/7242803/3193860/39854",
+    "category": "Recommended",
+    "buttonText": "Start Learning",
+    "icon": "🚀",
+    "tags": ["Popular", "C++", "Unreal"]
+  },
+  {
+    "title": "C# Programming for Unity Game Development",
+    "description": "Build a strong foundation in C# programming specifically for game development. Perfect for beginners and intermediate developers.",
+    "link": "https://trk.udemy.com/c/7242803/3193860/39854",
+    "category": "Recommended",
+    "buttonText": "Start Learning",
+    "icon": "💻",
+    "tags": ["Beginner", "C#", "Programming"]
+  },
+  {
+    "title": "Game Development Portfolio Masterclass",
+    "description": "Create a standout portfolio that gets you hired. Learn what studios look for and how to present your work professionally.",
+    "link": "https://trk.udemy.com/c/7242803/3193860/39854",
+    "category": "Recommended",
+    "buttonText": "Build Your Portfolio",
+    "icon": "🎨",
+    "tags": ["Career", "Portfolio"]
+  },
+  {
+    "title": "Game Industry Resume & Interview Prep",
+    "description": "Ace your game industry interviews with proven strategies. Learn resume optimization, behavioral questions, and technical prep.",
+    "link": "https://trk.udemy.com/c/7242803/3193860/39854",
+    "category": "Recommended",
+    "buttonText": "Prepare for Interviews",
+    "icon": "📋",
+    "tags": ["Career", "Interview"]
   }
 ]
