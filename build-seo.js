@@ -20,11 +20,24 @@ const LEGACY_JOB_REDIRECTS = [
     }
 ];
 
+const LEGACY_PAGE_REDIRECTS = [
+    { path: 'remote-game-dev-jobs-canada', title: 'Remote game dev jobs in Canada', destination: '/#mode=Remote' },
+    { path: 'entry-level-game-dev-jobs-canada', title: 'Entry-level game dev jobs in Canada', destination: '/#exp=junior' },
+    { path: 'game-programming-jobs-canada', title: 'Game programming jobs in Canada', destination: '/#role=programming' },
+    { path: 'game-artist-jobs-canada', title: 'Game artist jobs in Canada', destination: '/#role=art' },
+    { path: 'game-design-jobs-canada', title: 'Game design jobs in Canada', destination: '/#role=design' },
+    { path: 'video-game-studios-hiring-canada', title: 'Canadian video game studios hiring', destination: '/studios/' },
+    { path: 'canadian-game-dev-jobs', title: 'Canadian game developer jobs', destination: '/jobs/' },
+    { path: 'locations/montreal-qc', title: 'Montreal game dev jobs', destination: '/montreal/' },
+    { path: 'locations/vancouver-bc', title: 'Vancouver game dev jobs', destination: '/vancouver/' },
+    { path: 'locations/london-on', title: 'London Ontario game dev jobs', destination: '/#city=London' },
+    { path: 'locations/halifax-nova-scotia', title: 'Halifax game dev jobs', destination: '/#city=Halifax' }
+];
+
 const SEO_TARGETS = [
     { folder: 'about', hash: '#about', title: 'About MapleDevs | Canada\'s Game Industry Job Board', desc: 'Why we built MapleDevs and how we are helping Canadian game developers find local opportunities.' },
     { folder: 'studios', hash: '#studios', title: 'Top Canadian Game Studios Hiring Now | MapleDevs', desc: 'Browse the directory of Canadian game studios currently hiring. Vancouver, Montreal, Toronto and more.' },
-    { folder: 'saved', hash: '#saved', title: 'Your Saved Jobs | MapleDevs', desc: 'Manage your bookmarked game industry opportunities in Canada.' },
-    { folder: 'resources', hash: '#resources', title: 'Best Tools & Resources for Game Developers in Canada | MapleDevs', desc: 'Curated tools, courses, and resources to help you improve your skills and get hired in the Canadian game industry.' }
+    { folder: 'saved', hash: '#saved', title: 'Your Saved Jobs | MapleDevs', desc: 'Manage your bookmarked game industry opportunities in Canada.' }
 ];
 const JOBS_INDEX_TARGET = {
     folder: 'jobs',
@@ -36,6 +49,7 @@ const JOBS_INDEX_TARGET = {
 const NOINDEX_FOLDERS = new Set(['saved']);
 const PUBLIC_STATIC_PAGES = [
     { path: 'hire/', changefreq: 'monthly', priority: '0.7' },
+    { path: 'resources/', changefreq: 'weekly', priority: '0.8' },
     { path: 'talent/', changefreq: 'weekly', priority: '0.7' },
     { path: 'blog/', changefreq: 'weekly', priority: '0.7' },
     { path: 'blog/mapledevs-editorial-launch.html', changefreq: 'monthly', priority: '0.6' },
@@ -44,7 +58,7 @@ const PUBLIC_STATIC_PAGES = [
 
 async function fetchURL(url) {
     return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
+        const req = https.get(url, (res) => {
             if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
                 return resolve(fetchURL(res.headers.location));
             }
@@ -52,6 +66,7 @@ async function fetchURL(url) {
             res.on('data', (chunk) => data += chunk);
             res.on('end', () => resolve(data));
         }).on('error', (err) => reject(err));
+        req.setTimeout(8000, () => req.destroy(new Error('Request timed out')));
     });
 }
 
@@ -192,6 +207,43 @@ function legacyRedirectHTML(redirect) {
 </html>`;
 }
 
+function genericRedirectHTML(redirect) {
+    const destination = redirect.destination || '/';
+    const canonicalUrl = destination.startsWith('http')
+        ? destination
+        : `https://mapledevs.ca${destination}`;
+    const title = redirect.title || 'MapleDevs page moved';
+    return `<!doctype html>
+<html lang="en-CA">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${escapeHTML(title)} | MapleDevs</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="This MapleDevs page has moved. Continue to the current Canadian game industry jobs page.">
+    <link rel="canonical" href="${escapeHTML(canonicalUrl)}">
+    <meta http-equiv="refresh" content="0; url=${escapeHTML(destination)}">
+    <script>window.location.replace(${JSON.stringify(destination)});</script>
+</head>
+<body>
+    <main>
+        <h1>${escapeHTML(title)}</h1>
+        <p>Redirecting to the current MapleDevs page.</p>
+        <p><a href="${escapeHTML(destination)}">Continue to MapleDevs</a></p>
+    </main>
+</body>
+</html>`;
+}
+
+function writeLegacyPageRedirects() {
+    for (const redirect of LEGACY_PAGE_REDIRECTS) {
+        if (!redirect.path) continue;
+        const redirectDir = path.join(ROOT_DIR, redirect.path);
+        if (!fs.existsSync(redirectDir)) fs.mkdirSync(redirectDir, { recursive: true });
+        fs.writeFileSync(path.join(redirectDir, 'index.html'), genericRedirectHTML(redirect));
+    }
+}
+
 function listExistingJobSlugs(jobsDir) {
     if (!fs.existsSync(jobsDir)) return new Set();
     return new Set(fs.readdirSync(jobsDir, { withFileTypes: true })
@@ -219,6 +271,40 @@ function writeLegacyJobRedirects(jobsDir, activeSlugs, legacySlugs = new Set()) 
         if (!fs.existsSync(legacyPath)) fs.mkdirSync(legacyPath, { recursive: true });
         fs.writeFileSync(path.join(legacyPath, 'index.html'), legacyRedirectHTML(redirect));
     }
+}
+
+function postedTime(job) {
+    const date = new Date(job && job.posted || '');
+    return isNaN(date) ? 0 : date.getTime();
+}
+
+function writeRSSFeed(jobs) {
+    const latest = [...jobs].sort((a, b) => postedTime(b) - postedTime(a)).slice(0, 25);
+    const items = latest.map(job => {
+        const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
+        const url = `https://mapledevs.ca/jobs/${slug}/`;
+        const pubDate = validISODate(job.posted) ? new Date(job.posted).toUTCString() : new Date().toUTCString();
+        return `    <item>
+      <title>${escapeHTML(`${job.title} at ${job.studio}`)}</title>
+      <link>${escapeHTML(url)}</link>
+      <guid>${escapeHTML(url)}</guid>
+      <pubDate>${escapeHTML(pubDate)}</pubDate>
+      <description>${escapeHTML(truncate(job.desc || `Opportunity at ${job.studio}`, 220))}</description>
+    </item>`;
+    }).join('\n');
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>MapleDevs Canadian Game Jobs</title>
+    <link>https://mapledevs.ca/</link>
+    <description>Fresh Canadian game industry jobs from verified studios.</description>
+    <language>en-CA</language>
+    <lastBuildDate>${escapeHTML(new Date().toUTCString())}</lastBuildDate>
+${items}
+  </channel>
+</rss>
+`;
+    fs.writeFileSync(path.join(ROOT_DIR, 'rss.xml'), xml);
 }
 
 function hasVisa(job) {
@@ -259,13 +345,13 @@ function paidSort(a, b) {
 }
 
 function paidBadgeLabel(job) {
-    return job && job.tier === 'hiring_boost' ? 'Hiring Boost' : 'Featured';
+    return job && job.tier === 'hiring_boost' ? 'Priority Spotlight' : 'Featured';
 }
 
 function paidBadgeHTML(job) {
     if (!job || !job.featured) return '';
     return job.tier === 'hiring_boost'
-        ? '<span class="b-boost">Hiring Boost</span>'
+        ? '<span class="b-boost">Priority Spotlight</span>'
         : '<span class="b-feat">Featured</span>';
 }
 
@@ -444,8 +530,7 @@ function staticSpotlightHTML(job) {
     const slug = slugify(`${job.title}-${job.studio}-${job.location}`, { lower: true, strict: true });
     const boost = job.tier === 'hiring_boost';
     return `<div class="sc${boost ? ' boost' : ''}" onclick="window.location.href='/jobs/${slug}/'">
-        ${boost ? '<span class="sc-badge boost">Hiring Boost</span>' : ''}
-        <span class="sc-badge">★ Featured</span>
+        <span class="sc-badge${boost ? ' boost' : ''}">${boost ? 'Priority Spotlight' : 'Featured'}</span>
         <div class="sc-title">${escapeHTML(job.title)}</div>
         <div class="sc-studio">${escapeHTML(job.studio)}</div>
         <div class="sc-tags">
@@ -530,8 +615,15 @@ function injectSEO(html, target, targetJobs = []) {
     // 4. STATIC INJECTION (The "Fortress" of SEO)
     // We replace the skeleton list with actual HTML for search engines
     if (targetJobs.length > 0) {
-        const featured = targetJobs.filter(j => j.featured).sort(paidSort);
+        const boosted = targetJobs.filter(j => j.tier === 'hiring_boost').sort(paidSort);
+        const featured = targetJobs.filter(j => j.featured && j.tier !== 'hiring_boost').sort(paidSort);
         const standard = targetJobs.filter(j => !j.featured);
+
+        if (boosted.length > 0) {
+            const boostedHtml = boosted.map(staticSpotlightHTML).join('');
+            output = output.replace(/id="boost-s"\s+style="display:none"/i, 'id="boost-s" style="display:block"');
+            output = output.replace(/id="boost-grid">/i, `id="boost-grid">${boostedHtml}`);
+        }
 
         if (featured.length > 0) {
             const featuredHtml = featured.map(staticSpotlightHTML).join('');
@@ -673,6 +765,8 @@ async function build() {
     }
 
     writeLegacyJobRedirects(jobsDir, activeJobSlugs, legacyJobSlugs);
+    writeLegacyPageRedirects();
+    writeRSSFeed(jobs);
 
     sitemapXML += `\n</urlset>`;
     fs.writeFileSync(path.join(ROOT_DIR, 'sitemap.xml'), sitemapXML);

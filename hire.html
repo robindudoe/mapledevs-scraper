@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hire Canadian Game Developers | MapleDevs</title>
-  <meta name="description" content="Post Canadian game industry jobs on MapleDevs. Standard listings are free, with featured placement available for studios that want more visibility.">
+  <meta name="description" content="Post Canadian game industry jobs on MapleDevs. Standard listings are free, with Featured and Priority Spotlight placement for studios that want more visibility.">
   <link rel="canonical" href="https://mapledevs.ca/hire/">
-  <link rel="icon" href="../favicon.png">
+  <link rel="icon" href="/favicon.png">
   <style>
     :root{--maple:#c7352d;--maple-dark:#9f2822;--gold:#ffd600;--ink:#151515;--muted:#66635d;--line:#dedbd5;--paper:#f7f5f0;--panel:#fffefa}
     *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:8px;color:var(--ink);font-weight:800;text-decoration:none}.brand img{width:24px;border-radius:4px}.nav a{color:var(--muted);font-weight:700;text-decoration:none}.hero{padding:72px 24px;text-align:center;background:#111820;color:#fff}.hero h1{max-width:850px;margin:0 auto 16px;font-size:clamp(2.2rem,5vw,4rem);line-height:1.08}.hero p{max-width:650px;margin:0 auto 28px;color:rgba(255,255,255,.82);font-size:1.15rem}.btn{display:inline-block;border:0;border-radius:8px;background:var(--gold);color:#111820;padding:14px 24px;font-weight:900;text-decoration:none;cursor:pointer}.content{max-width:1040px;margin:0 auto;padding:52px 24px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.tier,.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}.tier:first-child{order:1}.tier.boost{order:2;border:2px solid var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.06)}.tier.featured{order:3}.price{font-size:2rem;font-weight:900;margin:8px 0 16px}.tier ul{padding-left:20px;color:var(--muted)}.notice{margin:28px 0;padding:18px 20px;border-left:4px solid var(--gold);background:#fff8de;border-radius:8px;color:#6b5200}.form{display:grid;gap:14px;max-width:760px}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-weight:800;font-size:.92rem}input,select,textarea{width:100%;margin-top:6px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#fff;font:inherit}.submit{background:var(--maple);color:#fff}.submit:hover{background:var(--maple-dark)}@media(max-width:760px){.grid,.row{grid-template-columns:1fr}.hero{padding:52px 18px}.content{padding:36px 18px}}
@@ -14,13 +14,13 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html"><img src="../favicon.png" alt="">MapleDevs</a>
-    <nav class="nav"><a href="../index.html">Back to jobs</a></nav>
+    <a class="brand" href="/"><img src="/favicon.png" alt="">MapleDevs</a>
+    <nav class="nav"><a href="/">Back to jobs</a></nav>
   </header>
 
   <section class="hero">
     <h1>Hire Canadian Game Developers Faster</h1>
-    <p>Reach a focused audience of Canadian game developers looking for studio roles. Standard listings are free, and paid featured placement is available for more visibility.</p>
+    <p>Reach a focused audience of Canadian game developers looking for studio roles. Standard listings are free, and Featured or Priority Spotlight placement is available for more visibility.</p>
     <a class="btn" href="#post">Post a job</a>
   </section>
 
@@ -51,7 +51,7 @@
       </article>
 
       <article class="tier boost">
-        <h2>Hiring Boost</h2>
+        <h2>Priority Spotlight</h2>
         <div class="price">$39 <small>CAD</small></div>
         <ul>
           <li>Maximum visibility placement</li>
@@ -59,11 +59,11 @@
           <li>Limited active slots</li>
           <li>Priority social promotion</li>
         </ul>
-        <button style="width:100%" class="btn" onclick="selectTier('hiring_boost')">Maximum Boost</button>
+        <button style="width:100%" class="btn" onclick="selectTier('hiring_boost')">Get Priority Spotlight</button>
       </article>
     </section>
 
-    <p class="notice">Featured and Hiring Boost payments are sent by Interac e-Transfer to <strong>wupeiheng11@gmail.com</strong>. Paid placement is final and non-refundable once the listing is live.</p>
+    <p class="notice">Featured and Priority Spotlight payments are sent by Interac e-Transfer to <strong>wupeiheng11@gmail.com</strong>. Paid placement is final and non-refundable once the listing is live.</p>
 
     <section id="post" class="panel">
       <h2>Submit a job</h2>
@@ -90,7 +90,7 @@
           <div style="display:flex; gap:12px; margin-top:8px;">
             <label style="font-weight:400;"><input type="radio" name="Tier" value="free" checked style="width:auto; margin-top:0;"> Free</label>
             <label style="font-weight:400;"><input type="radio" name="Tier" value="featured" style="width:auto; margin-top:0;"> Featured ($29)</label>
-            <label style="font-weight:400;"><input type="radio" name="Tier" value="hiring_boost" style="width:auto; margin-top:0;"> Hiring Boost ($39)</label>
+            <label style="font-weight:400;"><input type="radio" name="Tier" value="hiring_boost" style="width:auto; margin-top:0;"> Priority Spotlight ($39)</label>
           </div>
         </div>
 
@@ -129,7 +129,7 @@
             msg.innerHTML = '<div class="success-box" style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:left;"><b>✅ Submitted successfully!</b><p style="margin:12px 0;">Your job has been sent for manual review and will be published shortly.</p></div>';
           } else {
             const amt = tierVal === 'hiring_boost' ? '$39 CAD' : '$29 CAD';
-            const tName = tierVal === 'hiring_boost' ? 'Hiring Boost' : 'Featured';
+            const tName = tierVal === 'hiring_boost' ? 'Priority Spotlight' : 'Featured';
             msg.innerHTML = `<div class="success-box" style="background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:left;"><b>✅ Submitted successfully!</b><p style="margin:12px 0;">To complete your job posting, please follow these steps:</p><ol style="margin:0 0 16px;padding-left:20px;"><li>Send an Interac e-Transfer to <b>wupeiheng11@gmail.com</b></li><li>Amount: <b>${amt}</b> (${tName})</li><li><b>IMPORTANT:</b> Include your job title or studio name in the message.</li></ol><p style="margin:0;font-size:0.95rem;color:var(--muted);">Once payment is received, your listing will be manually approved and published.</p></div>`;
           }
           form.reset();

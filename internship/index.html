@@ -616,7 +616,8 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
 .p-visa { background: var(--maple-glow); color: var(--maple); border-color: rgba(200,55,45,0.22); }
 .p-neutral { background: transparent; color: var(--text-3); border-color: var(--border); }
 
-.jc-desc { font-size: 14px; color: var(--text-3); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.jc-desc { font-size: 14px; color: var(--text-3); line-height: 1.6; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2;
+  line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .jc-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border); }
 .jc-foot-main { display: flex; flex-direction: column; gap: 2px; }
 .jc-date { font-size: 11px; color: var(--text-3); font-weight: 500; }
@@ -659,7 +660,8 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
 .sc:hover::before { opacity: 0.12; }
 .sc::after { content: ''; position: absolute; inset: -2px; border-radius: calc(var(--r) + 2px); background: linear-gradient(135deg, var(--gold), transparent 60%); opacity: 0; z-index: -1; transition: opacity 0.3s; }
 .sc:hover::after { opacity: 0.3; }
-.sc-title { font-size: 14px; font-weight: 700; color: var(--text-1); line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sc-title { font-size: 14px; font-weight: 700; color: var(--text-1); line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2;
+  line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sc-studio { font-size: 11px; color: var(--text-3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 .sc-tags { display: flex; gap: 4px; margin-top: auto; padding-top: 10px; }
 .sc-loc { font-size: 10px; color: var(--text-2); background: var(--bg-subtle); padding: 2px 6px; border-radius: 4px; }
@@ -766,7 +768,8 @@ main { max-width: var(--max-w); margin: 0 auto; padding: 1.25rem 1.5rem 4rem; }
 /* Card hover expand — show more info */
 .jc { cursor: pointer; transition: all 0.15s var(--ease); }
 .jc:active { transform: scale(0.985) !important; transition: transform 0.08s !important; }
-.jc:hover .jc-desc { -webkit-line-clamp: 3; }
+.jc:hover .jc-desc { -webkit-line-clamp: 3;
+  line-clamp: 3; }
 
 /* Hot job glow — recent posts */
 .jc.hot { border-color: rgba(200,55,45,0.2); }
