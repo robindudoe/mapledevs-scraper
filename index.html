@@ -3049,6 +3049,201 @@ select {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 48px 48px;
     gap: 8px;
+  .f-pill,
+  .f-clear {
+    flex: 0 0 auto;
+  }
+  .controls::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: none;
+    background: rgba(17, 17, 16, 0.42);
+  }
+  .controls.filters-open::before { display: block; }
+  .filter-sheet {
+    display: grid;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    max-height: min(76vh, 620px);
+    overflow-y: auto;
+    padding: 14px 14px calc(16px + env(safe-area-inset-bottom));
+    border: 1px solid var(--border);
+    border-bottom: 0;
+    border-radius: 18px 18px 0 0;
+    background: var(--bg-card);
+    box-shadow: 0 -18px 40px rgba(18,21,27,0.22);
+    transform: translateY(110%);
+    transition: transform 0.22s var(--ease);
+  }
+  .controls.filters-open .filter-sheet { transform: translateY(0); }
+  .filter-sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 4px;
+  }
+  .filter-sheet-head strong {
+    color: var(--text-1);
+    font-size: 15px;
+  }
+  .filter-sheet-head button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-s);
+    background: var(--bg-subtle);
+    color: var(--text-2);
+    font-size: 20px;
+  }
+  .filter-sheet select,
+  .filter-sheet .stu-label,
+  .filter-sheet .alert-btn,
+  .filter-apply {
+    width: 100%;
+    min-height: 44px;
+  }
+  .filter-sheet .stu-label {
+    justify-content: flex-start;
+    padding: 0 12px;
+  }
+  .filter-apply {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+    border: 0;
+    border-radius: var(--r-s);
+    background: var(--maple);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  #main-content {
+    padding: 10px 10px 2.5rem;
+  }
+  .job-list { gap: 7px; }
+  .jc {
+    display: block;
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .jc:hover { transform: none; }
+  .jc-title-grp { padding-right: 38px; }
+  .jc-title {
+    font-size: 15px;
+    line-height: 1.22;
+  }
+  .jc-studio {
+    margin-bottom: 8px;
+    font-size: 12.5px;
+  }
+  .jc-badges { margin-bottom: 6px; }
+  .jc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 7px 0;
+  }
+  .meta-item {
+    padding: 4px 8px;
+    border-radius: var(--r-pill);
+    background: var(--bg-subtle);
+  }
+  .meta-k { display: none; }
+  .meta-v {
+    max-width: 210px;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .jc-pills {
+    gap: 5px;
+    margin: 7px 0 0;
+  }
+  .jc-pills .pill:nth-child(n+3) { display: none; }
+  .pill {
+    min-height: 23px;
+    padding: 3px 8px;
+    font-size: 10.5px;
+  }
+  .jc-desc { display: none; }
+  .jc-side {
+    position: static;
+    border: 0;
+    padding: 0;
+    margin-top: 9px;
+    gap: 0;
+  }
+  .jc-side-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+  }
+  .signal-score,
+  .jc-salary,
+  .jc-foot-main { display: none !important; }
+  .sv-btn {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-card);
+  }
+  .jc-cta-row {
+    display: flex;
+    gap: 7px;
+    margin-top: 0;
+  }
+  .jc-side .btn-p,
+  .jc-side .btn-s {
+    width: auto;
+    min-height: 36px;
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .jc-side .compare-btn { display: none !important; }
+
+  #detail-view.on {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+  #detail-view main {
+    padding: 12px 10px 2rem;
+  }
+  .crumbs { display: none; }
+  .d-card {
+    padding: 15px;
+    border-radius: 12px;
+  }
+  .d-title {
+    font-size: 1.55rem;
+    line-height: 1.08;
+  }
+  .d-hdr .jc-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .d-hdr .jc-meta .meta-item:first-child {
+    grid-column: 1 / -1;
+  }
+  .d-acts { flex-wrap: wrap; }
+  .apply-blk .apply-btn { display: none; }
+  .mobile-detail-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 220;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 48px 48px;
+    gap: 8px;
     padding: 9px 10px calc(9px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--border);
     background: var(--bg-card);
@@ -3113,6 +3308,44 @@ select {
   min-height: 0;
 }
 @media (min-width: 1024px) { #inline-detail-pane { display: flex !important; } }
+
+/* ═══════ STICKY JOB TITLE BAR ═══════ */
+.det-sticky-bar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: stickyFadeIn 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.det-sticky-bar.visible { display: flex; }
+.det-sticky-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.det-sticky-studio {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 500;
+  white-space: nowrap;
+}
+@keyframes stickyFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 #inline-detail-pane .detail-header {
   flex-shrink: 0;
@@ -4166,28 +4399,6 @@ select,
   <div class="h-inner">
     <a href="/" class="logo" onclick="goHome(event)" aria-label="MapleDevs home">
       <img class="logo-i" src="/favicon.png" alt="MapleDevs" width="24" height="24" style="border-radius:2px;">
-      <span class="logo-w">Maple<span>Devs</span></span>
-    </a>
-    <nav class="h-nav" role="navigation" aria-label="Main">
-      <a href="/blog/index.html" class="n-link nav-optional">Maple Feed</a>
-      <a href="/talent/" class="n-link" onclick="goLocalPage(event,'talent')">Talent</a>
-      <button class="n-link" id="nav-studios" onclick="showStudios()">Studios</button>
-      <button class="n-link" id="nav-about" onclick="showAbout()">About</button>
-      <button class="n-link" id="nav-saved" onclick="showSaved()">Saved<span class="n-badge" id="sv-badge">0</span></button>
-      <a href="/account/" class="n-link nav-optional" onclick="goAccount(event)">Account</a>
-      <a href="https://discord.com/invite/TXGyQYRYg9" target="_blank" rel="noopener noreferrer" class="n-link nav-optional" style="display:flex; align-items:center; gap:5px" aria-label="Join our Discord" onclick="return openDiscord(event)">
-        <svg width="14" height="14" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a67.59,67.59,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.2,46,96.09,53,91.08,65.69,84.69,65.69Z"/></svg>
-        Discord
-      </a>
-      <button class="n-link" id="nav-resources" onclick="showResources()">Resources</button>
-      <a href="/hire/" class="n-link nav-hire" onclick="goLocalPage(event,'hire')">Hiring</a>
-      <button class="post-job-nav" onclick="openPostModal()">Post job</button>
-      <button class="theme-btn" id="theme-btn" aria-label="Toggle dark mode"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-ic"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-    </nav>
-  </div>
-</header>
-<div class="feature-banner" id="feature-banner">
-  <div class="feature-banner-inner">
     <span class="feature-banner-text">Hiring? <strong>Priority Spotlight</strong> sits above <strong>Featured</strong>, and both stay above free listings.</span>
     <a class="fp-cta" href="/hire/" onclick="goLocalPage(event,'hire')">View tiers</a>
     <button class="fb-close" onclick="closeFeatureBanner()" aria-label="Close">âœ•</button>
@@ -5653,6 +5864,56 @@ function heroSearch(e){
 /* ═══════ HELPERS ═══════ */
 function isNew(d){if(!d)return false;const dt=new Date(d);return!isNaN(dt)&&(Date.now()-dt)/864e5<=4;}
 function isFreshThisWeek(d){if(!d)return false;const dt=new Date(d);return!isNaN(dt)&&(Date.now()-dt)/864e5<=7;}
+function relDate(d){if(!d)return"";const dt=new Date(d);if(isNaN(dt))return d;const days=Math.floor((Date.now()-dt)/864e5);if(days===0)return"Today";if(days===1)return"1d ago";if(days<30)return days+"d ago";return dt.toLocaleDateString("en-CA",{month:"short",day:"numeric"});}
+function modeC(m){if(!m)return"";const l=m.toLowerCase();return l.includes("remote")?"p-remote":l.includes("hybrid")?"p-hybrid":"p-onsite";}
+function engineBucket(e){const l=(e||"").toLowerCase();if(!l)return"";if(l.includes("unreal"))return"unreal";if(l.includes("unity"))return"unity";if(l.includes("godot"))return"godot";if(l.includes("c++")||l.includes("proprietary"))return"c++ / proprietary";return l;}
+function hasVisa(j){return /yes|sponsor|relocation|relocate|lmia/i.test(j.visa||"");}
+function visaText(j){return hasVisa(j)?"Visa support":"Visa not listed";}
+function metaItem(label,value,cls){return '<div class="meta-item '+(cls||'')+'"><span class="meta-k">'+esc(label)+'</span><span class="meta-v">'+esc(value||'Not listed')+'</span></div>';}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function hl(text,q){if(!q)return esc(text);const e=esc(text),qe=esc(q);const rx=new RegExp('('+qe.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return e.replace(rx,'<mark class="hl">$1</mark>');}
+
+/* ═══════ CARD ═══════ */
+function cardHTML(j,ri,ai){
+  const q=document.getElementById('search').value.toLowerCase(), dl=Math.min(ai*25,250);
+  const hot = isHot(j);
+  const score = signalScore(j);
+  const badges=paidBadgeHTML(j)+(isNew(j.posted)?'<span class="b-new">New</span>':'');
+  
+  return `<div class="jc${j.tier==='hiring_boost'?' boost':(j.featured?' feat':'')}${hot?' hot':''} scroll-in" style="animation-delay:${dl}ms" onclick="openDet(${ri},event)" tabindex="0" role="article" onkeydown="if(event.key==='Enter')openDet(${ri})" aria-label="${esc(j.title)} at ${esc(j.studio)}">
+    <div class="jc-main">
+      <div class="jc-top" style="margin-bottom: 2px;">
+        <div class="jc-title-grp" style="flex: 1; padding-right: 8px;">
+          ${badges ? `<div class="jc-badges" style="margin-bottom: 6px;">${badges}</div>` : ''}
+          <div class="jc-title" style="font-size: 1.1rem; line-height: 1.2;">${hl(j.title,q)}</div>
+        </div>
+        <div class="jc-score-mini" title="Signal Score">${score}</div>
+      </div>
+      <div class="jc-studio">${hl(j.studio,q)}</div>
+      <div class="jc-meta-mini">
+        <span>${esc(cityName(j.location))}</span>
+        <span class="dot">·</span>
+        <span>${esc(j.mode||'On-site')}</span>
+        ${j.salary ? `<span class="dot">·</span><span class="jc-salary-mini">${esc(j.salary)}</span>` : ''}
+      </div>
+      <div class="jc-date-mini">${j.posted ? relDate(j.posted) : 'Recently added'}</div>
+    </div>
+  </div>`;
+}
+
+/* ═══════ DETAIL ═══════ */
+function staleHref(j){
+  const subject=encodeURIComponent('Stale MapleDevs listing: '+(j.title||'Role')+' at '+(j.studio||'Studio'));
+  const body=encodeURIComponent('This job may be expired or inaccurate.\n\nRole: '+(j.title||'')+'\nStudio: '+(j.studio||'')+'\nLocation: '+(j.location||'')+'\nApply link: '+(j.apply||'')+'\n\nNotes: ');
+  return 'mailto:mapledevsbusiness@gmail.com?subject='+subject+'&body='+body;
+}
+function detailHTML(j,idx,isInline=false){
+const sv=isSaved(j),cmp=isCompared(j),score=signalScore(j);
+const apSec=j.apply?'<div class="apply-blk"><div class="d-label" style="margin-bottom:10px">How to apply</div>'+(j.apply.startsWith("mailto:")?'<p class="d-text" style="margin-bottom:1rem">'+esc(j.apply.replace("mailto:",""))+'</p>':'<p class="d-text" style="margin-bottom:1rem"><a href="'+esc(j.apply)+'" target="_blank" rel="noopener" style="color:var(--maple)">View application page</a></p>')+'<a class="apply-btn" href="'+esc(j.apply)+'" target="_blank" rel="noopener">Apply now</a><div class="d-acts" style="margin-top:12px"><a class="d-act-btn" href="'+esc(staleHref(j))+'">Report stale listing</a></div></div>':'';
+const mobileActions='<div class="mobile-detail-actions">'+(j.apply?'<a class="mobile-apply" href="'+esc(j.apply)+'" target="_blank" rel="noopener">Apply</a>':'<button type="button" class="mobile-apply" disabled>No apply link</button>')+'<button type="button" class="'+(sv?'saved':'')+'" onclick="togSaveDet(event,'+idx+')" aria-label="'+(sv?'Unsave':'Save')+' job"><svg width="18" height="18" viewBox="0 0 24 24" fill="'+(sv?'currentColor':'none')+'" stroke="currentColor" stroke-width="2.4"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></button><button type="button" onclick="shareJob('+idx+')" aria-label="Share job"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button></div>';
+const detailFacts='<div class="jc-meta" style="display:flex !important; flex-wrap:wrap !important; justify-content:center !important; gap:12px !important; margin:1.5rem auto !important; width:100% !important; max-width:500px !important;">'+metaItem('Signal score',score+'/100')+metaItem('Location',j.location||'Canada')+metaItem('Work mode',j.mode||'Not listed')+metaItem('Salary',j.salary||'Not listed','salary')+'</div>';
+
+const hdr = isInline ? `<div class="d-hdr" style="padding-top:0">${detailFacts}<div class="d-pills" style="margin-top:12px">${(j.type?'<span class="pill p-type">'+esc(j.type)+'</span>':'')+(j.engine?'<span class="pill p-engine">'+esc(j.engine)+'</span>':'')+(hasVisa(j)?'<span class="pill p-visa">'+visaText(j)+'</span>':'')+(j.student?'<span class="pill p-stu">Student-friendly</span>':'')}</div><div class="d-acts"><button class="d-act-btn" onclick="shareJob(${idx})">Share</button><button class="d-act-btn compare-btn${cmp?' on':''}" onclick="togCompareDet(event,${idx})">${cmp?'Compared':'Compare'}</button><button class="d-act-btn${sv?' saved':''}" onclick="togSaveDet(event,${idx})">${sv?'Saved':'Save'}</button></div></div>` 
 function relDate(d){if(!d)return"";const dt=new Date(d);if(isNaN(dt))return d;const days=Math.floor((Date.now()-dt)/864e5);if(days===0)return"Today";if(days===1)return"1d ago";if(days<30)return days+"d ago";return dt.toLocaleDateString("en-CA",{month:"short",day:"numeric"});}
 function modeC(m){if(!m)return"";const l=m.toLowerCase();return l.includes("remote")?"p-remote":l.includes("hybrid")?"p-hybrid":"p-onsite";}
 function engineBucket(e){const l=(e||"").toLowerCase();if(!l)return"";if(l.includes("unreal"))return"unreal";if(l.includes("unity"))return"unity";if(l.includes("godot"))return"godot";if(l.includes("c++")||l.includes("proprietary"))return"c++ / proprietary";return l;}
