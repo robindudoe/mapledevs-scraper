@@ -16,7 +16,7 @@
       "status": "Idle",
       "last_action": "Error: MISSING_API_KEY: Please set GOOGLE_API_KEY or GEMINI_API_KEY in your .env file.",
       "project": "Gaming News & Jobs",
-      "last_run": "2026-07-29T17:06:54.868Z"
+      "last_run": "2026-07-30T01:46:16.763Z"
     },
     "reviewer": {
       "status": "Idle",
